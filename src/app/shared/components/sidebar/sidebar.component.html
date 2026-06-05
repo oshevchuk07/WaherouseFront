@@ -1,4 +1,41 @@
-<aside [@sidebarExpand]="isExpanded() ? 'expanded' : 'collapsed'"
-  class="h-screen bg-gray-900 flex flex-col overflow-hidden">
-  test
+<aside [@sidebarWidth]="isExpanded() ? 'expanded' : 'collapsed'"
+  class="h-screen bg-gray-900 flex flex-col overflow-hidden shrink-0 border-r border-gray-800">
+  <!-- Logo -->
+  <div class="flex items-center gap-3 px-4 py-5 border-b border-gray-800 shrink-0">
+    <span class="material-icons text-blue-400 text-2xl shrink-0">inventory_2</span>
+    <span class="font-bold text-white text-sm whitespace-nowrap overflow-hidden transition-all duration-250"
+      [class.w-0]="!isExpanded()" [class.opacity-0]="!isExpanded()" [class.w-auto]="isExpanded()"
+      [class.opacity-100]="isExpanded()">
+      WAREHOUSE<br>
+      <span class="text-blue-400 font-normal text-xs">PLATFORM</span>
+    </span>
+  </div>
+
+  <!-- Nav -->
+  <nav class="flex-1 overflow-y-auto overflow-x-hidden px-2 py-4 flex flex-col gap-1">
+    @for (item of navItems; track item.route) {
+    <app-sidebar-nav-item [item]="item" [expanded]="isExpanded()" />
+    }
+  </nav>
+
+  <!-- Footer -->
+  <div class="border-t border-gray-800 px-2 py-3 flex flex-col gap-1 shrink-0">
+    <button (click)="logout.emit()" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-gray-400
+                 hover:bg-red-900/40 hover:text-red-400 transition-colors duration-150 w-full">
+      <span class="material-icons text-xl shrink-0">power_settings_new</span>
+      <span class="text-sm font-medium whitespace-nowrap overflow-hidden transition-all duration-250"
+        [class.w-0]="!isExpanded()" [class.opacity-0]="!isExpanded()" [class.w-auto]="isExpanded()"
+        [class.opacity-100]="isExpanded()">
+        Cerrar sesión
+      </span>
+    </button>
+
+    <!-- Toggle collapse button -->
+    <button (click)="toggleExpanded()" class="flex items-center justify-center px-3 py-2 rounded-lg text-gray-500
+                 hover:bg-gray-700 hover:text-white transition-colors duration-150 w-full">
+      <span class="material-icons text-xl transition-transform duration-250" [class.rotate-180]="!isExpanded()">
+        chevron_left
+      </span>
+    </button>
+  </div>
 </aside>

@@ -1,6 +1,14 @@
-import { Component } from "@angular/core";
+import { Component } from '@angular/core';
+import { RouterOutlet } from '@angular/router';
 
 @Component({
-  template: '',
+  selector: 'app-auth-layout',
+  standalone: true,
+  imports: [RouterOutlet],
+  template: `
+    <div class="min-h-screen bg-gray-950 flex items-center justify-center p-4">
+      <router-outlet />
+    </div>
+  `,
 })
-export class AuthLayoutComponent { }
+export class AuthLayoutComponent {}
