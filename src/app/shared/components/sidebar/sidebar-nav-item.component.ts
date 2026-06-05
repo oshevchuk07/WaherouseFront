@@ -1,40 +1,55 @@
-import { Component, input } from '@angular/core';
-import { RouterLink, RouterLinkActive } from '@angular/router';
-import { UserRole } from '../../../core/models/user.model';
-
-
-export interface NavItem {
-  label: string;
-  route: string;
-  icon: string;
-  roles?: UserRole[];
-}
+import { Component, computed, inject, input, OnInit, signal } from '@angular/core';
+import { NavigationEnd, Router, RouterLink, RouterLinkActive } from '@angular/router';
+import { NavItem } from './sidebar.types';
+import { animate, state, style, transition, trigger } from '@angular/animations';
+import { IconComponent } from "../icons/icons.component";
+import { filter } from 'rxjs';
 
 @Component({
   selector: 'app-sidebar-nav-item',
-  imports: [RouterLink, RouterLinkActive],
-  template: `
-    <a
-      [routerLink]="item().route"
-      routerLinkActive="bg-gray-700 text-white"
-      [routerLinkActiveOptions]="{ exact: false }"
-      class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-gray-400
-             hover:bg-gray-700 hover:text-white transition-colors duration-150 cursor-pointer"
-    >
-      <span class="material-icons text-xl shrink-0">{{ item().icon }}</span>
-      <span
-        class="text-sm font-medium whitespace-nowrap overflow-hidden transition-all duration-250"
-        [class.w-0]="!expanded()"
-        [class.opacity-0]="!expanded()"
-        [class.w-auto]="expanded()"
-        [class.opacity-100]="expanded()"
-      >
-        {{ item().label }}
-      </span>
-    </a>
-  `,
+  imports: [RouterLink, RouterLinkActive, IconComponent],
+  animations: [
+    trigger('expandChildren', [
+      state('open', style({ height: '*', opacity: 1 })),
+      state('closed', style({ height: '0px', opacity: 0 })),
+      transition('open <=> closed', animate('200ms cubic-bezier(0.4, 0, 0.2, 1)')),
+    ]),
+  ],
+  templateUrl: './sidebar-nav-item.component.html',
 })
-export class SidebarNavItemComponent {
+export class SidebarNavItemComponent implements OnInit {
   item = input.required<NavItem>();
   expanded = input<boolean>(true);
+
+  isOpen = signal(false);
+
+  private readonly router = inject(Router);
+
+  hasChildren = computed(() => !!this.item().children?.length);
+
+  // перевіряємо чи активний будь-який дочірній роут
+  isChildActive = computed(() => {
+    const url = this.router.url;
+    return this.item().children?.some(c => url.startsWith(c.route)) ?? false;
+  });
+
+  ngOnInit(): void {
+    // якщо при завантаженні активний дочірній — розкриваємо
+    if (this.isChildActive()) {
+      this.isOpen.set(true);
+    }
+
+    // слухаємо навігацію щоб автоматично розкритись
+    this.router.events.pipe(
+      filter(e => e instanceof NavigationEnd)
+    ).subscribe(() => {
+      if (this.isChildActive() && !this.isOpen()) {
+        this.isOpen.set(true);
+      }
+    });
+  }
+
+  toggleOpen(): void {
+    this.isOpen.update(v => !v);
+  }
 }

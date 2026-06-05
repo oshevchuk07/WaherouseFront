@@ -1,22 +1,26 @@
 import { Component, computed, inject, input, output, signal } from "@angular/core";
 import { trigger, state, style, transition, animate } from '@angular/animations';
-import { NavItem, SidebarNavItemComponent } from "./sidebar-nav-item.component";
+import { SidebarNavItemComponent } from "./sidebar-nav-item.component";
 import { AuthStore } from "../../../core/auth/auth.store";
+import { NavDivider, NavEntry, NavItem } from "./sidebar.types";
+import { NAV_CONFIG } from "./sidebar.config";
+import { UserRole } from "../../../core/models/user.model";
+import { IconComponent } from "../icons/icons.component";
 
-const NAV_ITEMS: NavItem[] = [
-  { label: 'Home', route: '/app/dashboard', icon: 'home' },
-  { label: 'Warehouse 3D', route: '/app/warehouse-3d', icon: 'warehouse' },
-  { label: 'Planes y precios', route: '/app/plans', icon: 'account_tree' },
-  { label: 'Configurador de tarifas', route: '/app/tariff-configurator', icon: 'settings', roles: ['ADMIN'] },
-  { label: 'Servicios y grupos', route: '/app/services-groups', icon: 'hub', roles: ['ADMIN'] },
-  { label: 'Usuarios', route: '/app/users', icon: 'group', roles: ['ADMIN'] },
-  { label: 'Picking IA', route: '/app/picking-ia', icon: 'grid_view', roles: ['ADMIN'] },
-];
+// const NAV_ITEMS: NavItem[] = [
+//   { label: 'Home', route: '/app/dashboard', icon: 'home' },
+//   { label: 'Warehouse 3D', route: '/app/warehouse-3d', icon: 'warehouse' },
+//   { label: 'Planes y precios', route: '/app/plans', icon: 'account_tree' },
+//   { label: 'Configurador de tarifas', route: '/app/tariff-configurator', icon: 'settings', roles: ['ADMIN'] },
+//   { label: 'Servicios y grupos', route: '/app/services-groups', icon: 'hub', roles: ['ADMIN'] },
+//   { label: 'Usuarios', route: '/app/users', icon: 'group', roles: ['ADMIN'] },
+//   { label: 'Picking IA', route: '/app/picking-ia', icon: 'grid_view', roles: ['ADMIN'] },
+// ];
 
 @Component({
   selector: 'app-sidebar',
   templateUrl: './sidebar.component.html',
-  imports: [SidebarNavItemComponent],
+  imports: [SidebarNavItemComponent, IconComponent],
   animations: [
     trigger('sidebarWidth', [
       state('expanded', style({ width: '240px' })),
@@ -30,20 +34,30 @@ const NAV_ITEMS: NavItem[] = [
 export class SidebarComponent {
   private readonly authStore = inject(AuthStore);
 
-  isExpanded = signal(true);
   forceCollapsed = input<boolean>(false);
-  logout = output<void>();  
+  logout = output<void>();
+
+  private isExpanded = signal(true);
 
   isCollapsed = computed(() => this.forceCollapsed() || !this.isExpanded());
 
-  visibleNavItems = computed(() => {
-    const role = this.authStore.user()?.role;
-    return NAV_ITEMS.filter(item =>
-      !item.roles || (role && item.roles.includes(role))
+  visibleEntries = computed<NavEntry[]>(() => {
+    const role = this.authStore.user()?.role as UserRole | undefined;
+    return NAV_CONFIG.filter(entry =>
+      !entry.roles || (role && entry.roles.includes(role))
     );
   });
 
   toggleExpanded(): void {
     this.isExpanded.update(v => !v);
+  }
+
+  // type helpers для шаблону
+  asItem(entry: NavEntry): NavItem {
+    return entry as NavItem;
+  }
+
+  asDivider(entry: NavEntry): NavDivider {
+    return entry as NavDivider;
   }
 }

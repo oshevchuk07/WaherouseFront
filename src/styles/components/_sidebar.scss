@@ -1,0 +1,32 @@
+.nav-item {
+  @apply flex items-center gap-3 px-3 py-2.5 rounded-lg
+         text-gray-400 hover:bg-gray-700 hover:text-white
+         transition-colors duration-150 cursor-pointer;
+
+  &--collapsed {
+    @apply justify-center px-0;
+  }
+
+  &--active-parent {
+    @apply text-white bg-gray-800;
+  }
+}
+
+.nav-item__label {
+  @apply text-sm font-medium whitespace-nowrap overflow-hidden;
+}
+
+// routerLinkActive додає цей клас
+.active-nav-item {
+  @apply bg-gray-700 text-white;
+}
+
+.nav-child {
+  @apply block px-3 py-1.5 rounded-md text-sm text-gray-400
+         hover:text-white hover:bg-gray-700/50
+         transition-colors duration-150;
+}
+
+.active-nav-child {
+  @apply text-blue-400 bg-blue-500/10;
+}

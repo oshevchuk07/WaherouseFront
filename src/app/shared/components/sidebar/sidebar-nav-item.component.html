@@ -1,0 +1,38 @@
+@if (!hasChildren()) {
+<a [routerLink]="item().route" routerLinkActive="active-nav-item" [routerLinkActiveOptions]="{ exact: false }"
+  class="nav-item" [class.nav-item--collapsed]="!expanded()">
+  <app-icon [name]="item().icon" [size]="20" cssClass="shrink-0" />
+  @if (expanded()) {
+  <span class="nav-item__label">{{ item().label }}</span>
+  }
+</a>
+}
+
+<!-- З дочірніми -->
+@if (hasChildren()) {
+<div>
+  <!-- Parent trigger -->
+  <button (click)="toggleOpen()" class="nav-item w-full" [class.nav-item--active-parent]="isChildActive()"
+    [class.nav-item--collapsed]="!expanded()">
+    <app-icon [name]="item().icon" [size]="20" cssClass="shrink-0" />
+
+    @if (expanded()) {
+    <span class="nav-item__label flex-1 text-left">{{ item().label }}</span>
+    <app-icon name="chevron-down" [size]="16" cssClass="shrink-0 transition-transform duration-200"
+      [class.rotate-180]="isOpen()" />
+    }
+  </button>
+
+  <!-- Children -->
+  <div [@expandChildren]="isOpen() && expanded() ? 'open' : 'closed'" class="overflow-hidden">
+    <div class="mt-1 ml-3 pl-3 border-l border-gray-700 flex flex-col gap-0.5">
+      @for (child of item().children; track child.route) {
+      <a [routerLink]="child.route" routerLinkActive="active-nav-child" [routerLinkActiveOptions]="{ exact: true }"
+        class="nav-child">
+        {{ child.label }}
+      </a>
+      }
+    </div>
+  </div>
+</div>
+}
