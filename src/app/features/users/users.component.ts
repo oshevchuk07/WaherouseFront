@@ -1,6 +1,184 @@
-import { Component } from "@angular/core";
+import { Component, inject, OnInit } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { MatTableModule } from '@angular/material/table';
+import { MatSortModule } from '@angular/material/sort';
+import { UsersStore } from './users.store';
+import { User } from '../../core/models/user.model';
 
 @Component({
-  template: ''
+  selector: 'app-users',
+  standalone: true,
+  imports: [FormsModule, MatTableModule, MatSortModule],
+  providers: [UsersStore],
+  template: `
+    <div class="flex flex-col gap-6">
+
+      <!-- Header -->
+      <div class="flex items-center justify-between">
+        <h1 class="text-2xl font-semibold text-gray-800">Usuarios</h1>
+        <button
+          class="flex items-center gap-2 bg-gray-800 hover:bg-gray-700 text-white
+                 text-sm font-medium px-4 py-2 rounded-lg transition-colors"
+        >
+          <span class="material-icons text-base">add</span>
+          Añadir nuevo
+        </button>
+      </div>
+
+      <!-- Search -->
+      <div class="relative max-w-sm">
+        <span class="material-icons absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 text-lg">
+          search
+        </span>
+        <input
+          type="text"
+          placeholder="Buscar usuario..."
+          [ngModel]="store.search()"
+          (ngModelChange)="store.setSearch($event)"
+          class="w-full pl-10 pr-4 py-2 bg-white border border-gray-200 rounded-lg
+                 text-sm text-gray-700 outline-none focus:border-blue-400 transition-colors"
+        />
+      </div>
+
+      <!-- Error -->
+      @if (store.error()) {
+        <div class="px-4 py-3 rounded-lg bg-red-50 border border-red-200 text-red-600 text-sm">
+          {{ store.error() }}
+        </div>
+      }
+
+      <!-- Table -->
+      <div class="bg-white rounded-xl border border-gray-200 overflow-hidden">
+
+        @if (store.loading()) {
+          <div class="flex items-center justify-center py-16 text-gray-400 text-sm gap-2">
+            <span class="material-icons animate-spin text-base">refresh</span>
+            Cargando...
+          </div>
+        } @else {
+          <table mat-table [dataSource]="store.filteredUsers()" class="w-full">
+
+            <!-- Email -->
+            <ng-container matColumnDef="email">
+              <th mat-header-cell *matHeaderCellDef
+                class="text-xs font-medium text-gray-500 uppercase tracking-wide px-6 py-3">
+                Correo electrónico
+              </th>
+              <td mat-cell *matCellDef="let user" class="px-6 py-4 text-sm text-gray-700">
+                {{ user.email }}
+              </td>
+            </ng-container>
+
+            <!-- Name -->
+            <ng-container matColumnDef="name">
+              <th mat-header-cell *matHeaderCellDef
+                class="text-xs font-medium text-gray-500 uppercase tracking-wide px-6 py-3">
+                Nombre
+              </th>
+              <td mat-cell *matCellDef="let user" class="px-6 py-4 text-sm text-gray-700">
+                {{ fullName(user) }}
+              </td>
+            </ng-container>
+
+            <!-- Role -->
+            <ng-container matColumnDef="role">
+              <th mat-header-cell *matHeaderCellDef
+                class="text-xs font-medium text-gray-500 uppercase tracking-wide px-6 py-3">
+                Role
+              </th>
+              <td mat-cell *matCellDef="let user" class="px-6 py-4">
+                <span class="text-xs font-medium px-2 py-1 rounded-full"
+                  [class]="user.role === 'ADMIN'
+                    ? 'bg-purple-100 text-purple-700'
+                    : 'bg-gray-100 text-gray-600'">
+                  {{ user.role }}
+                </span>
+              </td>
+            </ng-container>
+
+            <!-- Plan -->
+            <ng-container matColumnDef="plan">
+              <th mat-header-cell *matHeaderCellDef
+                class="text-xs font-medium text-gray-500 uppercase tracking-wide px-6 py-3">
+                Plan
+              </th>
+              <td mat-cell *matCellDef="let user" class="px-6 py-4 text-sm text-gray-500">
+                {{ user.plan?.name ?? '—' }}
+              </td>
+            </ng-container>
+
+            <!-- Payment type -->
+            <ng-container matColumnDef="paymentType">
+              <th mat-header-cell *matHeaderCellDef
+                class="text-xs font-medium text-gray-500 uppercase tracking-wide px-6 py-3">
+                Período de pago
+              </th>
+              <td mat-cell *matCellDef="let user" class="px-6 py-4 text-sm text-gray-500">
+                {{ user.paymentType === 'MONTHLY' ? 'Mensual' : 'Anual' }}
+              </td>
+            </ng-container>
+
+            <!-- Active -->
+            <ng-container matColumnDef="active">
+              <th mat-header-cell *matHeaderCellDef
+                class="text-xs font-medium text-gray-500 uppercase tracking-wide px-6 py-3">
+                Activo
+              </th>
+              <td mat-cell *matCellDef="let user" class="px-6 py-4">
+                @if (user.isActive) {
+                  <span class="material-icons text-emerald-500 text-xl">check_circle</span>
+                } @else {
+                  <span class="material-icons text-gray-300 text-xl">cancel</span>
+                }
+              </td>
+            </ng-container>
+
+            <!-- Actions -->
+            <ng-container matColumnDef="actions">
+              <th mat-header-cell *matHeaderCellDef class="px-6 py-3"></th>
+              <td mat-cell *matCellDef="let user" class="px-6 py-4">
+                <button
+                  class="text-gray-400 hover:text-gray-700 transition-colors"
+                  title="Editar"
+                >
+                  <span class="material-icons text-lg">edit</span>
+                </button>
+              </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="columns"
+              class="bg-gray-50 border-b border-gray-200"></tr>
+            <tr mat-row *matRowDef="let row; columns: columns;"
+              class="border-b border-gray-100 hover:bg-gray-50 transition-colors"></tr>
+
+          </table>
+
+          @if (store.filteredUsers().length === 0) {
+            <div class="py-12 text-center text-gray-400 text-sm">
+              No se encontraron usuarios
+            </div>
+          }
+        }
+      </div>
+
+      <!-- Footer count -->
+      <p class="text-xs text-gray-400">
+        Total: {{ store.totalCount() }} usuarios
+      </p>
+
+    </div>
+  `,
 })
-export class UsersComponent { }
+export class UsersComponent implements OnInit {
+  readonly store = inject(UsersStore);
+
+  readonly columns = ['email', 'name', 'role', 'plan', 'paymentType', 'active', 'actions'];
+
+  ngOnInit(): void {
+    this.store.loadUsers();
+  }
+
+  fullName(user: User): string {
+    return [user.firstName, user.lastName].filter(Boolean).join(' ') || '—';
+  }
+}
