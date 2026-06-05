@@ -43,7 +43,7 @@ export const routes: Routes = [
       },
       {
         path: 'plans',
-        loadComponent: () => import('./features/plans/plans.component').then(c => c.PlansComponent)
+        loadChildren: () => import('./features/plans/plans.routes').then(c => c.PLANS_ROUTES)
       },
       {
         path: '',
