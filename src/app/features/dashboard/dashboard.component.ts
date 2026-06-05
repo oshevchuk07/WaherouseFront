@@ -1,5 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { NotificationService } from '../../core/notifications/notification.service';
+import { IconComponent } from "../../shared/components/icons/icons.component";
 
 @Component({
   selector: 'app-dashboard',
@@ -9,8 +10,13 @@ import { NotificationService } from '../../core/notifications/notification.servi
       <h1 class="text-2xl font-semibold text-gray-800">Home</h1>
       <p class="text-gray-500 text-sm">Dashboard — en construcción</p>
       <button (click)="submit()">Sucess</button>
+
+      <p>
+        <app-icon name="Add_light" />
+      </p>
     </div>
   `,
+  imports: [IconComponent],
 })
 export class DashboardComponent {
   private readonly notify = inject(NotificationService);
