@@ -1,0 +1,7 @@
+@layer components {
+  .ui-page-title  { @apply text-2xl font-semibold text-gray-800; }
+  .ui-section-title { @apply text-lg font-medium text-gray-700; }
+  .ui-label-text  { @apply text-sm font-medium text-gray-300; }
+  .ui-muted-text  { @apply text-sm text-gray-500; }
+  .ui-hint-text   { @apply text-xs text-gray-500; }
+}

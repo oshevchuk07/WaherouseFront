@@ -1,0 +1,199 @@
+@layer components {
+
+  // ─── Field wrapper (label + input + error) ───────────────────────
+  .ui-field {
+    @apply flex flex-col gap-1.5;
+
+    .ui-label {
+      @apply text-sm font-medium text-gray-300;
+    }
+
+    .ui-error {
+      @apply text-xs text-red-400 mt-0.5;
+    }
+
+    // якщо поле в стані помилки — підсвічуємо border
+    &.has-error {
+      .ui-input,
+      .ui-textarea,
+      .ui-select {
+        @apply border-red-500 focus:ring-red-500;
+      }
+    }
+  }
+
+  // ─── Input ───────────────────────────────────────────────────────
+  .ui-input {
+    @apply w-full bg-gray-800 border border-gray-700 rounded-lg
+           px-3 text-sm text-white placeholder-gray-500
+           outline-none transition-colors
+           focus:border-blue-500 focus:ring-1 focus:ring-blue-500
+           disabled:opacity-50 disabled:cursor-not-allowed;
+    height: var(--ui-height);
+  }
+
+  // ─── Textarea ────────────────────────────────────────────────────
+  .ui-textarea {
+    @apply w-full bg-gray-800 border border-gray-700 rounded-lg
+           px-3 py-2 text-sm text-white placeholder-gray-500
+           outline-none transition-colors resize-none
+           focus:border-blue-500 focus:ring-1 focus:ring-blue-500
+           disabled:opacity-50 disabled:cursor-not-allowed;
+  }
+
+  // ─── Select ──────────────────────────────────────────────────────
+  .ui-select {
+    @apply w-full bg-gray-800 border border-gray-700 rounded-lg
+           px-3 text-sm text-white
+           outline-none transition-colors cursor-pointer
+           focus:border-blue-500 focus:ring-1 focus:ring-blue-500
+           disabled:opacity-50 disabled:cursor-not-allowed;
+    height: var(--ui-height);
+
+    option {
+      @apply bg-gray-800 text-white;
+    }
+  }
+
+  // ─── Buttons ─────────────────────────────────────────────────────
+  .ui-btn {
+    @apply inline-flex items-center justify-center gap-2
+           px-4 py-2 rounded-lg text-sm font-medium
+           transition-colors cursor-pointer
+           disabled:opacity-50 disabled:cursor-not-allowed;
+    height: var(--ui-height);
+  }
+
+  .ui-btn-primary {
+    @extend .ui-btn;
+    @apply bg-blue-600 hover:bg-blue-500 text-white;
+  }
+
+  .ui-btn-secondary {
+    @extend .ui-btn;
+    @apply bg-gray-700 hover:bg-gray-600 text-white;
+  }
+
+  .ui-btn-danger {
+    @extend .ui-btn;
+    @apply bg-red-700 hover:bg-red-600 text-white;
+  }
+
+  .ui-btn-ghost {
+    @extend .ui-btn;
+    @apply bg-transparent hover:bg-gray-700 text-gray-400 hover:text-white;
+  }
+
+  .ui-btn-sm {
+    @apply px-3 py-1.5 text-xs;
+    height: 30px;
+  }
+
+  .ui-btn-lg {
+    @apply px-6 py-3 text-base;
+    height: 46px;
+  }
+
+  // ─── Checkbox ────────────────────────────────────────────────────
+  .ui-checkbox {
+    @apply flex items-center gap-2 cursor-pointer select-none;
+
+    input[type="checkbox"] {
+      appearance: none;
+      -webkit-appearance: none;
+      width: 16px;
+      height: 16px;
+      min-width: 16px;
+      @apply border border-gray-600 rounded bg-gray-800
+             cursor-pointer transition-colors
+             grid place-content-center;
+
+      &::before {
+        content: "";
+        width: 9px;
+        height: 9px;
+        border-radius: 2px;
+        background-color: transparent;
+        transition: background-color 120ms ease-in-out;
+      }
+
+      &:checked {
+        @apply border-blue-500;
+
+        &::before {
+          @apply bg-blue-500;
+        }
+      }
+
+      &:focus-visible {
+        @apply ring-2 ring-blue-500 ring-offset-1 ring-offset-gray-900;
+      }
+
+      &:disabled {
+        @apply opacity-50 cursor-not-allowed;
+      }
+    }
+
+    span {
+      @apply text-sm text-gray-300;
+    }
+  }
+
+  // ─── Toggle ──────────────────────────────────────────────────────
+  .ui-toggle {
+    @apply relative inline-flex items-center cursor-pointer;
+
+    input[type="checkbox"] {
+      @apply sr-only;
+
+      & + span {
+        @apply relative w-9 h-5 bg-gray-700 rounded-full
+               transition-colors;
+
+        &::after {
+          content: "";
+          @apply absolute top-0.5 left-0.5 w-4 h-4
+                 bg-white rounded-full transition-transform;
+        }
+      }
+
+      &:checked + span {
+        @apply bg-blue-600;
+
+        &::after {
+          @apply translate-x-4;
+        }
+      }
+
+      &:disabled + span {
+        @apply opacity-50 cursor-not-allowed;
+      }
+    }
+  }
+
+  // ─── Badge ───────────────────────────────────────────────────────
+  .ui-badge {
+    @apply inline-flex items-center px-2 py-0.5
+           text-xs font-medium rounded-full;
+  }
+
+  .ui-badge-success { @extend .ui-badge; @apply bg-emerald-900/50 text-emerald-400; }
+  .ui-badge-error   { @extend .ui-badge; @apply bg-red-900/50 text-red-400; }
+  .ui-badge-warning { @extend .ui-badge; @apply bg-amber-900/50 text-amber-400; }
+  .ui-badge-info    { @extend .ui-badge; @apply bg-blue-900/50 text-blue-400; }
+  .ui-badge-neutral { @extend .ui-badge; @apply bg-gray-700 text-gray-300; }
+
+  // ─── Card ────────────────────────────────────────────────────────
+  .ui-card {
+    @apply bg-white rounded-xl border border-gray-200 overflow-hidden;
+  }
+
+  .ui-card-dark {
+    @apply bg-gray-900 rounded-xl border border-gray-800;
+  }
+
+  // ─── Divider ─────────────────────────────────────────────────────
+  .ui-divider {
+    @apply border-t border-gray-700 my-4;
+  }
+}
