@@ -1,5 +1,7 @@
 @use 'tailwindcss';
 
+@variant dark (&:where(.dark, .dark *));
+
 @import 'styles/variables';
 @import 'styles/base';
 @import 'styles/components';

@@ -1,5 +1,4 @@
 @layer components {
-
   // ─── Field wrapper (label + input + error) ───────────────────────
   .ui-field {
     @apply flex flex-col gap-1.5;
@@ -24,11 +23,11 @@
 
   // ─── Input ───────────────────────────────────────────────────────
   .ui-input {
-    @apply w-full bg-gray-800 border border-gray-700 rounded-lg
-           px-3 text-sm text-white placeholder-gray-500
-           outline-none transition-colors
-           focus:border-blue-500 focus:ring-1 focus:ring-blue-500
-           disabled:opacity-50 disabled:cursor-not-allowed;
+    @apply w-full border rounded-lg px-3 text-sm outline-none transition-colors
+         bg-white border-gray-300 text-gray-900 placeholder-gray-400
+         dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:placeholder-gray-500
+         focus:border-blue-500 focus:ring-1 focus:ring-blue-500
+         disabled:opacity-50 disabled:cursor-not-allowed;
     height: var(--ui-height);
   }
 
@@ -98,7 +97,7 @@
   .ui-checkbox {
     @apply flex items-center gap-2 cursor-pointer select-none;
 
-    input[type="checkbox"] {
+    input[type='checkbox'] {
       appearance: none;
       -webkit-appearance: none;
       width: 16px;
@@ -109,7 +108,7 @@
              grid place-content-center;
 
       &::before {
-        content: "";
+        content: '';
         width: 9px;
         height: 9px;
         border-radius: 2px;
@@ -143,7 +142,7 @@
   .ui-toggle {
     @apply relative inline-flex items-center cursor-pointer;
 
-    input[type="checkbox"] {
+    input[type='checkbox'] {
       @apply sr-only;
 
       & + span {
@@ -151,7 +150,7 @@
                transition-colors;
 
         &::after {
-          content: "";
+          content: '';
           @apply absolute top-0.5 left-0.5 w-4 h-4
                  bg-white rounded-full transition-transform;
         }
@@ -177,11 +176,26 @@
            text-xs font-medium rounded-full;
   }
 
-  .ui-badge-success { @extend .ui-badge; @apply bg-emerald-900/50 text-emerald-400; }
-  .ui-badge-error   { @extend .ui-badge; @apply bg-red-900/50 text-red-400; }
-  .ui-badge-warning { @extend .ui-badge; @apply bg-amber-900/50 text-amber-400; }
-  .ui-badge-info    { @extend .ui-badge; @apply bg-blue-900/50 text-blue-400; }
-  .ui-badge-neutral { @extend .ui-badge; @apply bg-gray-700 text-gray-300; }
+  .ui-badge-success {
+    @extend .ui-badge;
+    @apply bg-emerald-900/50 text-emerald-400;
+  }
+  .ui-badge-error {
+    @extend .ui-badge;
+    @apply bg-red-900/50 text-red-400;
+  }
+  .ui-badge-warning {
+    @extend .ui-badge;
+    @apply bg-amber-900/50 text-amber-400;
+  }
+  .ui-badge-info {
+    @extend .ui-badge;
+    @apply bg-blue-900/50 text-blue-400;
+  }
+  .ui-badge-neutral {
+    @extend .ui-badge;
+    @apply bg-gray-700 text-gray-300;
+  }
 
   // ─── Card ────────────────────────────────────────────────────────
   .ui-card {
