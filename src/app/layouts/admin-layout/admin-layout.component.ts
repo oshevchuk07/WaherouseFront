@@ -3,11 +3,12 @@ import { RouterOutlet } from '@angular/router';
 import { SidebarComponent } from '../../shared/components/sidebar/sidebar.component';
 import { AuthStore } from '../../core/auth/auth.store';
 import { TopbarComponent } from '../../shared/components/topbar/topbar';
+import { NotificationsComponent } from "../../shared/components/notifications/notifications.component";
 
 @Component({
   selector: 'app-admin-layout',
   standalone: true,
-  imports: [RouterOutlet, SidebarComponent, TopbarComponent],
+  imports: [RouterOutlet, SidebarComponent, TopbarComponent, NotificationsComponent],
   template: `
     <div class="flex h-screen overflow-hidden bg-gray-50">
       <app-sidebar (onLogout)="authStore.logout()" />
@@ -20,6 +21,8 @@ import { TopbarComponent } from '../../shared/components/topbar/topbar';
         </main>
       </div>
     </div>
+
+    <app-notifications />
   `,
 })
 export class AdminLayoutComponent {

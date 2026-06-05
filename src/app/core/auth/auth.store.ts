@@ -57,7 +57,9 @@ export const AuthStore = signalStore(
         )
       )
     ),
-
+    setUser(user: AuthUser): void {
+      patchState(store, { user });
+    },
     logout() {
       authService.logout();
       patchState(store, initialState);

@@ -1,11 +1,13 @@
 import { Component, input } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
+import { UserRole } from '../../../core/models/user.model';
 
 
 export interface NavItem {
   label: string;
   route: string;
   icon: string;
+  roles?: UserRole[];
 }
 
 @Component({
