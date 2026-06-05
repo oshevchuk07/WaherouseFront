@@ -1,6 +1,9 @@
 import { Routes } from '@angular/router';
 import { authGuard } from './core/auth/auth.guard';
 import { roleGuard } from './core/auth/role.guard';
+import { LayoutConfig } from './core/services/layout.service';
+
+const layout = (config: Partial<LayoutConfig>) => ({ layout: config })
 
 export const routes: Routes = [
   {
@@ -26,6 +29,12 @@ export const routes: Routes = [
       {
         path: 'dashboard',
         loadComponent: () => import('./features/dashboard/dashboard.component').then(c => c.DashboardComponent)
+      },
+      {
+        path: 'warehouse-3d',
+        data: layout({ topbarTransparent: true, sidebarCollapsed: true }),
+        loadComponent: () =>
+          import('./features/warehouse-3d/warehouse-3d.component').then(m => m.Warehouse3dComponent),
       },
       {
         path: 'users',

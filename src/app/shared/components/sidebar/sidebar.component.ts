@@ -1,4 +1,4 @@
-import { Component, computed, inject, output, signal } from "@angular/core";
+import { Component, computed, inject, input, output, signal } from "@angular/core";
 import { trigger, state, style, transition, animate } from '@angular/animations';
 import { NavItem, SidebarNavItemComponent } from "./sidebar-nav-item.component";
 import { AuthStore } from "../../../core/auth/auth.store";
@@ -31,7 +31,10 @@ export class SidebarComponent {
   private readonly authStore = inject(AuthStore);
 
   isExpanded = signal(true);
-  logout = output<void>();
+  forceCollapsed = input<boolean>(false);
+  logout = output<void>();  
+
+  isCollapsed = computed(() => this.forceCollapsed() || !this.isExpanded());
 
   visibleNavItems = computed(() => {
     const role = this.authStore.user()?.role;

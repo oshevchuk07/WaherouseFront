@@ -6,11 +6,20 @@ import { ThemeService } from '../../../core/services/theme.service';
   selector: 'app-topbar',
   standalone: true,
   template: `
-    <header class="h-14 bg-white dark:bg-gray-900
-                   border-b border-gray-200 dark:border-gray-800
-                   flex items-center justify-end gap-4 px-6 shrink-0
-                   transition-colors duration-200">
-
+    <header
+      class="h-14 flex items-center justify-end gap-4 px-6 shrink-0
+             transition-all duration-200 z-10"
+      [class.bg-white]="!transparent()"
+      [class.dark:bg-gray-900]="!transparent()"
+      [class.border-b]="!transparent()"
+      [class.border-gray-200]="!transparent()"
+      [class.dark:border-gray-800]="!transparent()"
+      [class.bg-transparent]="transparent()"
+      [class.absolute]="transparent()"
+      [class.top-0]="transparent()"
+      [class.right-0]="transparent()"
+      [class.left-0]="transparent()"
+    >
       <!-- Theme toggle -->
       <button
         (click)="themeService.toggle()"
@@ -39,5 +48,6 @@ import { ThemeService } from '../../../core/services/theme.service';
 })
 export class TopbarComponent {
   user = input<AuthUser | null>(null);
+  transparent = input<boolean>(false);
   readonly themeService = inject(ThemeService);
 }

@@ -1,4 +1,4 @@
-<aside [@sidebarWidth]="isExpanded() ? 'expanded' : 'collapsed'"
+<aside [@sidebarWidth]="!isCollapsed() ? 'expanded' : 'collapsed'"
   class="h-screen bg-gray-900 flex flex-col overflow-hidden shrink-0 border-r border-gray-800">
   <!-- Logo -->
   <div class="flex items-center gap-3 px-4 py-5 border-b border-gray-800 shrink-0">
