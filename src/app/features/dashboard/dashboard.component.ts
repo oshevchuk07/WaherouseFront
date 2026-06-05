@@ -1,6 +1,13 @@
-import { Component } from "@angular/core";
+import { Component } from '@angular/core';
 
 @Component({
-  template: ''
+  selector: 'app-dashboard',
+  standalone: true,
+  template: `
+    <div class="flex flex-col gap-2">
+      <h1 class="text-2xl font-semibold text-gray-800">Home</h1>
+      <p class="text-gray-500 text-sm">Dashboard — en construcción</p>
+    </div>
+  `,
 })
-export class DashboardComponent { }
+export class DashboardComponent {}

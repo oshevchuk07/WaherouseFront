@@ -1,14 +1,13 @@
 import { inject } from "@angular/core";
 import { AuthUser } from "../models/user.model"
 import { patchState, signalStore, withMethods, withState } from "@ngrx/signals";
-import { RxMethod, rxMethod } from "@ngrx/signals/rxjs-interop"
+import { rxMethod } from "@ngrx/signals/rxjs-interop"
 import { AuthService, LoginPayload } from "./auth.service";
 import { Router } from "@angular/router";
-import { pipe, of } from "rxjs";
-import { switchMap, tap, catchError } from 'rxjs/operators';
+import { switchMap } from 'rxjs/operators';
 import { tapResponse } from '@ngrx/operators';
 
-type AuthState = {
+interface AuthState {
   user: AuthUser | null;
   loading: boolean;
   error: string | null;
@@ -21,7 +20,7 @@ const initialState: AuthState = {
 }
 
 const getErrorMessage = (err: { status: number }): string =>
-  err.status === 401 ? 'Невірний email або пароль' : 'Помилка сервера. Спробуйте пізніше';
+  err.status === 401 ? 'Incorect email or password' : 'Server Error';
 
 
 export const AuthStore = signalStore(
