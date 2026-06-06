@@ -20,7 +20,7 @@ const initialState: AuthState = {
 }
 
 const getErrorMessage = (err: { status: number }): string =>
-  err.status === 401 ? 'Incorect email or password' : 'Server Error';
+  err.status === 401 ? 'Incorrect email or password' : 'Server Error';
 
 
 export const AuthStore = signalStore(
