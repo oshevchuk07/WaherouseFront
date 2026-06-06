@@ -7,17 +7,19 @@
 }
 
 <!-- Mobile sidebar -->
-<aside [@mobileSlide]="mobileOpen() ? 'open' : 'closed'" class="fixed top-0 left-0 h-screen w-[240px] bg-gray-900
-               border-r border-gray-800 flex flex-col z-40 overflow-hidden">
+<aside class="fixed top-0 left-0 h-screen w-60 bg-gray-900 border-r border-gray-800
+         flex flex-col z-40 transition-transform duration-250
+         ease-[cubic-bezier(0.4,0,0.2,1)]" [class.-translate-x-full]="!mobileOpen()"
+  [class.translate-x-0]="mobileOpen()">
   <ng-container *ngTemplateOutlet="sidebarContent" />
 </aside>
 }
 
 <!-- Tablet / Desktop sidebar -->
 @if (!bp.isMobile()) {
-<aside [@sidebarWidth]="isCollapsed() ? 'collapsed' : 'expanded'" class="h-screen bg-gray-900 flex flex-col overflow-hidden shrink-0
-               border-r border-gray-800 z-20" [class.relative]="bp.isDesktop()"
-  [class.absolute]="bp.isTablet() && !isCollapsed()">
+<aside class="sidebar-panel h-screen bg-gray-900 flex flex-col overflow-hidden
+         shrink-0 border-r border-gray-800 transition-[width] duration-250
+         ease-[cubic-bezier(0.4,0,0.2,1)]" [class.w-60]="!isCollapsed()" [class.w-16]="isCollapsed()">
   <ng-container *ngTemplateOutlet="sidebarContent" />
 </aside>
 
@@ -92,7 +94,7 @@
                    hover:bg-gray-700 hover:text-white transition-colors w-full">
       <!-- <app-icon name="chevron-left" [size]="18" cssClass="transition-transform duration-250"
         [class.rotate-180]="isCollapsed()" /> -->
-        <div>left</div>
+      <div>left</div>
     </button>
     }
   </div>

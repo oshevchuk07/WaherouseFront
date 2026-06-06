@@ -1,5 +1,4 @@
 import { Component, computed, effect, inject, input, output, signal } from "@angular/core";
-import { trigger, state, style, transition, animate } from '@angular/animations';
 import { SidebarNavItemComponent } from "./sidebar-nav-item.component";
 import { AuthStore } from "../../../core/auth/auth.store";
 import { NavDivider, NavEntry, NavItem } from "./sidebar.types";
@@ -13,24 +12,6 @@ import { NgTemplateOutlet } from "@angular/common";
   selector: 'app-sidebar',
   templateUrl: './sidebar.component.html',
   imports: [SidebarNavItemComponent, IconComponent, NgTemplateOutlet],
-  animations: [
-    // desctop/tablet
-    trigger('sidebarWidth', [
-      state('expanded', style({ width: '240px' })),
-      state('collapsed', style({ width: '64px' })),
-      transition('expanded <=> collapsed',
-        animate('250ms cubic-bezier(0.4, 0, 0.2, 1)')
-      ),
-    ]),
-    // mobile 
-    trigger('mobileSlide', [
-      state('open', style({ transform: 'translateX(0)' })),
-      state('closed', style({ transform: 'translateX(-100%)' })),
-      transition('open <=> closed',
-        animate('250ms cubic-bezier(0.4, 0, 0.2, 1)')
-      ),
-    ]),
-  ],
 })
 export class SidebarComponent {
   private readonly authStore = inject(AuthStore);
@@ -39,20 +20,18 @@ export class SidebarComponent {
   forceCollapsed = input<boolean>(false);
   logout = output<void>();
 
-  // десктоп стан
   private desktopExpanded = signal(true);
 
-  // мобільний стан
   mobileOpen = signal(false);
 
   isCollapsed = computed(() =>
     this.forceCollapsed() || !this.desktopExpanded()
   );
 
-  // показувати лейбли:
-  // desktop — залежить від collapsed
-  // tablet  — тільки якщо розгорнутий (overlay режим)
-  // mobile  — завжди показуємо (сайдбар повноширокий)
+  // Labels
+  // desktop — depends on collapsed
+  // tablet  — only if expanded (overlay mode)
+  // mobile  — Always
   showLabels = computed(() => {
     if (this.bp.isMobile()) return true;
     if (this.bp.isTablet()) return !this.isCollapsed();
@@ -60,16 +39,14 @@ export class SidebarComponent {
   });
 
   constructor() {
-    // при зміні breakpoint — скидаємо стани
+    // sidebar behaviour on different break points
     effect(() => {
       const bp = this.bp.breakpoint();
 
       if (bp === 'tablet') {
-        // планшет — завжди collapsed за замовчуванням
         this.desktopExpanded.set(false);
       }
       if (bp === 'desktop') {
-        // десктоп — розгортаємо
         this.desktopExpanded.set(true);
         this.mobileOpen.set(false);
       }
@@ -79,7 +56,6 @@ export class SidebarComponent {
     });
   }
 
-  // публічний метод — topbar викликає для відкриття на мобільному
   openMobile(): void {
     this.mobileOpen.set(true);
   }
@@ -96,7 +72,6 @@ export class SidebarComponent {
     this.desktopExpanded.update(v => !v);
   }
 
-  // закриваємо мобільний після кліку на пункт меню
   onNavItemClick(): void {
     if (this.bp.isMobile()) {
       this.mobileOpen.set(false);
