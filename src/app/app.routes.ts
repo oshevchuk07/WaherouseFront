@@ -2,12 +2,14 @@ import { Routes } from '@angular/router';
 import { authGuard } from './core/auth/auth.guard';
 import { roleGuard } from './core/auth/role.guard';
 import { LayoutConfig } from './core/services/layout.service';
+import { loginGuard } from './core/auth/login.guard';
 
 const layout = (config: Partial<LayoutConfig>) => ({ layout: config })
 
 export const routes: Routes = [
   {
     path: '',
+    canActivate: [loginGuard],
     loadComponent: () => import('./layouts/auth-layout/auth-layout.component').then(c => c.AuthLayoutComponent),
     children: [
       {
