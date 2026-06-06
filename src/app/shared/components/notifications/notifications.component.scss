@@ -1,0 +1,30 @@
+.notification-enter {
+  animation: slideIn 200ms ease-out forwards;
+}
+
+/* Анімація зникнення з DOM (:leave аналог) */
+.notification-leave {
+  animation: slideOut 150ms ease-in forwards;
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateX(100%);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideOut {
+  from {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateX(100%);
+  }
+}

@@ -1,0 +1,15 @@
+<div class="fixed bottom-6 right-6 z-50 flex flex-col gap-2 max-w-sm w-full pointer-events-none">
+  @for (n of service.notifications(); track n.id) {
+  <div animate.enter="notification-enter" animate.leave="notification-leave" class="flex items-start gap-3 px-4 py-3 rounded-xl border backdrop-blur-sm
+                 shadow-lg pointer-events-auto cursor-default" [class]="styles[n.type]">
+    <span class="material-icons text-xl shrink-0 mt-0.5" [class]="iconStyles[n.type]">
+      {{ icons[n.type] }}
+    </span>
+    <span class="text-sm flex-1 leading-relaxed">{{ n.message }}</span>
+    <button (click)="service.dismiss(n.id)"
+      class="material-icons text-lg shrink-0 opacity-60 hover:opacity-100 transition-opacity">
+      close
+    </button>
+  </div>
+  }
+</div>
