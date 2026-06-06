@@ -7,22 +7,22 @@ import { loginGuard } from './core/auth/login.guard';
 const layout = (config: Partial<LayoutConfig>) => ({ layout: config })
 
 export const routes: Routes = [
+  // Public routes
   {
     path: '',
+    loadComponent: () => import('./layouts/landing-layout/landing-layout.component').then(c => c.LandingLayout),
+    loadChildren: () => import('./features/landing/landing.routes').then(c => c.LANDING_ROUTES)
+  },
+
+  // Auth
+  {
+    path: 'login',
+    title: 'Sign in',
     canActivate: [loginGuard],
     loadComponent: () => import('./layouts/auth-layout/auth-layout.component').then(c => c.AuthLayoutComponent),
-    children: [
-      {
-        path: 'login',
-        loadComponent: () => import('./features/auth/login.component').then(c => c.LoginComponent)
-      },
-      {
-        path: '',
-        redirectTo: 'login',
-        pathMatch: 'full'
-      }
-    ]
+    loadChildren: () => import('./features/auth/login.routes').then(c => c.AUTH_ROUTES)
   },
+  // private
   {
     path: 'app',
     loadComponent: () => import('./layouts/admin-layout/admin-layout.component').then(c => c.AdminLayoutComponent),
@@ -30,6 +30,7 @@ export const routes: Routes = [
     children: [
       {
         path: 'dashboard',
+        title: 'Dashboard',
         loadComponent: () => import('./features/dashboard/dashboard.component').then(c => c.DashboardComponent)
       },
       {
@@ -56,6 +57,9 @@ export const routes: Routes = [
   },
   {
     path: '**',
-    redirectTo: ''
-  }
+    title: 'Page not found',
+    loadComponent: () =>
+      import('./layouts/landing-layout/landing-layout.component').then(c => c.LandingLayout),
+    loadChildren: () => import('./features/not-found/not-found.component').then(c => c.NotFoundComponent),
+  },
 ];
