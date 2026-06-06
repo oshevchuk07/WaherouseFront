@@ -1,5 +1,5 @@
 import { Component, computed, effect, inject, input, output, signal } from "@angular/core";
-import { SidebarNavItemComponent } from "./sidebar-nav-item.component";
+import { SidebarNavItemComponent } from "./sidebar-nav-item/sidebar-nav-item.component";
 import { AuthStore } from "../../../core/auth/auth.store";
 import { NavDivider, NavEntry, NavItem } from "./sidebar.types";
 import { NAV_CONFIG } from "./sidebar.config";

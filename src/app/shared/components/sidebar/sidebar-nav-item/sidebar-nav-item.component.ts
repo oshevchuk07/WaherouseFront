@@ -1,8 +1,8 @@
 import { Component, computed, inject, input, OnInit, output, signal } from '@angular/core';
 import { NavigationEnd, Router, RouterLink, RouterLinkActive } from '@angular/router';
-import { NavItem } from './sidebar.types';
+import { NavItem } from '../sidebar.types';
 import { animate, state, style, transition, trigger } from '@angular/animations';
-import { IconComponent } from "../icons/icons.component";
+import { IconComponent } from "../../icons/icons.component";
 import { filter } from 'rxjs';
 
 @Component({

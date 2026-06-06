@@ -3,8 +3,10 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve --port=4207",
-    "build": "ng build",
+    "start:dev": "ng serve --port=4207 --configuration development",
+    "start:prod": "ng serve --port=4207 --configuration production",
+    "build:prod": "ng build --configuration production",
+    "build:dev": "ng build --configuration development",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "lint": "ng lint",
