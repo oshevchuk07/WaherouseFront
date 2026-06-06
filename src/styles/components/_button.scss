@@ -1,0 +1,38 @@
+// ─── Buttons ─────────────────────────────────────────────────────
+.ui-btn {
+  @apply inline-flex items-center justify-center gap-2
+           px-4 py-2 rounded-lg text-sm font-medium
+           transition-colors cursor-pointer
+           disabled:opacity-50 disabled:cursor-not-allowed;
+  height: var(--ui-height);
+}
+
+.ui-btn-primary {
+  @extend .ui-btn;
+  @apply bg-blue-600 hover:bg-blue-500 text-white;
+}
+
+.ui-btn-secondary {
+  @extend .ui-btn;
+  @apply bg-gray-700 hover:bg-gray-600 text-white;
+}
+
+.ui-btn-danger {
+  @extend .ui-btn;
+  @apply bg-red-700 hover:bg-red-600 text-white;
+}
+
+.ui-btn-ghost {
+  @extend .ui-btn;
+  @apply bg-transparent hover:bg-gray-700 text-gray-400 hover:text-white;
+}
+
+.ui-btn-sm {
+  @apply px-3 py-1.5 text-xs;
+  height: 30px;
+}
+
+.ui-btn-lg {
+  @apply px-6 py-3 text-base;
+  height: 46px;
+}

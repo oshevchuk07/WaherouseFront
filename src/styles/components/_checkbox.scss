@@ -1,0 +1,44 @@
+// ─── Checkbox ────────────────────────────────────────────────────
+.ui-checkbox {
+  @apply flex items-center gap-2 cursor-pointer select-none;
+
+  input[type='checkbox'] {
+    appearance: none;
+    -webkit-appearance: none;
+    width: 16px;
+    height: 16px;
+    min-width: 16px;
+    @apply border border-gray-600 rounded bg-gray-800
+             cursor-pointer transition-colors
+             grid place-content-center;
+
+    &::before {
+      content: '';
+      width: 9px;
+      height: 9px;
+      border-radius: 2px;
+      background-color: transparent;
+      transition: background-color 120ms ease-in-out;
+    }
+
+    &:checked {
+      @apply border-blue-500;
+
+      &::before {
+        @apply bg-blue-500;
+      }
+    }
+
+    &:focus-visible {
+      @apply ring-2 ring-blue-500 ring-offset-1 ring-offset-gray-900;
+    }
+
+    &:disabled {
+      @apply opacity-50 cursor-not-allowed;
+    }
+  }
+
+  span {
+    @apply text-sm text-gray-300;
+  }
+}

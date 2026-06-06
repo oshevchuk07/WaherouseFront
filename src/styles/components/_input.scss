@@ -1,0 +1,32 @@
+// ─── Input ───────────────────────────────────────────────────────
+.ui-input {
+  @apply w-full border rounded-lg px-3 text-sm outline-none transition-colors
+         bg-white border-gray-300 text-gray-900 placeholder-gray-400
+         dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:placeholder-gray-500
+         focus:border-blue-500 focus:ring-1 focus:ring-blue-500
+         disabled:opacity-50 disabled:cursor-not-allowed;
+  height: var(--ui-height);
+}
+
+// ─── Textarea ────────────────────────────────────────────────────
+.ui-textarea {
+  @apply w-full bg-gray-800 border border-gray-700 rounded-lg
+           px-3 py-2 text-sm text-white placeholder-gray-500
+           outline-none transition-colors resize-none
+           focus:border-blue-500 focus:ring-1 focus:ring-blue-500
+           disabled:opacity-50 disabled:cursor-not-allowed;
+}
+
+// ─── Select ──────────────────────────────────────────────────────
+.ui-select {
+  @apply w-full bg-gray-800 border border-gray-700 rounded-lg
+           px-3 text-sm text-white
+           outline-none transition-colors cursor-pointer
+           focus:border-blue-500 focus:ring-1 focus:ring-blue-500
+           disabled:opacity-50 disabled:cursor-not-allowed;
+  height: var(--ui-height);
+
+  option {
+    @apply bg-gray-800 text-white;
+  }
+}

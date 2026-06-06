@@ -1,0 +1,26 @@
+// ─── Badge ───────────────────────────────────────────────────────
+.ui-badge {
+  @apply inline-flex items-center px-2 py-0.5
+           text-xs font-medium rounded-full;
+}
+
+.ui-badge-success {
+  @extend .ui-badge;
+  @apply bg-emerald-900/50 text-emerald-400;
+}
+.ui-badge-error {
+  @extend .ui-badge;
+  @apply bg-red-900/50 text-red-400;
+}
+.ui-badge-warning {
+  @extend .ui-badge;
+  @apply bg-amber-900/50 text-amber-400;
+}
+.ui-badge-info {
+  @extend .ui-badge;
+  @apply bg-blue-900/50 text-blue-400;
+}
+.ui-badge-neutral {
+  @extend .ui-badge;
+  @apply bg-gray-700 text-gray-300;
+}

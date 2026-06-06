@@ -1,0 +1,13 @@
+// ─── Card ────────────────────────────────────────────────────────
+.ui-card {
+  @apply bg-white rounded-xl border border-gray-200 overflow-hidden;
+}
+
+.ui-card-dark {
+  @apply bg-gray-900 rounded-xl border border-gray-800;
+}
+
+// ─── Divider ─────────────────────────────────────────────────────
+.ui-divider {
+  @apply border-t border-gray-700 my-4;
+}
