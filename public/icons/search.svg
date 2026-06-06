@@ -1,9 +1,0 @@
-<svg id="_Шар_2" data-name="Шар 2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
-  <g id="Capa_1" data-name="Capa 1">
-    <g>
-      <circle fill="none" stroke="currentColor" cx="6.5" cy="6.5" r="6"/>
-      <path fill="none" stroke="currentColor" stroke-linecap="round" d="m6.5,3.5c-.39,0-.78.08-1.15.23-.36.15-.69.37-.97.65-.28.28-.5.61-.65.97-.15.36-.23.75-.23,1.15"/>
-      <path fill="none" stroke="currentColor" stroke-linecap="round" d="m15.5,15.5l-3-3"/>
-    </g>
-  </g>
-</svg>

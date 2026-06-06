@@ -1,23 +1,60 @@
+<!-- eslint-disable @angular-eslint/template/interactive-supports-focus -->
+<!-- eslint-disable @angular-eslint/template/click-events-have-key-events -->
+<!-- Mobile overlay backdrop -->
+@if (bp.isMobile()) {
+@if (mobileOpen()) {
+<div class="fixed inset-0 bg-black/50 z-30 backdrop-blur-sm" (click)="closeMobile()"></div>
+}
+
+<!-- Mobile sidebar -->
+<aside [@mobileSlide]="mobileOpen() ? 'open' : 'closed'" class="fixed top-0 left-0 h-screen w-[240px] bg-gray-900
+               border-r border-gray-800 flex flex-col z-40 overflow-hidden">
+  <ng-container *ngTemplateOutlet="sidebarContent" />
+</aside>
+}
+
+<!-- Tablet / Desktop sidebar -->
+@if (!bp.isMobile()) {
 <aside [@sidebarWidth]="isCollapsed() ? 'collapsed' : 'expanded'" class="h-screen bg-gray-900 flex flex-col overflow-hidden shrink-0
-             border-r border-gray-800">
+               border-r border-gray-800 z-20" [class.relative]="bp.isDesktop()"
+  [class.absolute]="bp.isTablet() && !isCollapsed()">
+  <ng-container *ngTemplateOutlet="sidebarContent" />
+</aside>
+
+<!-- Tablet overlay backdrop -->
+@if (bp.isTablet() && !isCollapsed()) {
+<div class="fixed inset-0 bg-black/30 z-10" (click)="collapseTablet()"></div>
+}
+}
+
+<!-- Sidebar content template -->
+<ng-template #sidebarContent>
+
   <!-- Logo -->
   <div class="flex items-center gap-3 px-4 py-5 border-b border-gray-800 shrink-0">
-    <app-icon name="logo" [size]="28" cssClass="text-blue-400 shrink-0" />
-    @if (!isCollapsed()) {
+    <!-- <app-icon name="logo" [size]="28" cssClass="text-blue-400 shrink-0" /> -->
+    <div>logo</div>
+    @if (showLabels()) {
     <div class="leading-tight overflow-hidden">
       <div class="font-bold text-white text-sm whitespace-nowrap">WAREHOUSE</div>
       <div class="text-blue-400 font-normal text-xs tracking-widest">PLATFORM</div>
     </div>
+    }
+
+    <!-- Close button — mobile only -->
+    @if (bp.isMobile()) {
+    <button (click)="closeMobile()" class="ml-auto text-gray-400 hover:text-white transition-colors">
+      <!-- <app-icon name="close" [size]="20" /> -->
+      close
+    </button>
     }
   </div>
 
   <!-- Nav -->
   <nav class="flex-1 overflow-y-auto overflow-x-hidden px-2 py-4 flex flex-col gap-0.5">
     @for (entry of visibleEntries(); track $index) {
-
     @if (entry.type === 'divider') {
-    <!-- Divider -->
-    @if (!isCollapsed()) {
+    @if (showLabels()) {
     <div class="mx-2 mt-3 mb-1">
       @if (asDivider(entry).label) {
       <span class="text-xs font-medium text-gray-500 uppercase tracking-widest px-1">
@@ -33,26 +70,31 @@
     }
 
     @if (entry.type === 'item') {
-    <app-sidebar-nav-item [item]="asItem(entry)" [expanded]="!isCollapsed()" />
+    <app-sidebar-nav-item [item]="asItem(entry)" [expanded]="showLabels()" (clicked)="onNavItemClick()" />
     }
-
     }
   </nav>
 
   <!-- Footer -->
   <div class="border-t border-gray-800 px-2 py-3 flex flex-col gap-1 shrink-0">
     <button (click)="logout.emit()" class="nav-item w-full hover:!bg-red-900/40 hover:!text-red-400"
-      [class.nav-item--collapsed]="isCollapsed()">
-      <app-icon name="logout" [size]="20" cssClass="shrink-0" />
-      @if (!isCollapsed()) {
+      [class.nav-item--collapsed]="!showLabels()">
+      <!-- <app-icon name="logout" [size]="20" cssClass="shrink-0" /> -->
+      <div>logout</div>
+      @if (showLabels()) {
       <span class="nav-item__label">Cerrar sesión</span>
       }
     </button>
 
-    <button (click)="toggleExpanded()" class="flex items-center justify-center py-2 rounded-lg text-gray-500
-                 hover:bg-gray-700 hover:text-white transition-colors w-full">
-      <app-icon name="chevron-left" [size]="18" cssClass="transition-transform duration-250"
-        [class.rotate-180]="isCollapsed()" />
+    <!-- Toggle — тільки десктоп -->
+    @if (bp.isDesktop()) {
+    <button (click)="toggleDesktop()" class="flex items-center justify-center py-2 rounded-lg text-gray-500
+                   hover:bg-gray-700 hover:text-white transition-colors w-full">
+      <!-- <app-icon name="chevron-left" [size]="18" cssClass="transition-transform duration-250"
+        [class.rotate-180]="isCollapsed()" /> -->
+        <div>left</div>
     </button>
+    }
   </div>
-</aside>
+
+</ng-template>

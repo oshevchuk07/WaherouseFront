@@ -1,4 +1,4 @@
-import { Component, computed, inject, input, output, signal } from "@angular/core";
+import { Component, computed, effect, inject, input, output, signal } from "@angular/core";
 import { trigger, state, style, transition, animate } from '@angular/animations';
 import { SidebarNavItemComponent } from "./sidebar-nav-item.component";
 import { AuthStore } from "../../../core/auth/auth.store";
@@ -6,22 +6,15 @@ import { NavDivider, NavEntry, NavItem } from "./sidebar.types";
 import { NAV_CONFIG } from "./sidebar.config";
 import { UserRole } from "../../../core/models/user.model";
 import { IconComponent } from "../icons/icons.component";
-
-// const NAV_ITEMS: NavItem[] = [
-//   { label: 'Home', route: '/app/dashboard', icon: 'home' },
-//   { label: 'Warehouse 3D', route: '/app/warehouse-3d', icon: 'warehouse' },
-//   { label: 'Planes y precios', route: '/app/plans', icon: 'account_tree' },
-//   { label: 'Configurador de tarifas', route: '/app/tariff-configurator', icon: 'settings', roles: ['ADMIN'] },
-//   { label: 'Servicios y grupos', route: '/app/services-groups', icon: 'hub', roles: ['ADMIN'] },
-//   { label: 'Usuarios', route: '/app/users', icon: 'group', roles: ['ADMIN'] },
-//   { label: 'Picking IA', route: '/app/picking-ia', icon: 'grid_view', roles: ['ADMIN'] },
-// ];
+import { BreakpointService } from "../../../core/services/breakpoint.service";
+import { NgTemplateOutlet } from "@angular/common";
 
 @Component({
   selector: 'app-sidebar',
   templateUrl: './sidebar.component.html',
-  imports: [SidebarNavItemComponent, IconComponent],
+  imports: [SidebarNavItemComponent, IconComponent, NgTemplateOutlet],
   animations: [
+    // desctop/tablet
     trigger('sidebarWidth', [
       state('expanded', style({ width: '240px' })),
       state('collapsed', style({ width: '64px' })),
@@ -29,17 +22,86 @@ import { IconComponent } from "../icons/icons.component";
         animate('250ms cubic-bezier(0.4, 0, 0.2, 1)')
       ),
     ]),
+    // mobile 
+    trigger('mobileSlide', [
+      state('open', style({ transform: 'translateX(0)' })),
+      state('closed', style({ transform: 'translateX(-100%)' })),
+      transition('open <=> closed',
+        animate('250ms cubic-bezier(0.4, 0, 0.2, 1)')
+      ),
+    ]),
   ],
 })
 export class SidebarComponent {
   private readonly authStore = inject(AuthStore);
+  readonly bp = inject(BreakpointService);
 
   forceCollapsed = input<boolean>(false);
   logout = output<void>();
 
-  private isExpanded = signal(true);
+  // десктоп стан
+  private desktopExpanded = signal(true);
 
-  isCollapsed = computed(() => this.forceCollapsed() || !this.isExpanded());
+  // мобільний стан
+  mobileOpen = signal(false);
+
+  isCollapsed = computed(() =>
+    this.forceCollapsed() || !this.desktopExpanded()
+  );
+
+  // показувати лейбли:
+  // desktop — залежить від collapsed
+  // tablet  — тільки якщо розгорнутий (overlay режим)
+  // mobile  — завжди показуємо (сайдбар повноширокий)
+  showLabels = computed(() => {
+    if (this.bp.isMobile()) return true;
+    if (this.bp.isTablet()) return !this.isCollapsed();
+    return !this.isCollapsed();
+  });
+
+  constructor() {
+    // при зміні breakpoint — скидаємо стани
+    effect(() => {
+      const bp = this.bp.breakpoint();
+
+      if (bp === 'tablet') {
+        // планшет — завжди collapsed за замовчуванням
+        this.desktopExpanded.set(false);
+      }
+      if (bp === 'desktop') {
+        // десктоп — розгортаємо
+        this.desktopExpanded.set(true);
+        this.mobileOpen.set(false);
+      }
+      if (bp === 'mobile') {
+        this.mobileOpen.set(false);
+      }
+    });
+  }
+
+  // публічний метод — topbar викликає для відкриття на мобільному
+  openMobile(): void {
+    this.mobileOpen.set(true);
+  }
+
+  closeMobile(): void {
+    this.mobileOpen.set(false);
+  }
+
+  collapseTablet(): void {
+    this.desktopExpanded.set(false);
+  }
+
+  toggleDesktop(): void {
+    this.desktopExpanded.update(v => !v);
+  }
+
+  // закриваємо мобільний після кліку на пункт меню
+  onNavItemClick(): void {
+    if (this.bp.isMobile()) {
+      this.mobileOpen.set(false);
+    }
+  }
 
   visibleEntries = computed<NavEntry[]>(() => {
     const role = this.authStore.user()?.role as UserRole | undefined;
@@ -49,15 +111,13 @@ export class SidebarComponent {
   });
 
   toggleExpanded(): void {
-    this.isExpanded.update(v => !v);
+    if (this.bp.isMobile()) {
+      this.openMobile();
+    } else {
+      this.toggleDesktop();
+    }
   }
 
-  // type helpers для шаблону
-  asItem(entry: NavEntry): NavItem {
-    return entry as NavItem;
-  }
-
-  asDivider(entry: NavEntry): NavDivider {
-    return entry as NavDivider;
-  }
+  asItem(entry: NavEntry): NavItem { return entry as NavItem; }
+  asDivider(entry: NavEntry): NavDivider { return entry as NavDivider; }
 }

@@ -1,14 +1,14 @@
-import { Component, input, inject } from '@angular/core';
+import { Component, input, inject, output } from '@angular/core';
 import { AuthUser } from '../../../core/models/user.model';
 import { ThemeService } from '../../../core/services/theme.service';
+import { IconComponent } from "../icons/icons.component";
 
 @Component({
   selector: 'app-topbar',
   standalone: true,
   template: `
-    <header
-      class="h-14 flex items-center justify-end gap-4 px-6 shrink-0
-             transition-all duration-200 z-10"
+     <header
+      class="h-14 flex items-center gap-3 px-4 shrink-0 transition-all duration-200 z-10"
       [class.bg-white]="!transparent()"
       [class.dark:bg-gray-900]="!transparent()"
       [class.border-b]="!transparent()"
@@ -20,6 +20,21 @@ import { ThemeService } from '../../../core/services/theme.service';
       [class.right-0]="transparent()"
       [class.left-0]="transparent()"
     >
+    <!-- Hamburger — mobile/tablet -->
+      @if (showMenuButton()) {
+        <button
+          (click)="menuClick.emit()"
+          class="w-8 h-8 flex items-center justify-center rounded-lg
+                 text-gray-500 dark:text-gray-400
+                 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+        >
+          <!-- <app-icon name="menu" [size]="20" /> -->
+           menu
+        </button>
+      }
+
+      <div class="flex-1"></div>
+      
       <!-- Theme toggle -->
       <button
         (click)="themeService.toggle()"
@@ -45,9 +60,13 @@ import { ThemeService } from '../../../core/services/theme.service';
 
     </header>
   `,
+  imports: [IconComponent],
 })
 export class TopbarComponent {
   user = input<AuthUser | null>(null);
   transparent = input<boolean>(false);
+  showMenuButton = input<boolean>(false);
+  menuClick = output<void>();
+
   readonly themeService = inject(ThemeService);
 }

@@ -1,4 +1,4 @@
-import { Component, computed, inject, input, OnInit, signal } from '@angular/core';
+import { Component, computed, inject, input, OnInit, output, signal } from '@angular/core';
 import { NavigationEnd, Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { NavItem } from './sidebar.types';
 import { animate, state, style, transition, trigger } from '@angular/animations';
@@ -22,6 +22,7 @@ export class SidebarNavItemComponent implements OnInit {
   expanded = input<boolean>(true);
 
   isOpen = signal(false);
+  clicked = output<void>();
 
   private readonly router = inject(Router);
 

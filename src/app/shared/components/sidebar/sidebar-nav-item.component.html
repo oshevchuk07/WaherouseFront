@@ -28,7 +28,7 @@
     <div class="mt-1 ml-3 pl-3 border-l border-gray-700 flex flex-col gap-0.5">
       @for (child of item().children; track child.route) {
       <a [routerLink]="child.route" routerLinkActive="active-nav-child" [routerLinkActiveOptions]="{ exact: true }"
-        class="nav-child">
+        (click)="clicked.emit()" class="nav-child">
         {{ child.label }}
       </a>
       }
