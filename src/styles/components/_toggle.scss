@@ -2,7 +2,7 @@
 .ui-toggle {
   @apply relative inline-flex items-center cursor-pointer;
 
-  input[type='checkbox'] {
+  input[type="checkbox"] {
     @apply sr-only;
 
     & + span {
@@ -10,7 +10,7 @@
                transition-colors;
 
       &::after {
-        content: '';
+        content: "";
         @apply absolute top-0.5 left-0.5 w-4 h-4
                  bg-white rounded-full transition-transform;
       }

@@ -1,7 +1,8 @@
-import { CanActivateFn, Router } from "@angular/router";
-import { UserRole } from "../models/user.model";
-import { inject } from "@angular/core";
-import { AuthStore } from "./auth.store";
+import type { CanActivateFn } from '@angular/router';
+import { Router } from '@angular/router';
+import type { UserRole } from '../models/user.model';
+import { inject } from '@angular/core';
+import { AuthStore } from './auth.store';
 
 export const roleGuard = (allowedRoles: UserRole[]): CanActivateFn => {
   return () => {
@@ -19,5 +20,5 @@ export const roleGuard = (allowedRoles: UserRole[]): CanActivateFn => {
     }
 
     return router.createUrlTree(['/app/dashboard']);
-  }
-}
+  };
+};

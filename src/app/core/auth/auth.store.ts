@@ -1,9 +1,10 @@
-import { inject } from "@angular/core";
-import { AuthUser } from "../models/user.model"
-import { patchState, signalStore, withMethods, withState } from "@ngrx/signals";
-import { rxMethod } from "@ngrx/signals/rxjs-interop"
-import { AuthService, LoginPayload } from "./auth.service";
-import { Router } from "@angular/router";
+import { inject } from '@angular/core';
+import type { AuthUser } from '../models/user.model';
+import { patchState, signalStore, withMethods, withState } from '@ngrx/signals';
+import { rxMethod } from '@ngrx/signals/rxjs-interop';
+import type { LoginPayload } from './auth.service';
+import { AuthService } from './auth.service';
+import { Router } from '@angular/router';
 import { switchMap } from 'rxjs/operators';
 import { tapResponse } from '@ngrx/operators';
 
@@ -17,11 +18,9 @@ const initialState: AuthState = {
   user: null,
   loading: false,
   error: null,
-}
+};
 
-const getErrorMessage = (err: { status: number }): string =>
-  err.status === 401 ? 'Incorrect email or password' : 'Server Error';
-
+const getErrorMessage = (err: { status: number }): string => (err.status === 401 ? 'Incorrect email or password' : 'Server Error');
 
 export const AuthStore = signalStore(
   { providedIn: 'root' },
@@ -38,11 +37,10 @@ export const AuthStore = signalStore(
               patchState(store, { user, loading: false });
               router.navigateByUrl('/app/dashboard');
             },
-            error: (err: { status: number }) =>
-              patchState(store, { error: getErrorMessage(err), loading: false }),
-          })
-        )
-      })
+            error: (err: { status: number }) => patchState(store, { error: getErrorMessage(err), loading: false }),
+          }),
+        );
+      }),
     ),
     loadProfile: rxMethod<void>(
       switchMap(() =>
@@ -53,9 +51,9 @@ export const AuthStore = signalStore(
               authService.logout();
               router.navigateByUrl('/login');
             },
-          })
-        )
-      )
+          }),
+        ),
+      ),
     ),
     setUser(user: AuthUser): void {
       patchState(store, { user });
@@ -65,5 +63,5 @@ export const AuthStore = signalStore(
       patchState(store, initialState);
       router.navigateByUrl('/login');
     },
-  }))
-)
+  })),
+);

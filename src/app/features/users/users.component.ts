@@ -1,9 +1,10 @@
-import { Component, inject, OnInit } from '@angular/core';
+import type { OnInit } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatTableModule } from '@angular/material/table';
 import { MatSortModule } from '@angular/material/sort';
 import { UsersStore } from './users.store';
-import { User } from '../../core/models/user.model';
+import type { User } from '../../core/models/user.model';
 
 @Component({
   selector: 'app-users',
@@ -12,7 +13,6 @@ import { User } from '../../core/models/user.model';
   providers: [UsersStore],
   template: `
     <div class="flex flex-col gap-6">
-
       <!-- Header -->
       <div class="flex items-center justify-between">
         <h1 class="text-2xl font-semibold text-gray-800">Usuarios</h1>
@@ -27,9 +27,7 @@ import { User } from '../../core/models/user.model';
 
       <!-- Search -->
       <div class="relative max-w-sm">
-        <span class="material-icons absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 text-lg">
-          search
-        </span>
+        <span class="material-icons absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 text-lg"> search </span>
         <input
           type="text"
           placeholder="Buscar usuario..."
@@ -49,7 +47,6 @@ import { User } from '../../core/models/user.model';
 
       <!-- Table -->
       <div class="bg-white rounded-xl border border-gray-200 overflow-hidden">
-
         @if (store.loading()) {
           <div class="flex items-center justify-center py-16 text-gray-400 text-sm gap-2">
             <span class="material-icons animate-spin text-base">refresh</span>
@@ -57,11 +54,9 @@ import { User } from '../../core/models/user.model';
           </div>
         } @else {
           <table mat-table [dataSource]="store.filteredUsers()" class="w-full">
-
             <!-- Email -->
             <ng-container matColumnDef="email">
-              <th mat-header-cell *matHeaderCellDef
-                class="text-xs font-medium text-gray-500 uppercase tracking-wide px-6 py-3">
+              <th mat-header-cell *matHeaderCellDef class="text-xs font-medium text-gray-500 uppercase tracking-wide px-6 py-3">
                 Correo electrónico
               </th>
               <td mat-cell *matCellDef="let user" class="px-6 py-4 text-sm text-gray-700">
@@ -71,10 +66,7 @@ import { User } from '../../core/models/user.model';
 
             <!-- Name -->
             <ng-container matColumnDef="name">
-              <th mat-header-cell *matHeaderCellDef
-                class="text-xs font-medium text-gray-500 uppercase tracking-wide px-6 py-3">
-                Nombre
-              </th>
+              <th mat-header-cell *matHeaderCellDef class="text-xs font-medium text-gray-500 uppercase tracking-wide px-6 py-3">Nombre</th>
               <td mat-cell *matCellDef="let user" class="px-6 py-4 text-sm text-gray-700">
                 {{ fullName(user) }}
               </td>
@@ -82,15 +74,12 @@ import { User } from '../../core/models/user.model';
 
             <!-- Role -->
             <ng-container matColumnDef="role">
-              <th mat-header-cell *matHeaderCellDef
-                class="text-xs font-medium text-gray-500 uppercase tracking-wide px-6 py-3">
-                Role
-              </th>
+              <th mat-header-cell *matHeaderCellDef class="text-xs font-medium text-gray-500 uppercase tracking-wide px-6 py-3">Role</th>
               <td mat-cell *matCellDef="let user" class="px-6 py-4">
-                <span class="text-xs font-medium px-2 py-1 rounded-full"
-                  [class]="user.role === 'ADMIN'
-                    ? 'bg-purple-100 text-purple-700'
-                    : 'bg-gray-100 text-gray-600'">
+                <span
+                  class="text-xs font-medium px-2 py-1 rounded-full"
+                  [class]="user.role === 'ADMIN' ? 'bg-purple-100 text-purple-700' : 'bg-gray-100 text-gray-600'"
+                >
                   {{ user.role }}
                 </span>
               </td>
@@ -98,10 +87,7 @@ import { User } from '../../core/models/user.model';
 
             <!-- Plan -->
             <ng-container matColumnDef="plan">
-              <th mat-header-cell *matHeaderCellDef
-                class="text-xs font-medium text-gray-500 uppercase tracking-wide px-6 py-3">
-                Plan
-              </th>
+              <th mat-header-cell *matHeaderCellDef class="text-xs font-medium text-gray-500 uppercase tracking-wide px-6 py-3">Plan</th>
               <td mat-cell *matCellDef="let user" class="px-6 py-4 text-sm text-gray-500">
                 {{ user.plan?.name ?? '—' }}
               </td>
@@ -109,8 +95,7 @@ import { User } from '../../core/models/user.model';
 
             <!-- Payment type -->
             <ng-container matColumnDef="paymentType">
-              <th mat-header-cell *matHeaderCellDef
-                class="text-xs font-medium text-gray-500 uppercase tracking-wide px-6 py-3">
+              <th mat-header-cell *matHeaderCellDef class="text-xs font-medium text-gray-500 uppercase tracking-wide px-6 py-3">
                 Período de pago
               </th>
               <td mat-cell *matCellDef="let user" class="px-6 py-4 text-sm text-gray-500">
@@ -120,10 +105,7 @@ import { User } from '../../core/models/user.model';
 
             <!-- Active -->
             <ng-container matColumnDef="active">
-              <th mat-header-cell *matHeaderCellDef
-                class="text-xs font-medium text-gray-500 uppercase tracking-wide px-6 py-3">
-                Activo
-              </th>
+              <th mat-header-cell *matHeaderCellDef class="text-xs font-medium text-gray-500 uppercase tracking-wide px-6 py-3">Activo</th>
               <td mat-cell *matCellDef="let user" class="px-6 py-4">
                 @if (user.isActive) {
                   <span class="material-icons text-emerald-500 text-xl">check_circle</span>
@@ -137,35 +119,24 @@ import { User } from '../../core/models/user.model';
             <ng-container matColumnDef="actions">
               <th mat-header-cell *matHeaderCellDef class="px-6 py-3"></th>
               <td mat-cell *matCellDef="let user" class="px-6 py-4">
-                <button
-                  class="text-gray-400 hover:text-gray-700 transition-colors"
-                  title="Editar"
-                >
+                <button class="text-gray-400 hover:text-gray-700 transition-colors" title="Editar">
                   <span class="material-icons text-lg">edit</span>
                 </button>
               </td>
             </ng-container>
 
-            <tr mat-header-row *matHeaderRowDef="columns"
-              class="bg-gray-50 border-b border-gray-200"></tr>
-            <tr mat-row *matRowDef="let row; columns: columns;"
-              class="border-b border-gray-100 hover:bg-gray-50 transition-colors"></tr>
-
+            <tr mat-header-row *matHeaderRowDef="columns" class="bg-gray-50 border-b border-gray-200"></tr>
+            <tr mat-row *matRowDef="let row; columns: columns" class="border-b border-gray-100 hover:bg-gray-50 transition-colors"></tr>
           </table>
 
           @if (store.filteredUsers().length === 0) {
-            <div class="py-12 text-center text-gray-400 text-sm">
-              No se encontraron usuarios
-            </div>
+            <div class="py-12 text-center text-gray-400 text-sm">No se encontraron usuarios</div>
           }
         }
       </div>
 
       <!-- Footer count -->
-      <p class="text-xs text-gray-400">
-        Total: {{ store.totalCount() }} usuarios
-      </p>
-
+      <p class="text-xs text-gray-400">Total: {{ store.totalCount() }} usuarios</p>
     </div>
   `,
 })

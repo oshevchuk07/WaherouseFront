@@ -5,96 +5,102 @@
   }
 
   <!-- Mobile sidebar -->
-  <aside class="fixed top-0 left-0 h-screen w-60 bg-gray-900 border-r border-gray-800
-          flex flex-col z-40 transition-transform duration-250
-          ease-[cubic-bezier(0.4,0,0.2,1)]" [class.-translate-x-full]="!mobileOpen()"
-    [class.translate-x-0]="mobileOpen()">
+  <aside
+    class="fixed top-0 left-0 h-screen w-60 bg-gray-900 border-r border-gray-800 flex flex-col z-40 transition-transform duration-250 ease-[cubic-bezier(0.4,0,0.2,1)]"
+    [class.-translate-x-full]="!mobileOpen()"
+    [class.translate-x-0]="mobileOpen()"
+  >
     <ng-container *ngTemplateOutlet="sidebarContent" />
   </aside>
 }
 
 <!-- Tablet / Desktop sidebar -->
 @if (!bp.isMobile()) {
-  <aside class="sidebar-panel h-screen bg-gray-900 flex flex-col overflow-hidden
-          shrink-0 border-r border-gray-800 transition-[width] duration-250
-          ease-[cubic-bezier(0.4,0,0.2,1)]" [class.w-60]="!isCollapsed()" [class.w-16]="isCollapsed()">
+  <aside
+    class="sidebar-panel h-screen bg-gray-900 flex flex-col overflow-hidden shrink-0 border-r border-gray-800 transition-[width] duration-250 ease-[cubic-bezier(0.4,0,0.2,1)]"
+    [class.w-60]="!isCollapsed()"
+    [class.w-16]="isCollapsed()"
+  >
     <ng-container *ngTemplateOutlet="sidebarContent" />
   </aside>
 
   <!-- Tablet overlay backdrop -->
   @if (bp.isTablet() && !isCollapsed()) {
-  <div class="fixed inset-0 bg-black/30 z-10" (click)="collapseTablet()" role="presentation"></div>
+    <div class="fixed inset-0 bg-black/30 z-10" (click)="collapseTablet()" role="presentation"></div>
   }
 }
 
 <!-- Sidebar content template -->
 <ng-template #sidebarContent>
-
   <!-- Logo -->
   <div class="flex items-center gap-3 px-4 py-5 border-b border-gray-800 shrink-0">
     <!-- <app-icon name="logo" [size]="28" cssClass="text-blue-400 shrink-0" /> -->
     <div>logo</div>
     @if (showLabels()) {
-    <div class="leading-tight overflow-hidden">
-      <div class="font-bold text-white text-sm whitespace-nowrap">WAREHOUSE</div>
-      <div class="text-blue-400 font-normal text-xs tracking-widest">PLATFORM</div>
-    </div>
+      <div class="leading-tight overflow-hidden">
+        <div class="font-bold text-white text-sm whitespace-nowrap">WAREHOUSE</div>
+        <div class="text-blue-400 font-normal text-xs tracking-widest">PLATFORM</div>
+      </div>
     }
 
     <!-- Close button — mobile only -->
     @if (bp.isMobile()) {
-    <button (click)="closeMobile()" class="ml-auto text-gray-400 hover:text-white transition-colors">
-      <!-- <app-icon name="close" [size]="20" /> -->
-      close
-    </button>
+      <button (click)="closeMobile()" class="ml-auto text-gray-400 hover:text-white transition-colors">
+        <!-- <app-icon name="close" [size]="20" /> -->
+        close
+      </button>
     }
   </div>
 
   <!-- Nav -->
   <nav class="flex-1 overflow-y-auto overflow-x-hidden px-2 py-4 flex flex-col gap-0.5">
     @for (entry of visibleEntries(); track $index) {
-    @if (entry.type === 'divider') {
-    @if (showLabels()) {
-    <div class="mx-2 mt-3 mb-1">
-      @if (asDivider(entry).label) {
-      <span class="text-xs font-medium text-gray-500 uppercase tracking-widest px-1">
-        {{ asDivider(entry).label }}
-      </span>
-      } @else {
-      <hr class="border-gray-700" />
+      @if (entry.type === 'divider') {
+        @if (showLabels()) {
+          <div class="mx-2 mt-3 mb-1">
+            @if (asDivider(entry).label) {
+              <span class="text-xs font-medium text-gray-500 uppercase tracking-widest px-1">
+                {{ asDivider(entry).label }}
+              </span>
+            } @else {
+              <hr class="border-gray-700" />
+            }
+          </div>
+        } @else {
+          <hr class="border-gray-700 mx-2 my-2" />
+        }
       }
-    </div>
-    } @else {
-    <hr class="border-gray-700 mx-2 my-2" />
-    }
-    }
 
-    @if (entry.type === 'item') {
-    <app-sidebar-nav-item [item]="asItem(entry)" [expanded]="showLabels()" (clicked)="onNavItemClick()" />
-    }
+      @if (entry.type === 'item') {
+        <app-sidebar-nav-item [item]="asItem(entry)" [expanded]="showLabels()" (clicked)="onNavItemClick()" />
+      }
     }
   </nav>
 
   <!-- Footer -->
   <div class="border-t border-gray-800 px-2 py-3 flex flex-col gap-1 shrink-0">
-    <button (click)="logout.emit()" class="nav-item w-full hover:!bg-red-900/40 hover:!text-red-400"
-      [class.nav-item--collapsed]="!showLabels()">
+    <button
+      (click)="logout.emit()"
+      class="nav-item w-full hover:!bg-red-900/40 hover:!text-red-400"
+      [class.nav-item--collapsed]="!showLabels()"
+    >
       <!-- <app-icon name="logout" [size]="20" cssClass="shrink-0" /> -->
       <div>logout</div>
       @if (showLabels()) {
-      <span class="nav-item__label">Cerrar sesión</span>
+        <span class="nav-item__label">Cerrar sesión</span>
       }
     </button>
 
     <!-- Toggle — тільки десктоп -->
     @if (bp.isDesktop()) {
-    <button (click)="toggleDesktop()" class="flex items-center justify-center py-2 rounded-lg text-gray-500
-                   hover:bg-gray-700 hover:text-white transition-colors w-full">
-      <!-- <app-icon name="chevron-left" [size]="18" cssClass="transition-transform duration-250"
+      <button
+        (click)="toggleDesktop()"
+        class="flex items-center justify-center py-2 rounded-lg text-gray-500 hover:bg-gray-700 hover:text-white transition-colors w-full"
+      >
+        <!-- <app-icon name="chevron-left" [size]="18" cssClass="transition-transform duration-250"
         [class.rotate-180]="isCollapsed()" /> -->
-      <div>left</div>
-    </button>
+        <div>left</div>
+      </button>
     }
   </div>
-
 </ng-template>

@@ -1,14 +1,14 @@
 import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { AuthStore } from '../../core/auth/auth.store';
+import { CdkTableModule } from '@angular/cdk/table';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [FormsModule],
+  imports: [FormsModule, CdkTableModule],
   template: `
     <div class="w-full max-w-sm">
-
       <!-- Logo -->
       <div class="flex items-center gap-3 mb-8 justify-center">
         <span class="material-icons text-blue-400 text-3xl">inventory_2</span>
@@ -32,8 +32,9 @@ import { AuthStore } from '../../core/auth/auth.store';
         <!-- Form -->
         <div class="flex flex-col gap-4">
           <div class="flex flex-col gap-1.5">
-            <label class="text-gray-400 text-sm">Email</label>
+            <label for="email" class="text-gray-400 text-sm">Email</label>
             <input
+              id="email"
               type="email"
               [(ngModel)]="email"
               placeholder="admin@warehouse.com"
@@ -44,8 +45,9 @@ import { AuthStore } from '../../core/auth/auth.store';
           </div>
 
           <div class="flex flex-col gap-1.5">
-            <label class="text-gray-400 text-sm">Contraseña</label>
+            <label for="password" class="text-gray-400 text-sm">Contraseña</label>
             <input
+              id="password"
               type="password"
               [(ngModel)]="password"
               placeholder="••••••••"

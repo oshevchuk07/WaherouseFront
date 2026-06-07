@@ -1,7 +1,7 @@
 import { Injectable, inject } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { Observable } from 'rxjs';
-import { ConfirmDialogData, PromptDialogData } from '../components/dialogs/dialog.types';
+import type { Observable } from 'rxjs';
+import type { ConfirmDialogData, PromptDialogData } from '../components/dialogs/dialog.types';
 import { ConfirmDialogComponent } from '../components/dialogs/confirm-dialog.component';
 import { PromptDialogComponent } from '../components/dialogs/prompt-dialog.component';
 
@@ -17,16 +17,20 @@ export class DialogService {
   private readonly matDialog = inject(MatDialog);
 
   confirm(data: ConfirmDialogData): Observable<boolean> {
-    return this.matDialog.open(ConfirmDialogComponent, {
-      ...BASE_CONFIG,
-      data,
-    }).afterClosed();
+    return this.matDialog
+      .open(ConfirmDialogComponent, {
+        ...BASE_CONFIG,
+        data,
+      })
+      .afterClosed();
   }
 
   prompt(data: PromptDialogData): Observable<string | null> {
-    return this.matDialog.open(PromptDialogComponent, {
-      ...BASE_CONFIG,
-      data,
-    }).afterClosed();
+    return this.matDialog
+      .open(PromptDialogComponent, {
+        ...BASE_CONFIG,
+        data,
+      })
+      .afterClosed();
   }
 }

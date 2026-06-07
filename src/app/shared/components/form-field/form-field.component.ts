@@ -1,14 +1,12 @@
 import { Component, input } from '@angular/core';
-import { NgIf } from '@angular/common';
 
 @Component({
   selector: 'app-form-field',
   standalone: true,
-  imports: [NgIf],
   template: `
     <div class="ui-field" [class.has-error]="!!error()">
       @if (label()) {
-        <label class="ui-label">{{ label() }}</label>
+        <span class="ui-label">{{ label() }}</span>
       }
       <ng-content />
       @if (error()) {

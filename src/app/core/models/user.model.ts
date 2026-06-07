@@ -1,5 +1,5 @@
-export type UserRole = "ADMIN" | "USER";
-export type PaymentType = "MONTHLY" | "YEARLY";
+export type UserRole = 'ADMIN' | 'USER';
+export type PaymentType = 'MONTHLY' | 'YEARLY';
 
 export interface User {
   id: number;

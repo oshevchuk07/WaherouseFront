@@ -1,4 +1,4 @@
-import { UserRole } from '../../../core/models/user.model';
+import type { UserRole } from '../../../core/models/user.model';
 
 export interface NavItem {
   type: 'item';

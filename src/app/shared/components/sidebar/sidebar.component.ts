@@ -1,11 +1,11 @@
-import { Component, computed, effect, inject, input, output, signal } from "@angular/core";
-import { SidebarNavItemComponent } from "./sidebar-nav-item/sidebar-nav-item.component";
-import { AuthStore } from "../../../core/auth/auth.store";
-import { NavDivider, NavEntry, NavItem } from "./sidebar.types";
-import { NAV_CONFIG } from "./sidebar.config";
-import { UserRole } from "../../../core/models/user.model";
-import { BreakpointService } from "../../../core/services/breakpoint.service";
-import { NgTemplateOutlet } from "@angular/common";
+import { Component, computed, effect, inject, input, output, signal } from '@angular/core';
+import { SidebarNavItemComponent } from './sidebar-nav-item/sidebar-nav-item.component';
+import { AuthStore } from '../../../core/auth/auth.store';
+import type { NavDivider, NavEntry, NavItem } from './sidebar.types';
+import { NAV_CONFIG } from './sidebar.config';
+import type { UserRole } from '../../../core/models/user.model';
+import { BreakpointService } from '../../../core/services/breakpoint.service';
+import { NgTemplateOutlet } from '@angular/common';
 
 @Component({
   selector: 'app-sidebar',
@@ -23,9 +23,7 @@ export class SidebarComponent {
 
   mobileOpen = signal(false);
 
-  isCollapsed = computed(() =>
-    this.forceCollapsed() || !this.desktopExpanded()
-  );
+  isCollapsed = computed(() => this.forceCollapsed() || !this.desktopExpanded());
 
   // Labels
   // desktop — depends on collapsed
@@ -79,9 +77,7 @@ export class SidebarComponent {
 
   visibleEntries = computed<NavEntry[]>(() => {
     const role = this.authStore.user()?.role as UserRole | undefined;
-    return NAV_CONFIG.filter(entry =>
-      !entry.roles || (role && entry.roles.includes(role))
-    );
+    return NAV_CONFIG.filter(entry => !entry.roles || (role && entry.roles.includes(role)));
   });
 
   toggleExpanded(): void {
@@ -92,6 +88,10 @@ export class SidebarComponent {
     }
   }
 
-  asItem(entry: NavEntry): NavItem { return entry as NavItem; }
-  asDivider(entry: NavEntry): NavDivider { return entry as NavDivider; }
+  asItem(entry: NavEntry): NavItem {
+    return entry as NavItem;
+  }
+  asDivider(entry: NavEntry): NavDivider {
+    return entry as NavDivider;
+  }
 }

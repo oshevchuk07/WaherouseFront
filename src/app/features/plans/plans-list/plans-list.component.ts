@@ -1,6 +1,6 @@
-import { Component } from "@angular/core";
+import { Component } from '@angular/core';
 
 @Component({
-  template: 'plan list'
+  template: 'plan list',
 })
-export class PlansListComponent { }
+export class PlansListComponent {}

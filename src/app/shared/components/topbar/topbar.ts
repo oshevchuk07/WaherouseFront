@@ -1,13 +1,13 @@
 import { Component, input, inject, output } from '@angular/core';
-import { AuthUser } from '../../../core/models/user.model';
+import type { AuthUser } from '../../../core/models/user.model';
 import { ThemeService } from '../../../core/services/theme.service';
-import { IconComponent } from "../icons/icons.component";
+import { IconComponent } from '../icons/icons.component';
 
 @Component({
   selector: 'app-topbar',
   standalone: true,
   template: `
-     <header
+    <header
       class="h-14 flex items-center gap-3 px-4 shrink-0 transition-all duration-200 z-10"
       [class.bg-white]="!transparent()"
       [class.dark:bg-gray-900]="!transparent()"
@@ -20,7 +20,7 @@ import { IconComponent } from "../icons/icons.component";
       [class.right-0]="transparent()"
       [class.left-0]="transparent()"
     >
-    <!-- Hamburger — mobile/tablet -->
+      <!-- Hamburger — mobile/tablet -->
       @if (showMenuButton()) {
         <button
           (click)="menuClick.emit()"
@@ -29,12 +29,12 @@ import { IconComponent } from "../icons/icons.component";
                  hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
         >
           <!-- <app-icon name="menu" [size]="20" /> -->
-           menu
+          menu
         </button>
       }
 
       <div class="flex-1"></div>
-      
+
       <!-- Theme toggle -->
       <button
         (click)="themeService.toggle()"
@@ -57,7 +57,6 @@ import { IconComponent } from "../icons/icons.component";
           {{ user()!.email }}
         </span>
       }
-
     </header>
   `,
   imports: [IconComponent],

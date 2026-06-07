@@ -4,14 +4,8 @@ import { Component, input, computed } from '@angular/core';
   selector: 'app-icon',
   standalone: true,
   template: `
-    <svg
-      [attr.width]="size()"
-      [attr.height]="size()"
-      class="inline-block shrink-0"
-      [class]="cssClass()"
-      aria-hidden="true"
-    >
-      <use [attr.href]="href()"/>
+    <svg [attr.width]="size()" [attr.height]="size()" class="inline-block shrink-0" [class]="cssClass()" aria-hidden="true">
+      <use [attr.href]="href()" />
     </svg>
   `,
 })

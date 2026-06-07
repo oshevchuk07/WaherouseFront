@@ -1,6 +1,6 @@
-import { Component, computed, input } from "@angular/core";
+import { Component, computed, input } from '@angular/core';
 
-export type SkeletonVariant = "text" | "title" | "avatar" | "card" | "table-row" | "rect";
+export type SkeletonVariant = 'text' | 'title' | 'avatar' | 'card' | 'table-row' | 'rect';
 
 @Component({
   selector: 'app-skeleton',

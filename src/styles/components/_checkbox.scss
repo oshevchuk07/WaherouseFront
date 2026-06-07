@@ -2,7 +2,7 @@
 .ui-checkbox {
   @apply flex items-center gap-2 cursor-pointer select-none;
 
-  input[type='checkbox'] {
+  input[type="checkbox"] {
     appearance: none;
     -webkit-appearance: none;
     width: 16px;
@@ -13,7 +13,7 @@
              grid place-content-center;
 
     &::before {
-      content: '';
+      content: "";
       width: 9px;
       height: 9px;
       border-radius: 2px;

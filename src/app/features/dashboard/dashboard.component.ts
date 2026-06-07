@@ -1,9 +1,9 @@
 import { Component, inject } from '@angular/core';
 import { NotificationService } from '../../core/notifications/notification.service';
-import { IconComponent } from "../../shared/components/icons/icons.component";
-import { FormFieldComponent } from "../../shared/components/form-field/form-field.component";
+import { IconComponent } from '../../shared/components/icons/icons.component';
+import { FormFieldComponent } from '../../shared/components/form-field/form-field.component';
 import { DialogService } from '../../shared/services/dialog.service';
-import { SkeletonComponent } from "../../shared/components/skeleton/skeleton.component";
+import { SkeletonComponent } from '../../shared/components/skeleton/skeleton.component';
 
 @Component({
   selector: 'app-dashboard',
@@ -20,13 +20,15 @@ export class DashboardComponent {
   }
 
   save(): void {
-    this.dialogService.confirm({
-      title: 'Видалити користувача',
-      message: 'Цю дію неможливо скасувати. Продовжити?',
-      variant: 'danger',
-      confirmLabel: 'Видалити',
-    }).subscribe(() => {
-      // 
-    });
+    this.dialogService
+      .confirm({
+        title: 'Видалити користувача',
+        message: 'Цю дію неможливо скасувати. Продовжити?',
+        variant: 'danger',
+        confirmLabel: 'Видалити',
+      })
+      .subscribe(() => {
+        //
+      });
   }
 }

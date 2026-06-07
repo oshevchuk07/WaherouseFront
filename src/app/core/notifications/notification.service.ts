@@ -1,8 +1,8 @@
-import { Injectable, signal } from "@angular/core";
-import { Notification, NotificationType } from "./notification.model";
+import { Injectable, signal } from '@angular/core';
+import type { Notification, NotificationType } from './notification.model';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class NotificationService {
   readonly notifications = signal<Notification[]>([]);

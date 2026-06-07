@@ -1,4 +1,4 @@
-import { NavEntry } from './sidebar.types';
+import type { NavEntry } from './sidebar.types';
 
 export const NAV_CONFIG: NavEntry[] = [
   {

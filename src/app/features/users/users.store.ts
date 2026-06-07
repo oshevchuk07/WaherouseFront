@@ -4,8 +4,9 @@ import { rxMethod } from '@ngrx/signals/rxjs-interop';
 import { tapResponse } from '@ngrx/operators';
 import { computed } from '@angular/core';
 import { pipe, switchMap, tap } from 'rxjs';
-import { User } from '../../core/models/user.model';
-import { UsersService, UpdateUserPayload } from './users.service';
+import type { User } from '../../core/models/user.model';
+import type { UpdateUserPayload } from './users.service';
+import { UsersService } from './users.service';
 
 interface UsersState {
   users: User[];
@@ -13,7 +14,7 @@ interface UsersState {
   saving: boolean;
   error: string | null;
   search: string;
-};
+}
 
 const initialState: UsersState = {
   users: [],
@@ -29,10 +30,11 @@ export const UsersStore = signalStore(
     filteredUsers: computed(() => {
       const q = search().toLowerCase();
       if (!q) return users();
-      return users().filter(u =>
-        u.email.toLowerCase().includes(q) ||
-        (u.firstName ?? '').toLowerCase().includes(q) ||
-        (u.lastName ?? '').toLowerCase().includes(q)
+      return users().filter(
+        u =>
+          u.email.toLowerCase().includes(q) ||
+          (u.firstName ?? '').toLowerCase().includes(q) ||
+          (u.lastName ?? '').toLowerCase().includes(q),
       );
     }),
     totalCount: computed(() => users().length),
@@ -45,14 +47,15 @@ export const UsersStore = signalStore(
           service.getAll().pipe(
             tapResponse({
               next: users => patchState(store, { users, loading: false }),
-              error: () => patchState(store, {
-                error: 'Не вдалося завантажити користувачів',
-                loading: false,
-              }),
-            })
-          )
-        )
-      )
+              error: () =>
+                patchState(store, {
+                  error: 'Не вдалося завантажити користувачів',
+                  loading: false,
+                }),
+            }),
+          ),
+        ),
+      ),
     ),
 
     updateUser: rxMethod<{ id: number; payload: UpdateUserPayload }>(
@@ -62,17 +65,18 @@ export const UsersStore = signalStore(
           service.update(id, payload).pipe(
             tapResponse({
               next: updated => {
-                const users = store.users().map(u => u.id === updated.id ? updated : u);
+                const users = store.users().map(u => (u.id === updated.id ? updated : u));
                 patchState(store, { users, saving: false });
               },
-              error: () => patchState(store, {
-                error: 'Не вдалося оновити користувача',
-                saving: false,
-              }),
-            })
-          )
-        )
-      )
+              error: () =>
+                patchState(store, {
+                  error: 'Не вдалося оновити користувача',
+                  saving: false,
+                }),
+            }),
+          ),
+        ),
+      ),
     ),
 
     removeUser: rxMethod<number>(
@@ -85,18 +89,19 @@ export const UsersStore = signalStore(
                 const users = store.users().filter(u => u.id !== id);
                 patchState(store, { users, saving: false });
               },
-              error: () => patchState(store, {
-                error: 'Не вдалося видалити користувача',
-                saving: false,
-              }),
-            })
-          )
-        )
-      )
+              error: () =>
+                patchState(store, {
+                  error: 'Не вдалося видалити користувача',
+                  saving: false,
+                }),
+            }),
+          ),
+        ),
+      ),
     ),
 
     setSearch(search: string): void {
       patchState(store, { search });
     },
-  }))
+  })),
 );

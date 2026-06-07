@@ -1,9 +1,9 @@
-import { Component } from "@angular/core";
-import { RouterLink } from "@angular/router";
+import { Component } from '@angular/core';
+import { RouterLink } from '@angular/router';
 
 @Component({
   templateUrl: './landing.component.html',
-  imports: [RouterLink]
+  imports: [RouterLink],
 })
 export class LandingComponent {
   readonly year = new Date().getFullYear();

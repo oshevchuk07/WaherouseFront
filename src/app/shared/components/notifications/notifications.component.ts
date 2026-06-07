@@ -1,6 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { NotificationService } from '../../../core/notifications/notification.service';
-import { NotificationType } from '../../../core/notifications/notification.model';
+import type { NotificationType } from '../../../core/notifications/notification.model';
 
 const ICONS: Record<NotificationType, string> = {
   success: 'check_circle',
@@ -27,7 +27,7 @@ const ICON_STYLES: Record<NotificationType, string> = {
   selector: 'app-notifications',
   standalone: true,
   templateUrl: './notifications.component.html',
-  styleUrl: './notifications.component.scss'
+  styleUrl: './notifications.component.scss',
 })
 export class NotificationsComponent {
   readonly service = inject(NotificationService);

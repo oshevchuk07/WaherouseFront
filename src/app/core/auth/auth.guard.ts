@@ -1,8 +1,9 @@
-import { inject } from "@angular/core";
-import { CanActivateFn, Router } from "@angular/router";
-import { AuthService } from "./auth.service";
-import { AuthStore } from "./auth.store";
-import { catchError, map, of } from "rxjs";
+import { inject } from '@angular/core';
+import type { CanActivateFn } from '@angular/router';
+import { Router } from '@angular/router';
+import { AuthService } from './auth.service';
+import { AuthStore } from './auth.store';
+import { catchError, map, of } from 'rxjs';
 
 export const authGuard: CanActivateFn = () => {
   const authService = inject(AuthService);
@@ -25,6 +26,6 @@ export const authGuard: CanActivateFn = () => {
     catchError(() => {
       authService.logout();
       return of(router.createUrlTree(['/login']));
-    })
+    }),
   );
-}
+};

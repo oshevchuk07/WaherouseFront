@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { NotificationsComponent } from "../../shared/components/notifications/notifications.component";
+import { NotificationsComponent } from '../../shared/components/notifications/notifications.component';
 
 @Component({
   selector: 'app-auth-layout',

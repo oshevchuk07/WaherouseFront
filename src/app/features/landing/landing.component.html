@@ -1,5 +1,4 @@
 <main class="flex-1 flex flex-col items-center justify-center px-6 py-24 text-center">
-
   <!-- Logo mark -->
   <div class="flex items-center justify-center gap-3 mb-12">
     <span class="material-icons text-blue-400 text-5xl">inventory_2</span>
@@ -17,34 +16,31 @@
 
   <!-- Subtitle -->
   <p class="text-gray-400 text-lg max-w-xl leading-relaxed mb-10">
-    Real-time 3D visualization, AI-powered picking, plan management and
-    full user administration — all in one platform.
+    Real-time 3D visualization, AI-powered picking, plan management and full user administration — all in one platform.
   </p>
 
   <!-- Features grid -->
   <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 max-w-2xl w-full mb-12">
     @for (feature of features; track feature.icon) {
-    <div class="bg-gray-900 border border-gray-800 rounded-xl px-5 py-4 text-left">
-      <span class="material-icons text-blue-400 text-xl mb-2 block">{{ feature.icon }}</span>
-      <div class="text-white text-sm font-medium mb-1">{{ feature.title }}</div>
-      <div class="text-gray-500 text-xs leading-relaxed">{{ feature.description }}</div>
-    </div>
+      <div class="bg-gray-900 border border-gray-800 rounded-xl px-5 py-4 text-left">
+        <span class="material-icons text-blue-400 text-xl mb-2 block">{{ feature.icon }}</span>
+        <div class="text-white text-sm font-medium mb-1">{{ feature.title }}</div>
+        <div class="text-gray-500 text-xs leading-relaxed">{{ feature.description }}</div>
+      </div>
     }
   </div>
 
   <!-- CTA -->
-  <a routerLink="/login" class="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-500
-               text-white font-medium px-8 py-3 rounded-xl text-sm
-               transition-colors duration-150">
+  <a
+    routerLink="/login"
+    class="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-500 text-white font-medium px-8 py-3 rounded-xl text-sm transition-colors duration-150"
+  >
     Go to dashboard
     <span class="material-icons text-base">arrow_forward</span>
   </a>
-
 </main>
 
 <!-- Footer -->
 <footer class="border-t border-gray-800 py-6 text-center">
-  <p class="text-gray-600 text-xs">
-    &copy; {{ year }} Warehouse Platform. All rights reserved.
-  </p>
+  <p class="text-gray-600 text-xs">&copy; {{ year }} Warehouse Platform. All rights reserved.</p>
 </footer>

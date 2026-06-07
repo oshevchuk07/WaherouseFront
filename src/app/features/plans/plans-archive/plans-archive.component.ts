@@ -1,6 +1,6 @@
-import { Component } from "@angular/core";
+import { Component } from '@angular/core';
 
 @Component({
-  template: 'plans-archive'
+  template: 'plans-archive',
 })
-export class PlansAcrhiveComponent { }
+export class PlansAcrhiveComponent {}

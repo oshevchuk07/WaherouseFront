@@ -1,7 +1,7 @@
 import { Component, inject, signal } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { FormsModule } from '@angular/forms';
-import { PromptDialogData } from './dialog.types';
+import type { PromptDialogData } from './dialog.types';
 import { FormFieldComponent } from '../form-field/form-field.component';
 import { IconComponent } from '../icons/icons.component';
 
@@ -11,7 +11,6 @@ import { IconComponent } from '../icons/icons.component';
   imports: [FormsModule, FormFieldComponent, IconComponent],
   template: `
     <div class="ui-dialog">
-
       <!-- Header -->
       <div class="ui-dialog__header">
         <h2 class="ui-dialog__title">{{ data.title }}</h2>
@@ -44,15 +43,10 @@ import { IconComponent } from '../icons/icons.component';
         <button class="ui-btn-secondary" (click)="cancel()">
           {{ data.cancelLabel ?? 'Скасувати' }}
         </button>
-        <button
-          class="ui-btn-primary"
-          [disabled]="!!error() || !value.trim()"
-          (click)="confirm()"
-        >
+        <button class="ui-btn-primary" [disabled]="!!error() || !value.trim()" (click)="confirm()">
           {{ data.confirmLabel ?? 'Підтвердити' }}
         </button>
       </div>
-
     </div>
   `,
 })

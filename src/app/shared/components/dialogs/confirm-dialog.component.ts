@@ -1,8 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { ConfirmDialogData } from './dialog.types';
+import type { ConfirmDialogData } from './dialog.types';
 import { IconComponent } from '../icons/icons.component';
-
 
 const VARIANT_STYLES = {
   danger: { icon: 'trash', iconClass: 'text-red-400', btnClass: 'ui-btn-danger' },
@@ -16,15 +15,10 @@ const VARIANT_STYLES = {
   imports: [IconComponent],
   template: `
     <div class="ui-dialog">
-
       <!-- Header -->
       <div class="ui-dialog__header">
         <div class="flex items-center gap-3">
-          <app-icon
-            [name]="styles.icon"
-            [size]="22"
-            [cssClass]="styles.iconClass"
-          />
+          <app-icon [name]="styles.icon" [size]="22" [cssClass]="styles.iconClass" />
           <h2 class="ui-dialog__title">{{ data.title }}</h2>
         </div>
         <button class="ui-dialog__close" (click)="cancel()">
@@ -46,7 +40,6 @@ const VARIANT_STYLES = {
           {{ data.confirmLabel ?? 'Підтвердити' }}
         </button>
       </div>
-
     </div>
   `,
 })
@@ -56,6 +49,10 @@ export class ConfirmDialogComponent {
 
   readonly styles = VARIANT_STYLES[this.data.variant ?? 'info'];
 
-  confirm(): void { this.ref.close(true); }
-  cancel(): void { this.ref.close(false); }
+  confirm(): void {
+    this.ref.close(true);
+  }
+  cancel(): void {
+    this.ref.close(false);
+  }
 }

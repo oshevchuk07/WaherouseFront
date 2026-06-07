@@ -1,6 +1,11 @@
 @if (loader.isNavigating()) {
-<div animate.enter="progress-enter" animate.leave="progress-leave" class="fixed top-0 left-0 right-0 z-[9999] h-[3px] origin-left
-               bg-gradient-to-r from-blue-500 via-blue-400 to-blue-600
-               shadow-[0_0_8px_rgba(59,130,246,0.8)]" role="progressbar" aria-label="Page loading" aria-valuemin="0"
-  aria-valuemax="100"></div>
+  <div
+    animate.enter="progress-enter"
+    animate.leave="progress-leave"
+    class="fixed top-0 left-0 right-0 z-[9999] h-[3px] origin-left bg-gradient-to-r from-blue-500 via-blue-400 to-blue-600 shadow-[0_0_8px_rgba(59,130,246,0.8)]"
+    role="progressbar"
+    aria-label="Page loading"
+    aria-valuemin="0"
+    aria-valuemax="100"
+  ></div>
 }

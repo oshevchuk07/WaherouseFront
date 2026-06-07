@@ -1,33 +1,30 @@
 @if (variant() === 'table-row') {
-
-@for (_ of rowsArray(); track $index) {
-<div class="flex items-center gap-4 px-6 py-4 border-b border-gray-100 dark:border-gray-800">
-  <!-- Checkbox / index col -->
-  <div class="skeleton h-4 w-4 rounded"></div>
-  <!-- Main col — wider -->
-  <div class="skeleton h-3.5 rounded flex-1 max-w-[220px]"></div>
-  <!-- Secondary cols -->
-  <div class="skeleton h-3.5 rounded w-24"></div>
-  <div class="skeleton h-3.5 rounded w-16"></div>
-  <div class="skeleton h-5 w-14 rounded-full"></div>
-  <!-- Actions col -->
-  <div class="skeleton h-4 w-4 rounded ml-auto"></div>
-</div>
-}
-
+  @for (_ of rowsArray(); track $index) {
+    <div class="flex items-center gap-4 px-6 py-4 border-b border-gray-100 dark:border-gray-800">
+      <!-- Checkbox / index col -->
+      <div class="skeleton h-4 w-4 rounded"></div>
+      <!-- Main col — wider -->
+      <div class="skeleton h-3.5 rounded flex-1 max-w-[220px]"></div>
+      <!-- Secondary cols -->
+      <div class="skeleton h-3.5 rounded w-24"></div>
+      <div class="skeleton h-3.5 rounded w-16"></div>
+      <div class="skeleton h-5 w-14 rounded-full"></div>
+      <!-- Actions col -->
+      <div class="skeleton h-4 w-4 rounded ml-auto"></div>
+    </div>
+  }
 } @else if (variant() === 'card') {
-
-<div class="skeleton rounded-xl" [style.width]="width()" [style.height]="height() || '120px'"></div>
-
+  <div class="skeleton rounded-xl" [style.width]="width()" [style.height]="height() || '120px'"></div>
 } @else if (variant() === 'avatar') {
-
-<div class="skeleton rounded-full shrink-0" [style.width]="width() || '40px'" [style.height]="height() || '40px'"></div>
-
+  <div class="skeleton rounded-full shrink-0" [style.width]="width() || '40px'" [style.height]="height() || '40px'"></div>
 } @else {
-
-<!-- text | title | rect -->
-<div class="skeleton rounded" [class.h-3]="variant() === 'text'" [class.h-4]="variant() === 'title'"
-  [class.h-5]="variant() === 'rect'" [style.width]="width()"
-  [style.height]="variant() === 'rect' ? height() : undefined"></div>
-
+  <!-- text | title | rect -->
+  <div
+    class="skeleton rounded"
+    [class.h-3]="variant() === 'text'"
+    [class.h-4]="variant() === 'title'"
+    [class.h-5]="variant() === 'rect'"
+    [style.width]="width()"
+    [style.height]="variant() === 'rect' ? height() : undefined"
+  ></div>
 }

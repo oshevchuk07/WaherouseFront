@@ -15,6 +15,19 @@ module.exports = defineConfig([
     ],
     processor: angular.processInlineTemplates,
     rules: {
+      // --- TypeScript ---
+      '@typescript-eslint/explicit-function-return-type': 'off',
+      '@typescript-eslint/no-explicit-any': 'error',
+      '@typescript-eslint/no-unused-vars': ['error', {
+        argsIgnorePattern: '^_',
+        varsIgnorePattern: '^_',
+      }],
+      '@typescript-eslint/consistent-type-imports': ['error', {
+        prefer: 'type-imports',
+      }],
+
+      // --- Angular ---
+      '@angular-eslint/prefer-standalone': 'error',
       '@angular-eslint/directive-selector': [
         'error',
         {
@@ -31,6 +44,10 @@ module.exports = defineConfig([
           style: 'kebab-case',
         },
       ],
+
+      // --- General ---
+      'no-console': ['warn', { allow: ['warn', 'error'] }], // console.log → warning
+      'eqeqeq': ['error', 'always'],
     },
   },
   {

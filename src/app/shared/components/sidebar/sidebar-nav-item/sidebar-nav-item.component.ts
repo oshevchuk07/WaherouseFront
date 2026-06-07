@@ -1,8 +1,9 @@
-import { Component, computed, inject, input, OnInit, output, signal } from '@angular/core';
+import type { OnInit } from '@angular/core';
+import { Component, computed, inject, input, output, signal } from '@angular/core';
 import { NavigationEnd, Router, RouterLink, RouterLinkActive } from '@angular/router';
-import { NavItem } from '../sidebar.types';
+import type { NavItem } from '../sidebar.types';
 import { animate, state, style, transition, trigger } from '@angular/animations';
-import { IconComponent } from "../../icons/icons.component";
+import { IconComponent } from '../../icons/icons.component';
 import { filter } from 'rxjs';
 
 @Component({
@@ -41,9 +42,7 @@ export class SidebarNavItemComponent implements OnInit {
     }
 
     // слухаємо навігацію щоб автоматично розкритись
-    this.router.events.pipe(
-      filter(e => e instanceof NavigationEnd)
-    ).subscribe(() => {
+    this.router.events.pipe(filter(e => e instanceof NavigationEnd)).subscribe(() => {
       if (this.isChildActive() && !this.isOpen()) {
         this.isOpen.set(true);
       }
