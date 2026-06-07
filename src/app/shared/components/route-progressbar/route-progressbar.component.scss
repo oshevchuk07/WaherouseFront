@@ -1,0 +1,43 @@
+.progress-enter {
+  animation:
+    barStep1 150ms ease-out forwards,
+    barStep2 3000ms ease-in-out 150ms forwards;
+}
+
+.progress-leave {
+  animation: barLeave 200ms ease-in forwards;
+}
+
+// Fast start to 40%
+@keyframes barStep1 {
+  from {
+    opacity: 0;
+    transform: scaleX(0);
+  }
+  to {
+    opacity: 1;
+    transform: scaleX(0.4);
+  }
+}
+
+// Slow loading between 40-85%
+@keyframes barStep2 {
+  from {
+    transform: scaleX(0.4);
+  }
+  to {
+    transform: scaleX(0.85);
+  }
+}
+
+// Final jump to 100%
+@keyframes barLeave {
+  from {
+    opacity: 1;
+    transform: scaleX(0.85);
+  }
+  to {
+    opacity: 0;
+    transform: scaleX(1);
+  }
+}

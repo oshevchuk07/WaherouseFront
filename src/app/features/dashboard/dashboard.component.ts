@@ -3,12 +3,13 @@ import { NotificationService } from '../../core/notifications/notification.servi
 import { IconComponent } from "../../shared/components/icons/icons.component";
 import { FormFieldComponent } from "../../shared/components/form-field/form-field.component";
 import { DialogService } from '../../shared/services/dialog.service';
+import { SkeletonComponent } from "../../shared/components/skeleton/skeleton.component";
 
 @Component({
   selector: 'app-dashboard',
   standalone: true,
   templateUrl: './dashboard.component.html',
-  imports: [IconComponent, FormFieldComponent],
+  imports: [IconComponent, FormFieldComponent, SkeletonComponent],
 })
 export class DashboardComponent {
   private readonly notify = inject(NotificationService);
