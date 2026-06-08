@@ -5,7 +5,7 @@ export const NAV_CONFIG: NavEntry[] = [
     type: 'item',
     label: 'Home',
     route: '/app/dashboard',
-    icon: 'Map_light',
+    icon: 'Shop_light',
   },
   {
     type: 'item',
@@ -17,14 +17,14 @@ export const NAV_CONFIG: NavEntry[] = [
   // ── Admin section ──────────────────────────────
   {
     type: 'divider',
-    label: 'Управління',
+    label: 'Control',
     roles: ['ADMIN'],
   },
   {
     type: 'item',
-    label: 'Planes y precios',
+    label: 'Plans and prices',
     route: '/app/plans',
-    icon: 'Return',
+    icon: 'Molecule_light',
     roles: ['ADMIN'],
     children: [
       { label: 'Список планів', route: '/app/plans/list' },
@@ -33,36 +33,36 @@ export const NAV_CONFIG: NavEntry[] = [
   },
   {
     type: 'item',
-    label: 'Configurador',
+    label: 'Plan configurator',
     route: '/app/tariff-configurator',
-    icon: 'Return',
+    icon: 'Setting_line_light',
     roles: ['ADMIN'],
   },
   {
     type: 'item',
-    label: 'Servicios y grupos',
+    label: 'Service groups',
     route: '/app/services-groups',
-    icon: 'Return',
+    icon: 'Chemistry _light',
     roles: ['ADMIN'],
   },
   {
     type: 'item',
-    label: 'Usuarios',
+    label: 'Users',
     route: '/app/users',
-    icon: 'Return',
+    icon: 'Group_add_light',
     roles: ['ADMIN'],
   },
 
   // ── Shared section ────────────────────────────
-  {
-    type: 'divider',
-    label: 'Інструменти',
-  },
-  {
-    type: 'item',
-    label: 'Picking IA',
-    route: '/app/picking-ia',
-    icon: 'Return',
-    roles: ['ADMIN'],
-  },
+  // {
+  //   type: 'divider',
+  //   label: 'Tools',
+  // },
+  // {
+  //   type: 'item',
+  //   label: 'Picking IA',
+  //   route: '/app/picking-ia',
+  //   icon: 'Return',
+  //   roles: ['ADMIN'],
+  // },
 ];

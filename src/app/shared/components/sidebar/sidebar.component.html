@@ -46,8 +46,7 @@
     <!-- Close button — mobile only -->
     @if (bp.isMobile()) {
       <button (click)="closeMobile()" class="ml-auto text-gray-400 hover:text-white transition-colors">
-        <!-- <app-icon name="close" [size]="20" /> -->
-        close
+        <app-icon name="close_ring_light" [size]="20" />
       </button>
     }
   </div>
@@ -84,8 +83,8 @@
       class="nav-item w-full hover:!bg-red-900/40 hover:!text-red-400"
       [class.nav-item--collapsed]="!showLabels()"
     >
-      <!-- <app-icon name="logout" [size]="20" cssClass="shrink-0" /> -->
-      <div>logout</div>
+      <app-icon name="On_button_light" [size]="20" cssClass="shrink-0" />
+
       @if (showLabels()) {
         <span class="nav-item__label">Cerrar sesión</span>
       }
@@ -95,11 +94,13 @@
     @if (bp.isDesktop()) {
       <button
         (click)="toggleDesktop()"
-        class="flex items-center justify-center py-2 rounded-lg text-gray-500 hover:bg-gray-700 hover:text-white transition-colors w-full"
+        class="flex items-center justify-center py-2 rounded-lg text-gray-500 hover:bg-gray-700 text-white transition-colors w-full"
       >
-        <!-- <app-icon name="chevron-left" [size]="18" cssClass="transition-transform duration-250"
-        [class.rotate-180]="isCollapsed()" /> -->
-        <div>left</div>
+        @if (!isCollapsed()) {
+          <app-icon name="Menu_collapse" [size]="18" cssClass="transition-transform duration-250" />
+        } @else {
+          <app-icon name="Menu_expand" [size]="18" cssClass="transition-transform duration-250" />
+        }
       </button>
     }
   </div>

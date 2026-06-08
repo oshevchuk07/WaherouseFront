@@ -15,7 +15,7 @@ import { IconComponent } from '../icons/icons.component';
       <div class="ui-dialog__header">
         <h2 class="ui-dialog__title">{{ data.title }}</h2>
         <button class="ui-dialog__close" (click)="cancel()">
-          <app-icon name="close" [size]="18" />
+          <app-icon name="close_ring_light" [size]="18" />
         </button>
       </div>
 

@@ -22,7 +22,7 @@ const VARIANT_STYLES = {
           <h2 class="ui-dialog__title">{{ data.title }}</h2>
         </div>
         <button class="ui-dialog__close" (click)="cancel()">
-          <app-icon name="close" [size]="18" />
+          <app-icon name="close_ring_light" [size]="32" />
         </button>
       </div>
 
