@@ -39,6 +39,10 @@ export const routes: Routes = [
         loadComponent: () => import('./features/warehouse-3d/warehouse-3d.component').then(m => m.Warehouse3dComponent),
       },
       {
+        path: 'integrations-list',
+        loadChildren,
+      },
+      {
         path: 'users',
         canActivate: [roleGuard(['ADMIN'])],
         loadComponent: () => import('./features/users/users.component').then(c => c.UsersComponent),

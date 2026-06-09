@@ -40,8 +40,8 @@ export const NAV_CONFIG: NavEntry[] = [
   },
   {
     type: 'item',
-    label: 'Service groups',
-    route: '/app/services-groups',
+    label: 'Integrations & Groups',
+    route: '/app/integrations-list',
     icon: 'Chemistry _light',
     roles: ['ADMIN'],
   },
