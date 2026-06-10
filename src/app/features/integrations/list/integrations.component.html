@@ -30,19 +30,27 @@
               {{ item?.name }}
             </h3>
             <div class="flex items-center gap-2">
-              <button class="text-gray-400 hover:text-gray-600 p-1 rounded transition-colors" title="Editar grupo">
+              <button
+                class="text-gray-400 hover:text-gray-600 p-1 rounded transition-colors"
+                title="Editar grupo"
+                (click)="editGroup(item)"
+              >
                 <span class="material-icons text-lg">edit</span>
               </button>
-              <button class="text-gray-400 hover:text-gray-600 p-1 rounded transition-colors" title="Añadir servicio">
+              <button
+                class="text-gray-400 hover:text-gray-600 p-1 rounded transition-colors"
+                title="Añadir servicio"
+                (click)="addIntegration(item)"
+              >
                 <span class="material-icons text-lg">add</span>
               </button>
             </div>
           </div>
 
           <div class="divide-y divide-gray-100">
-            @for (service of item?.services; track service.id) {
+            @for (integration of item?.services; track integration.id) {
               <div class="px-6 py-4 hover:bg-gray-50 transition-colors">
-                <!-- <service-item [item]="service" (onEditService)="editService($event)"></service-item> -->
+                <app-integration-item [item]="integration" (editIntegration)="editIntegration($event)"></app-integration-item>
               </div>
             } @empty {
               <div class="px-6 py-4 text-sm text-gray-400 italic">There are no services assigned to this group</div>

@@ -5,12 +5,13 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { NotificationService } from '../../../core/notifications/notification.service';
 import { IntegrationsService } from '../integrations.service';
+import { IconComponent } from '../../../shared/components/icons/icons.component';
 
 @Component({
   selector: 'app-add-integration-group-dialog',
   templateUrl: './add-integration-group.dialog.html',
   standalone: true,
-  imports: [ReactiveFormsModule, MatIconModule],
+  imports: [ReactiveFormsModule, MatIconModule, IconComponent],
 })
 export class AddIntegrationGroupDialogComponent implements OnInit {
   private integrationsService = inject(IntegrationsService);

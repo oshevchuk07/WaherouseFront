@@ -1,0 +1,65 @@
+<div class="ui-dialog">
+  <div class="ui-dialog__header">
+    <h2 class="ui-dialog__title">{{ isEdit ? 'Edit service' : 'Add new service' }}</h2>
+    <button class="ui-dialog__close" (click)="cancel()" aria-label="Close dialog">
+      <app-icon name="close_ring_light" [size]="32" />
+    </button>
+  </div>
+
+  <div class="ui-dialog__body flex flex-col gap-4" [formGroup]="integrationForm">
+    <app-form-field label="Name" [error]="getFieldError('name')">
+      <input class="ui-input" type="text" placeholder="Service name" formControlName="name" />
+    </app-form-field>
+
+    <app-form-field label="Website URL" [error]="getFieldError('url')">
+      <input class="ui-input" type="text" placeholder="https://example.com" formControlName="url" />
+    </app-form-field>
+
+    <app-form-field label="Description">
+      <textarea class="ui-textarea" rows="3" placeholder="Optional description" formControlName="description"></textarea>
+    </app-form-field>
+
+    <label class="ui-checkbox">
+      <input type="checkbox" formControlName="isActive" />
+      <span>Active</span>
+    </label>
+
+    <!-- Image upload -->
+    <div class="flex flex-col gap-2">
+      <span class="ui-label-text">Logo image</span>
+      <label
+        for="fileInput"
+        class="relative cursor-pointer w-28 h-28 rounded-xl border-2 border-dashed border-gray-700 hover:border-gray-500 transition-colors flex items-center justify-center overflow-hidden bg-gray-800"
+      >
+        <input id="fileInput" type="file" class="hidden" accept="image/jpeg,image/png,image/webp" (change)="onFileSelected($event)" />
+
+        @if (previewUrl()) {
+          <img [src]="previewUrl()" alt="" class="w-full h-full object-contain" />
+          <button
+            class="absolute top-1 right-1 w-6 h-6 rounded-full bg-red-600 hover:bg-red-500 flex items-center justify-center transition-colors z-10"
+            (click)="removeImage($event)"
+          >
+            <app-icon name="close" [size]="12" cssClass="text-white" />
+          </button>
+        } @else {
+          <div class="flex flex-col items-center gap-1 text-gray-500 pointer-events-none">
+            <app-icon name="upload" [size]="20" />
+            <span class="text-xs">Add image</span>
+          </div>
+        }
+      </label>
+    </div>
+  </div>
+
+  <div class="ui-dialog__footer">
+    <button class="ui-btn-secondary" (click)="cancel()">Cancel</button>
+    <button class="ui-btn-primary" [disabled]="saving()" (click)="save()">
+      @if (saving()) {
+        <span class="material-icons text-base animate-spin">refresh</span>
+        Saving...
+      } @else {
+        {{ isEdit ? 'Save changes' : 'Add service' }}
+      }
+    </button>
+  </div>
+</div>
