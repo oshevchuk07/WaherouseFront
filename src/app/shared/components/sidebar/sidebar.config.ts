@@ -34,7 +34,7 @@ export const NAV_CONFIG: NavEntry[] = [
   {
     type: 'item',
     label: 'Plan configurator',
-    route: '/app/tariff-configurator',
+    route: '/app/plans',
     icon: 'Setting_line_light',
     roles: ['ADMIN'],
   },
