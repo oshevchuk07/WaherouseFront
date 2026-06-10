@@ -1,6 +1,0 @@
-import { Component } from '@angular/core';
-
-@Component({
-  templateUrl: './integrations.component.html',
-})
-export class ServiceManageComponent {}

@@ -1,0 +1,41 @@
+<div class="ui-dialog md:min-w-[460px]">
+  <div class="ui-dialog__header">
+    <h2 class="ui-dialog__title">
+      {{ data?.item ? 'Editar grupo de integración' : 'Añadir nuevo grupo' }}
+    </h2>
+    <button class="ui-dialog__close" (click)="cancel()" aria-label="Close dialog">
+      <mat-icon svgIcon="close_ring_light" class="text-gray-400 w-5 h-5"></mat-icon>
+    </button>
+  </div>
+
+  <div class="ui-dialog__body flex flex-col gap-4">
+    <div class="flex flex-col gap-1">
+      <label class="text-xs font-medium text-gray-500 uppercase tracking-wide" for="name">Nombre</label>
+      <input
+        id="name"
+        type="text"
+        [formControl]="name"
+        placeholder="Ej. Marketplaces, ERP..."
+        autocomplete="off"
+        class="w-full px-4 py-2 bg-white border rounded-lg text-sm text-gray-700 outline-none focus:border-blue-400 transition-colors"
+        [class.border-red-400]="name.hasError('required') && name.touched"
+        [class.border-gray-200]="!(name.hasError('required') && name.touched)"
+      />
+      @if (name.hasError('required') && name.touched) {
+        <span class="text-xs text-red-500 mt-1">Se requiere el nombre</span>
+      }
+    </div>
+  </div>
+
+  <div class="ui-dialog__footer">
+    <button class="ui-btn-secondary" (click)="cancel()">Cancelar</button>
+    <button class="ui-btn-primary flex items-center gap-2" [disabled]="name.invalid || saving()" (click)="submit()">
+      @if (saving()) {
+        <span class="material-icons text-base animate-spin">refresh</span>
+        Guardando...
+      } @else {
+        Guardar
+      }
+    </button>
+  </div>
+</div>

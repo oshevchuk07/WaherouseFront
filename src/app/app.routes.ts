@@ -40,7 +40,7 @@ export const routes: Routes = [
       },
       {
         path: 'integrations-list',
-        loadChildren,
+        loadChildren: () => import('./features/integrations/integrations.routes').then(r => r.INTEGRATIONS_ROUTES),
       },
       {
         path: 'users',

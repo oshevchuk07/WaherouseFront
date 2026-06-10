@@ -1,0 +1,61 @@
+<div class="flex flex-col gap-6">
+  <div class="flex items-center justify-between">
+    <h1 class="text-2xl font-semibold text-gray-800">Integrations</h1>
+    <button
+      (click)="addNewGroup()"
+      class="flex items-center gap-2 bg-gray-800 hover:bg-gray-700 text-white text-sm font-medium px-4 py-2 rounded-lg transition-colors"
+    >
+      <span class="material-icons text-base">add</span>
+      Add new group
+    </button>
+  </div>
+
+  <!-- @if (store.error()) {
+    <div class="px-4 py-3 rounded-lg bg-red-50 border border-red-200 text-red-600 text-sm">
+      {{ store.error() }}
+    </div>
+  } -->
+
+  <div class="flex flex-col gap-6 flex-1">
+    @if (isLoading()) {
+      <div class="bg-white rounded-xl border border-gray-200 flex items-center justify-center py-16 text-gray-400 text-sm gap-2">
+        <span class="material-icons animate-spin text-base">refresh</span>
+        Loading...
+      </div>
+    } @else {
+      @for (item of integrationsList(); track item.id) {
+        <div class="bg-white rounded-xl border border-gray-200 overflow-hidden shadow-sm">
+          <div class="flex items-center justify-between bg-gray-50 px-6 py-4 border-b border-gray-200">
+            <h3 class="text-sm font-semibold text-gray-700 uppercase tracking-wide">
+              {{ item?.name }}
+            </h3>
+            <div class="flex items-center gap-2">
+              <button class="text-gray-400 hover:text-gray-600 p-1 rounded transition-colors" title="Editar grupo">
+                <span class="material-icons text-lg">edit</span>
+              </button>
+              <button class="text-gray-400 hover:text-gray-600 p-1 rounded transition-colors" title="Añadir servicio">
+                <span class="material-icons text-lg">add</span>
+              </button>
+            </div>
+          </div>
+
+          <div class="divide-y divide-gray-100">
+            @for (service of item?.services; track service.id) {
+              <div class="px-6 py-4 hover:bg-gray-50 transition-colors">
+                <!-- <service-item [item]="service" (onEditService)="editService($event)"></service-item> -->
+              </div>
+            } @empty {
+              <div class="px-6 py-4 text-sm text-gray-400 italic">There are no services assigned to this group</div>
+            }
+          </div>
+        </div>
+      }
+
+      @if (integrationsList().length === 0) {
+        <div class="bg-white rounded-xl border border-gray-200 py-12 text-center text-gray-400 text-sm">No data</div>
+      }
+    }
+  </div>
+
+  <!-- <p class="text-xs text-gray-400">Total: {{ store.totalCount() }} grupos de integraciones</p> -->
+</div>
