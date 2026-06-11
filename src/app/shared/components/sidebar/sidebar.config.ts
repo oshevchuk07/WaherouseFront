@@ -23,13 +23,13 @@ export const NAV_CONFIG: NavEntry[] = [
   {
     type: 'item',
     label: 'Plans and prices',
-    route: '/app/plans',
+    route: '/app/plans/list',
     icon: 'Molecule_light',
     roles: ['ADMIN'],
-    children: [
-      { label: 'Список планів', route: '/app/plans/list' },
-      { label: 'Архів', route: '/app/plans/archive' },
-    ],
+    // children: [
+    //   { label: 'Plan list', route: '/app/plans/list' },
+    //   { label: 'Archive', route: '/app/plans/archive' },
+    // ],
   },
   {
     type: 'item',

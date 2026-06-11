@@ -5,13 +5,13 @@ import type { NavDivider, NavEntry, NavItem } from './sidebar.types';
 import { NAV_CONFIG } from './sidebar.config';
 import type { UserRole } from '../../../core/models/user.model';
 import { BreakpointService } from '../../../core/services/breakpoint.service';
-import { NgTemplateOutlet } from '@angular/common';
+import { NgClass, NgTemplateOutlet } from '@angular/common';
 import { IconComponent } from '../icons/icons.component';
 
 @Component({
   selector: 'app-sidebar',
   templateUrl: './sidebar.component.html',
-  imports: [SidebarNavItemComponent, NgTemplateOutlet, IconComponent],
+  imports: [SidebarNavItemComponent, NgTemplateOutlet, IconComponent, NgClass],
 })
 export class SidebarComponent {
   private readonly authStore = inject(AuthStore);
