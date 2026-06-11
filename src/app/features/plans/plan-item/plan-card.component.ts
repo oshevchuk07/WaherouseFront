@@ -51,12 +51,12 @@ export class PlanCardComponent {
       });
   }
 
-  private filterSelectedGroups(allGroups: IntegrationGroupModel[], selectedIds: number[]): IntegrationGroupModel[] {
-    return allGroups
-      .map(group => {
-        const services = group.services.filter(s => selectedIds.includes(s.id));
-        return services.length ? { ...group, services } : null;
-      })
-      .filter((g): g is IntegrationGroupModel => g !== null);
-  }
+  // private filterSelectedGroups(allGroups: IntegrationGroupModel[], selectedIds: number[]): IntegrationGroupModel[] {
+  //   return allGroups
+  //     .map(group => {
+  //       const services = group.services.filter(s => selectedIds.includes(s.id));
+  //       return services.length ? { ...group, services } : null;
+  //     })
+  //     .filter((g): g is IntegrationGroupModel => g !== null);
+  // }
 }

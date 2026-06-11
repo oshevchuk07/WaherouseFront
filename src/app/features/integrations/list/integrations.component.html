@@ -48,7 +48,7 @@
           </div>
 
           <div class="divide-y divide-gray-100">
-            @for (integration of item?.services; track integration.id) {
+            @for (integration of item?.integrations; track integration.id) {
               <div class="px-6 py-4 hover:bg-gray-50 transition-colors">
                 <app-integration-item [item]="integration" (editIntegration)="editIntegration($event)"></app-integration-item>
               </div>
