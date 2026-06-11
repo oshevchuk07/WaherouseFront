@@ -85,6 +85,11 @@
   <path d="M21.5 4.5L2.5 8.5" stroke="currentColor" />
   <circle cx="9" cy="15" r="1" fill="currentColor" />
   </symbol>
+  <symbol id="icon-Menu" viewBox="0 0 24 24">
+    <path d="M5 7H19" stroke="currentcColor" stroke-width="2" stroke-linecap="round" />
+  <path d="M5 12H19" stroke="currentcColor" stroke-width="2" stroke-linecap="round" />
+  <path d="M5 17H19" stroke="currentcColor" stroke-width="2" stroke-linecap="round" />
+  </symbol>
   <symbol id="icon-Menu_collapse" viewBox="0 0 35 35">
     <g id="Capa_1" data-name="Capa 1">
     <g>
