@@ -52,6 +52,10 @@ export const routes: Routes = [
         loadChildren: () => import('./features/plans/plans.routes').then(c => c.PLANS_ROUTES),
       },
       {
+        path: 'template',
+        loadComponent: () => import('./features/template/template.component').then(c => c.TemplateComponent),
+      },
+      {
         path: '',
         redirectTo: 'dashboard',
         pathMatch: 'full',

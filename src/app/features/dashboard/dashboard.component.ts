@@ -1,15 +1,13 @@
 import { Component, inject } from '@angular/core';
 import { NotificationService } from '../../core/notifications/notification.service';
-import { IconComponent } from '../../shared/components/icons/icons.component';
-import { FormFieldComponent } from '../../shared/components/form-field/form-field.component';
 import { DialogService } from '../../shared/services/dialog.service';
-import { SkeletonComponent } from '../../shared/components/skeleton/skeleton.component';
+import { TemplateComponent } from '../template/template.component';
 
 @Component({
   selector: 'app-dashboard',
   standalone: true,
   templateUrl: './dashboard.component.html',
-  imports: [IconComponent, FormFieldComponent, SkeletonComponent],
+  imports: [TemplateComponent],
 })
 export class DashboardComponent {
   private readonly notify = inject(NotificationService);
