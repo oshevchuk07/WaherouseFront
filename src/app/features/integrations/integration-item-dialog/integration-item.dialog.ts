@@ -85,7 +85,7 @@ export class IntegrationItemDialogComponent {
 
     request$.subscribe({
       next: res => {
-        const id = this.isEdit ? String(this.data.item!.id) : res.data?.id ? String(res.data.id) : undefined;
+        const id = this.isEdit ? String(this.data.item!.id) : res?.id ? String(res.id) : undefined;
 
         if (this.selectedFile() && id) {
           const formData = new FormData();
@@ -94,7 +94,7 @@ export class IntegrationItemDialogComponent {
           this.integrationsService.uploadServiceImage(id, formData).subscribe({
             next: uploaded => {
               this.notify.success(this.isEdit ? 'Service updated' : 'Service added');
-              this.dialogRef.close(uploaded.data);
+              this.dialogRef.close(uploaded);
             },
             error: () => {
               this.notify.error('Failed to upload image');
@@ -103,7 +103,7 @@ export class IntegrationItemDialogComponent {
           });
         } else {
           this.notify.success(this.isEdit ? 'Service updated' : 'Service added');
-          this.dialogRef.close(res.data);
+          this.dialogRef.close(res);
         }
       },
       error: () => {

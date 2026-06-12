@@ -85,25 +85,20 @@
   <path d="M21.5 4.5L2.5 8.5" stroke="currentColor" />
   <circle cx="9" cy="15" r="1" fill="currentColor" />
   </symbol>
-  <symbol id="icon-Menu_collapse" viewBox="0 0 35 35">
-    <g id="Capa_1" data-name="Capa 1">
-    <g>
-      <rect style="fill: #707070; stroke-width: 0px;" x="0" width="35" height="35" rx="7.5" ry="7.5" />
-      <path
-        style="fill: none; stroke: currentColor; stroke-linecap: round; stroke-linejoin: round; stroke-width: 1.5px;"
-        d="m7.5,10.44v14.12m10.59-14.12l-5.88,7.06m0,0l5.88,7.06m-5.88-7.06h15.29" />
-    </g>
-  </g>
+  <symbol id="icon-Menu" viewBox="0 0 24 24">
+    <path d="M5 7H19" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+  <path d="M5 12H19" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+  <path d="M5 17H19" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
   </symbol>
-  <symbol id="icon-Menu_expand" viewBox="0 0 35 35">
-    <g id="Capa_1" data-name="Capa 1">
-    <g>
-      <rect style="fill: #707070; stroke-width: 0px;" width="35" height="35" rx="7.5" ry="7.5" />
-      <path stroke="currentColor"
-        style="fill: none; stroke: currentColor; stroke-linecap: round; stroke-linejoin: round; stroke-width: 1.5px;"
-        d="m27.5,24.56v-14.12m-10.59,14.12l5.88-7.06m0,0l-5.88-7.06m5.88,7.06H7.5" />
-    </g>
-  </g>
+  <symbol id="icon-Menu_collapse" viewBox="0 0 24 24">
+    <path stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"
+    stroke-width="1.5" fill-rule="evenodd"
+    d="m1.5 4.4v14.2m10.6-14.2l-5.9 7.1m0 0l5.9 7.1m-5.9-7.1h15.3" />
+  </symbol>
+  <symbol id="icon-Menu_expand" viewBox="0 0 24 24">
+    <path stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"
+    stroke-width="1.5" fill-rule="evenodd"
+    d="m21.5 18.6v-14.2m-10.6 14.2l5.9-7.1m0 0l-5.9-7.1m5.9 7.1h-15.3" />
   </symbol>
   <symbol id="icon-Molecule_light" viewBox="0 0 24 24">
     <circle cx="12" cy="12" r="2.5" stroke="currentColor" />

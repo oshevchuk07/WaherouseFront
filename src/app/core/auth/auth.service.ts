@@ -3,8 +3,6 @@ import type { AuthUser } from '../models/user.model';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../environrments/environment';
 import type { Observable } from 'rxjs';
-import { map } from 'rxjs';
-import type { ApiResponse } from '../models/api-response.model';
 
 export interface LoginPayload {
   email: string;
@@ -25,11 +23,11 @@ export class AuthService {
   private readonly api = environment.apiUrl;
 
   login(payload: LoginPayload): Observable<LoginData> {
-    return this.http.post<ApiResponse<LoginData>>(`${this.api}/auth/login`, payload).pipe(map(res => res.data!));
+    return this.http.post<LoginData>(`${this.api}/auth/login`, payload);
   }
 
   getProfile(): Observable<AuthUser> {
-    return this.http.get<ApiResponse<AuthUser>>(`${this.api}/auth/profile`).pipe(map(res => res.data!));
+    return this.http.get<AuthUser>(`${this.api}/auth/profile`);
   }
 
   logout(): void {

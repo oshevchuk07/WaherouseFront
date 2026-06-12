@@ -1,10 +1,5 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 35 35">
-  <g id="Capa_1" data-name="Capa 1">
-    <g>
-      <rect style="fill: #707070; stroke-width: 0px;" width="35" height="35" rx="7.5" ry="7.5" />
-      <path stroke="currentColor"
-        style="fill: none; stroke: currentColor; stroke-linecap: round; stroke-linejoin: round; stroke-width: 1.5px;"
-        d="m27.5,24.56v-14.12m-10.59,14.12l5.88-7.06m0,0l-5.88-7.06m5.88,7.06H7.5" />
-    </g>
-  </g>
+<svg version="1.2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
+  <path stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"
+    stroke-width="1.5" fill-rule="evenodd"
+    d="m21.5 18.6v-14.2m-10.6 14.2l5.9-7.1m0 0l-5.9-7.1m5.9 7.1h-15.3" />
 </svg>

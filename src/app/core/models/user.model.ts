@@ -1,5 +1,8 @@
 export type UserRole = 'ADMIN' | 'USER';
-export type PaymentType = 'MONTHLY' | 'YEARLY';
+export enum PaymentType {
+  MONTHLY = 'MONTHLY',
+  YEARLY = 'YEARLY',
+}
 
 export interface User {
   id: number;

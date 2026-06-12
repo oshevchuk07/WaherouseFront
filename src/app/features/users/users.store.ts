@@ -49,7 +49,7 @@ export const UsersStore = signalStore(
               next: users => patchState(store, { users, loading: false }),
               error: () =>
                 patchState(store, {
-                  error: 'Не вдалося завантажити користувачів',
+                  error: 'Failed to load users',
                   loading: false,
                 }),
             }),
@@ -70,7 +70,7 @@ export const UsersStore = signalStore(
               },
               error: () =>
                 patchState(store, {
-                  error: 'Не вдалося оновити користувача',
+                  error: 'Failed to update user',
                   saving: false,
                 }),
             }),
@@ -91,7 +91,7 @@ export const UsersStore = signalStore(
               },
               error: () =>
                 patchState(store, {
-                  error: 'Не вдалося видалити користувача',
+                  error: 'Failed to delete user',
                   saving: false,
                 }),
             }),

@@ -1,17 +1,15 @@
 export interface IntegrationGroupModel {
   id: number;
   name: string;
-  services: IntegrationItemModel[];
+  integrations: IntegrationItemModel[];
 }
 
 export interface IntegrationItemModel {
   id: number;
   name: string;
-  categoryId: number;
+  groupId: number;
   description: string;
   isActive: boolean;
   logoImage: string;
   url: string;
-
-  logo: string;
 }

@@ -28,8 +28,7 @@ import { IconComponent } from '../icons/icons.component';
                  text-gray-500 dark:text-gray-400
                  hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
         >
-          <!-- <app-icon name="menu" [size]="20" /> -->
-          menu
+          <app-icon name="Menu" [size]="20" cssClass="stroke-gray-400" />
         </button>
       }
 
