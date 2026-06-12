@@ -28,7 +28,7 @@ const VARIANT_STYLES = {
 
       <!-- Body -->
       <div class="ui-dialog__body">
-        <p class="text-sm text-gray-400 leading-relaxed">{{ data.message }}</p>
+        <p class="text-sm text-gray-600 dark:text-gray-400 leading-relaxed">{{ data.message }}</p>
       </div>
 
       <!-- Footer -->

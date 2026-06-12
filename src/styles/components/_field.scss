@@ -1,16 +1,14 @@
-// ─── Field wrapper (label + input + error) ───────────────────────
 .ui-field {
   @apply flex flex-col gap-1.5;
 
   .ui-label {
-    @apply text-sm font-medium text-gray-300;
+    @apply text-sm font-medium text-gray-700 dark:text-gray-300;
   }
 
   .ui-error {
-    @apply text-xs text-red-400 mt-0.5;
+    @apply text-xs text-red-500 dark:text-red-400 mt-0.5;
   }
 
-  // якщо поле в стані помилки — підсвічуємо border
   &.has-error {
     .ui-input,
     .ui-textarea,
