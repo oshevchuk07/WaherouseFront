@@ -1,5 +1,4 @@
-import type { OnDestroy, OnInit } from '@angular/core';
-import { Component, inject } from '@angular/core';
+import { Component, effect, inject } from '@angular/core';
 import { ActivatedRoute, NavigationEnd, Router, RouterOutlet } from '@angular/router';
 import { SidebarComponent } from '../../shared/components/sidebar/sidebar.component';
 import { AuthStore } from '../../core/auth/auth.store';
@@ -8,9 +7,10 @@ import { NotificationsComponent } from '../../shared/components/notifications/no
 import type { LayoutConfig } from '../../core/services/layout.service';
 import { LayoutService } from '../../core/services/layout.service';
 import type { Subscription } from 'rxjs';
-import { filter } from 'rxjs';
+import { filter, map } from 'rxjs';
 import { BreakpointService } from '../../core/services/breakpoint.service';
 import { RouteProgressBarComponent } from '../../shared/components/route-progressbar/route-progressbar.component';
+import { toSignal } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-admin-layout',
@@ -18,7 +18,7 @@ import { RouteProgressBarComponent } from '../../shared/components/route-progres
   imports: [RouterOutlet, SidebarComponent, TopbarComponent, NotificationsComponent, RouteProgressBarComponent],
   templateUrl: './admin-layout.component.html',
 })
-export class AdminLayoutComponent implements OnInit, OnDestroy {
+export class AdminLayoutComponent {
   readonly authStore = inject(AuthStore);
   readonly layout = inject(LayoutService);
   readonly bp = inject(BreakpointService);
@@ -27,10 +27,17 @@ export class AdminLayoutComponent implements OnInit, OnDestroy {
   private readonly activatedRoute = inject(ActivatedRoute);
   private sub?: Subscription;
 
-  ngOnInit(): void {
-    this.sub = this.router.events.pipe(filter(e => e instanceof NavigationEnd)).subscribe(() => {
-      const data = this.getDeepestRouteData();
-      const layoutConfig = data['layout'] as Partial<LayoutConfig> | undefined;
+  private readonly routeData = toSignal(
+    this.router.events.pipe(
+      filter((e): e is NavigationEnd => e instanceof NavigationEnd),
+      map(() => this.getDeepestRouteData()),
+    ),
+  );
+
+  constructor() {
+    effect(() => {
+      const data = this.routeData();
+      const layoutConfig = data?.['layout'] as Partial<LayoutConfig> | undefined;
 
       if (layoutConfig) {
         this.layout.set(layoutConfig);
@@ -38,10 +45,6 @@ export class AdminLayoutComponent implements OnInit, OnDestroy {
         this.layout.reset();
       }
     });
-  }
-
-  ngOnDestroy(): void {
-    this.sub?.unsubscribe();
   }
 
   private getDeepestRouteData(): Record<string, unknown> {

@@ -19,7 +19,6 @@
   backdrop-filter: blur(4px);
 }
 
-// сам діалог
 .ui-dialog {
   @apply bg-gray-900 border border-gray-800 rounded-2xl
          flex flex-col overflow-hidden;

@@ -1,5 +1,22 @@
 import type { NavEntry } from './sidebar.types';
 
+// {
+//   type: 'divider',
+//   label: 'Control',
+//   roles: ['ADMIN'],
+// },
+//  {
+//     type: 'item',
+//     label: 'Plans and prices',
+//     route: '/app/plans/selection',
+//     icon: 'Molecule_light',
+//     roles: ['ADMIN'],
+// children: [
+//   { label: 'Plan list', route: '/app/plans/list' },
+//   { label: 'Archive', route: '/app/plans/archive' },
+// ],
+// },
+
 export const NAV_CONFIG: NavEntry[] = [
   {
     type: 'item',
@@ -15,26 +32,18 @@ export const NAV_CONFIG: NavEntry[] = [
   },
 
   // ── Admin section ──────────────────────────────
-  {
-    type: 'divider',
-    label: 'Control',
-    roles: ['ADMIN'],
-  },
+
   {
     type: 'item',
     label: 'Plans and prices',
-    route: '/app/plans/list',
+    route: '/app/plans/selection',
     icon: 'Molecule_light',
     roles: ['ADMIN'],
-    // children: [
-    //   { label: 'Plan list', route: '/app/plans/list' },
-    //   { label: 'Archive', route: '/app/plans/archive' },
-    // ],
   },
   {
     type: 'item',
     label: 'Plan configurator',
-    route: '/app/plans',
+    route: '/app/plans/configurator',
     icon: 'Setting_line_light',
     roles: ['ADMIN'],
   },
@@ -52,17 +61,4 @@ export const NAV_CONFIG: NavEntry[] = [
     icon: 'Group_add_light',
     roles: ['ADMIN'],
   },
-
-  // ── Shared section ────────────────────────────
-  // {
-  //   type: 'divider',
-  //   label: 'Tools',
-  // },
-  // {
-  //   type: 'item',
-  //   label: 'Picking IA',
-  //   route: '/app/picking-ia',
-  //   icon: 'Return',
-  //   roles: ['ADMIN'],
-  // },
 ];

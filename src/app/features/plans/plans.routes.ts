@@ -11,12 +11,12 @@ export const PLANS_ROUTES: Routes = [
         pathMatch: 'full',
       },
       {
-        path: 'list',
-        loadComponent: () => import('./plans-list/plans-list.component').then(m => m.PlansListComponent),
+        path: 'selection',
+        loadComponent: () => import('./plan-selection/plan-selection.component').then(m => m.PlanSelectionComponent),
       },
       {
-        path: 'archive',
-        loadComponent: () => import('./plans-archive/plans-archive.component').then(m => m.PlansAcrhiveComponent),
+        path: 'configurator',
+        loadComponent: () => import('./plan-configurator/plan-configurator.component').then(m => m.PlanConfiguratorComponent),
       },
     ],
   },

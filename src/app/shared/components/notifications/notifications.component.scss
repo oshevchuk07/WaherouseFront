@@ -2,7 +2,6 @@
   animation: slideIn 200ms ease-out forwards;
 }
 
-/* Анімація зникнення з DOM (:leave аналог) */
 .notification-leave {
   animation: slideOut 150ms ease-in forwards;
 }
