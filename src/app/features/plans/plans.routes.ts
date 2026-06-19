@@ -16,7 +16,7 @@ export const PLANS_ROUTES: Routes = [
       },
       {
         path: 'configurator',
-        loadComponent: () => import('./plan-configurator/plan-configurator.component').then(m => m.PlanConfiguratorComponent),
+        loadComponent: () => import('./configurator/configurator.component').then(m => m.PlanConfiguratorComponent),
       },
     ],
   },

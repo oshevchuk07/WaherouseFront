@@ -1,10 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Component, computed, inject, input, output } from '@angular/core';
-import type { Plan } from '../../../core/models/user.model';
 import { PaymentType } from '../../../core/models/user.model';
 import type { IntegrationGroupModel } from '../../integrations/integrations.model';
 import { DialogService } from '../../../shared/services/dialog.service';
 import { IconComponent } from '../../../shared/components/icons/icons.component';
+import type { PlanItemModel } from '../plan.models';
 
 @Component({
   templateUrl: './plan-card.component.html',
@@ -16,14 +16,14 @@ export class PlanCardComponent {
 
   private readonly dialogService = inject(DialogService);
 
-  item = input.required<Plan>();
+  item = input.required<PlanItemModel>();
   payPeriod = input<PaymentType | null>(null);
   isCurrent = input<boolean>(false);
   editMode = input<boolean>(false);
   categoryList = input<IntegrationGroupModel[]>([]);
 
-  editItem = output<Plan>();
-  startPlan = output<Plan>();
+  editItem = output<PlanItemModel>();
+  startPlan = output<PlanItemModel>();
 
   isPopular = computed(() => this.item().isPopular);
 

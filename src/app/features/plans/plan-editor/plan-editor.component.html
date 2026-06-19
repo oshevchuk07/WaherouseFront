@@ -1,0 +1,66 @@
+<div class="ui-dialog">
+  <div class="ui-dialog__header">
+    <h2 class="ui-dialog__title">Add new plan</h2>
+    <button class="ui-dialog__close" (click)="cancel()" aria-label="Close dialog">
+      <app-icon name="close_ring_light" [size]="32" />
+    </button>
+  </div>
+
+  <div class="ui-dialog__body flex flex-wrap gap-4" [formGroup]="editForm">
+    <div class="flex flex-col">
+      <app-form-field label="Name" class="flex-1" [error]="getFieldError('name')">
+        <input class="ui-input" type="text" placeholder="name" formControlName="name" />
+      </app-form-field>
+
+      <app-form-field label="description" class="flex-1" [error]="getFieldError('description')">
+        <input class="ui-input" type="text" placeholder="description" formControlName="description" />
+      </app-form-field>
+
+      <app-form-field label="subtitle" class="flex-1" [error]="getFieldError('subtitle')">
+        <input class="ui-input" type="text" placeholder="subtitle" formControlName="subtitle" />
+      </app-form-field>
+    </div>
+    <div class="flex flex-col">
+      <app-form-field label="oldMonthlyPrice" class="flex-1" [error]="getFieldError('oldMonthlyPrice')">
+        <input class="ui-input" type="number" placeholder="oldMonthlyPrice" formControlName="oldMonthlyPrice" />
+      </app-form-field>
+
+      <app-form-field label="monthlyPrice" class="flex-1" [error]="getFieldError('monthlyPrice')">
+        <input class="ui-input" type="number" placeholder="monthlyPrice" formControlName="monthlyPrice" />
+      </app-form-field>
+    </div>
+    <div class="flex flex-col">
+      <app-form-field label="oldYearlyPrice" class="flex-1" [error]="getFieldError('oldYearlyPrice')">
+        <input class="ui-input" type="number" placeholder="oldYearlyPrice" formControlName="oldYearlyPrice" />
+      </app-form-field>
+
+      <app-form-field label="yearlyPrice" class="flex-1" [error]="getFieldError('yearlyPrice')">
+        <input class="ui-input" type="number" placeholder="yearlyPrice" formControlName="yearlyPrice" />
+      </app-form-field>
+    </div>
+    <div class="flex flex-col">
+      <label class="ui-toggle flex items-center gap-2 cursor-pointer">
+        <input type="checkbox" formControlName="isActive" />
+        <span></span>
+        <span class="text-sm text-gray-600 dark:text-gray-400 select-none">Active</span>
+      </label>
+      <label class="ui-toggle flex items-center gap-2 cursor-pointer">
+        <input type="checkbox" formControlName="isPopular" />
+        <span></span>
+        <span class="text-sm text-gray-600 dark:text-gray-400 select-none">Popular</span>
+      </label>
+    </div>
+  </div>
+
+  <div class="ui-dialog__footer">
+    <button class="ui-btn-secondary" (click)="cancel()">Cancel</button>
+    <button class="ui-btn-primary" [disabled]="saving()" (click)="save()">
+      @if (saving()) {
+        <span class="material-icons text-base animate-spin">refresh</span>
+        Saving...
+      } @else {
+        Save
+      }
+    </button>
+  </div>
+</div>

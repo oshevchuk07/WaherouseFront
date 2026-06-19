@@ -1,3 +1,5 @@
+import type { PlanItemModel } from '../../features/plans/plan.models';
+
 export type UserRole = 'ADMIN' | 'USER';
 export enum PaymentType {
   MONTHLY = 'MONTHLY',
@@ -14,23 +16,9 @@ export interface User {
   role: UserRole;
   paymentType: PaymentType;
   planId: number | null;
-  plan: Plan | null;
+  plan: PlanItemModel | null;
   createdAt: string;
   updatedAt: string;
-}
-
-export interface Plan {
-  id: number;
-  name: string;
-  description: string | null;
-  subtitle: string | null;
-  isActive: boolean;
-  isPopular: boolean;
-  monthlyPrice: number | null;
-  yearlyPrice: number | null;
-  prevMonthlyPrice: number | null;
-  prevYearlyPrice: number | null;
-  advantages: unknown;
 }
 
 export interface AuthUser {

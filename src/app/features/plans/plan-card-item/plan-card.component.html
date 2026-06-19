@@ -19,8 +19,8 @@
   @if (isPopular()) {
     <div class="absolute top-[-12px] w-full flex justify-center z-10">
       <div class="bg-gray-900 dark:bg-white dark:text-gray-900 text-white h-6 px-4 rounded-lg text-[11px] flex items-center gap-1">
-        <app-icon name="star" [size]="12" />
-        Más popular
+        <app-icon name="Star_light" [size]="16" />
+        More Popular
       </div>
     </div>
   }
@@ -28,7 +28,7 @@
   <!-- Current plan badge -->
   @if (isCurrent()) {
     <div class="absolute top-2 right-2">
-      <span class="text-xs text-gray-400 italic">Plan actual</span>
+      <span class="text-xs text-gray-400 italic">Currect plan</span>
     </div>
   }
 
@@ -39,7 +39,7 @@
         class="w-7 h-7 flex items-center justify-center rounded-lg text-gray-400 hover:text-white hover:bg-gray-700 transition-colors"
         (click)="onEditItem()"
       >
-        <app-icon name="edit" [size]="16" />
+        <app-icon name="Edit" [size]="20" />
       </button>
     </div>
   }
@@ -56,8 +56,8 @@
       @if (payPeriod() === PaymentType.MONTHLY || editMode()) {
         <div>
           <div class="text-sm text-gray-400 line-through h-5">
-            @if (item().prevMonthlyPrice) {
-              {{ item().prevMonthlyPrice }}€
+            @if (item().oldMonthlyPrice) {
+              {{ item().oldYearlyPrice }}€
             }
           </div>
           <div class="flex items-baseline gap-1">
@@ -70,9 +70,10 @@
       @if (payPeriod() === PaymentType.YEARLY || editMode()) {
         <div>
           <div class="text-sm text-gray-400 line-through h-5">
-            @if (item().prevYearlyPrice) {
-              {{ item().prevYearlyPrice }}€
-            }
+            <!-- @if (item().oldYearlyPrice) {
+              {{ item().oldMonthlyPrice }}€
+            } -->
+            {{ item().oldYearlyPrice ? item().oldYearlyPrice + '€' : '' }}
           </div>
           <div class="flex items-baseline gap-1">
             <span class="text-[44px] leading-none font-normal text-gray-900 dark:text-white"> {{ item().yearlyPrice }}€ </span>
@@ -88,7 +89,7 @@
   <!-- Activate button -->
   @if (!editMode() && !isCurrent()) {
     <div class="px-6">
-      <button class="ui-btn-secondary w-full" (click)="onStartPlan()">Activar</button>
+      <button class="ui-btn-secondary w-full" (click)="onStartPlan()">Activate</button>
     </div>
   }
 

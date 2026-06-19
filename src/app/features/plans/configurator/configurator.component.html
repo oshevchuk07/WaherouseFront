@@ -13,4 +13,14 @@
       </button>
     </div>
   </section>
+
+  <div class="flex gap-4 justify-center flex-wrap">
+    @if (plansStore.planListLoading()) {
+      Loading
+    } @else {
+      @for (plan of plansStore.planList(); track plan.id) {
+        <app-plan-cart [item]="plan" [editMode]="true" (editItem)="editPlanItem($event)"></app-plan-cart>
+      }
+    }
+  </div>
 </div>
