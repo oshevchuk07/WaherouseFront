@@ -1,0 +1,49 @@
+<div class="ui-dialog">
+  <div class="ui-dialog__header">
+    <h2 class="ui-dialog__title">Add new plan</h2>
+    <button class="ui-dialog__close" (click)="cancel()" aria-label="Close dialog">
+      <app-icon name="close_ring_light" [size]="32" />
+    </button>
+  </div>
+
+  <!-- <div class="flex flex-col gap-4 overflow-y-auto max-w-[860px]"> -->
+  <div class="ui-dialog__body flex flex-wrap gap-4">
+    <div class="max-h-[500px] overflow-y-auto">
+      @for (group of groupList(); track group.id) {
+        <div>
+          <h2 class="text-[16px] font-[500] text-gray-700 mb-4">
+            {{ group.name }}
+          </h2>
+          <div class="flex flex-wrap gap-2">
+            @for (item of group.integrations; track item.id) {
+              <div
+                role="button"
+                tabindex="0"
+                (click)="toggle(item.id)"
+                (keydown.enter)="toggle(item.id)"
+                [class.bg-gray-50]="!selectedIds().has(item.id)"
+                [class.opacity-50]="!selectedIds().has(item.id)"
+                class="cursor-pointer gap-1 border border-gray-300 hover:border-blue-400 px-4 py-2 rounded flex flex-col items-center justify-center relative min-w-[120px]"
+              >
+                <img [src]="item.logoImage" class="h-[50px]" alt="{{ item.name }}" />
+                <span class="text-gray-700 font-[500] text-[14px] text-center">
+                  {{ item.name }}
+                </span>
+                @if (selectedIds().has(item.id)) {
+                  <div class="absolute top-1 left-1">
+                    <mat-icon svgIcon="checked-green" />
+                  </div>
+                }
+              </div>
+            }
+          </div>
+        </div>
+      }
+    </div>
+  </div>
+
+  <div class="ui-dialog__footer">
+    <button class="ui-btn-secondary" (click)="cancel()">Cancel</button>
+    <button class="ui-btn-primary" (click)="submit()">Save</button>
+  </div>
+</div>

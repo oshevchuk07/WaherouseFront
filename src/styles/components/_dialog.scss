@@ -1,4 +1,8 @@
 .ui-dialog-panel {
+  --mat-dialog-container-max-width: 95vw;
+  --mat-dialog-container-min-width: 0px;
+  width: fit-content;
+
   .mat-mdc-dialog-container {
     padding: 0 !important;
     border-radius: 16px !important;
@@ -14,6 +18,11 @@
   }
 }
 
+.ui-dialog-panel-wide {
+  width: 860px;
+  max-width: 95vw !important;
+}
+
 .ui-dialog-backdrop {
   background: rgba(0, 0, 0, 0.6) !important;
   backdrop-filter: blur(4px);
@@ -21,17 +30,19 @@
 
 .ui-dialog {
   @apply bg-white border border-gray-200 rounded-2xl flex flex-col overflow-hidden;
+  max-height: 90vh;
+  width: fit-content;
+  min-width: 320px;
 
   // dark mode
   @apply dark:bg-gray-900 dark:border-gray-800;
 
   &__header {
-    @apply flex items-center justify-between
-           px-6 py-4 border-b border-gray-200 dark:border-gray-800;
+    @apply flex items-center justify-between px-6 py-4;
   }
 
   &__title {
-    @apply text-base font-semibold text-gray-900 dark:text-white;
+    @apply text-base font-semibold text-gray-900 dark:text-white font-[500] text-[20px] leading-[32px];
   }
 
   &__close {
@@ -42,11 +53,10 @@
   }
 
   &__body {
-    @apply px-6 py-5;
+    @apply px-6 py-5 overflow-y-auto;
   }
 
   &__footer {
-    @apply flex items-center justify-end gap-3
-           px-6 py-4 border-t border-gray-200 dark:border-gray-800;
+    @apply flex items-center justify-end gap-3 px-6 py-4;
   }
 }

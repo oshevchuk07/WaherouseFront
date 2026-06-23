@@ -31,6 +31,10 @@ export class IntegrationsService {
     });
   }
 
+  getIntegrationGroups(): Observable<PaginatedResponse<IntegrationGroupModel>> {
+    return this.http.get<PaginatedResponse<IntegrationGroupModel>>(`${this.api}/integrations/groups`);
+  }
+
   addCategory(params: { name: string }): Observable<IntegrationGroupModel> {
     return this.http.post<IntegrationGroupModel>(`${this.api}/integrations/groups`, params);
   }

@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 
 @Component({
-  template: '',
+  templateUrl: './warehouse-3d.component.html',
 })
 export class Warehouse3dComponent {}

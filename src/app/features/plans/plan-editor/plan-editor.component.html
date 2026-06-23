@@ -1,54 +1,90 @@
+<!-- eslint-disable @angular-eslint/template/label-has-associated-control -->
 <div class="ui-dialog">
   <div class="ui-dialog__header">
-    <h2 class="ui-dialog__title">Add new plan</h2>
-    <button class="ui-dialog__close" (click)="cancel()" aria-label="Close dialog">
-      <app-icon name="close_ring_light" [size]="32" />
-    </button>
+    <h2 class="ui-dialog__title">Create nes subscription</h2>
+    <div class="flex gap-4 items-center">
+      <button class="ui-btn-primary" [disabled]="saving()" (click)="editItegrationsCollection()">Chouse integrations</button>
+      <button class="ui-dialog__close" (click)="cancel()" aria-label="Close dialog">
+        <app-icon name="close_ring_light" [size]="32" />
+      </button>
+    </div>
   </div>
 
   <div class="ui-dialog__body flex flex-wrap gap-4" [formGroup]="editForm">
-    <div class="flex flex-col">
-      <app-form-field label="Name" class="flex-1" [error]="getFieldError('name')">
+    <div class="flex flex-col flex-1 gap-4 items-start min-w-[300px]">
+      <app-form-field label="Name" class="w-full" [error]="getFieldError('name')">
         <input class="ui-input" type="text" placeholder="name" formControlName="name" />
       </app-form-field>
 
-      <app-form-field label="description" class="flex-1" [error]="getFieldError('description')">
+      <app-form-field label="Description" class="w-full" [error]="getFieldError('description')">
         <input class="ui-input" type="text" placeholder="description" formControlName="description" />
       </app-form-field>
 
-      <app-form-field label="subtitle" class="flex-1" [error]="getFieldError('subtitle')">
+      <app-form-field label="Sub title" class="w-full" [error]="getFieldError('subtitle')">
         <input class="ui-input" type="text" placeholder="subtitle" formControlName="subtitle" />
       </app-form-field>
-    </div>
-    <div class="flex flex-col">
-      <app-form-field label="oldMonthlyPrice" class="flex-1" [error]="getFieldError('oldMonthlyPrice')">
-        <input class="ui-input" type="number" placeholder="oldMonthlyPrice" formControlName="oldMonthlyPrice" />
-      </app-form-field>
 
-      <app-form-field label="monthlyPrice" class="flex-1" [error]="getFieldError('monthlyPrice')">
-        <input class="ui-input" type="number" placeholder="monthlyPrice" formControlName="monthlyPrice" />
-      </app-form-field>
-    </div>
-    <div class="flex flex-col">
-      <app-form-field label="oldYearlyPrice" class="flex-1" [error]="getFieldError('oldYearlyPrice')">
-        <input class="ui-input" type="number" placeholder="oldYearlyPrice" formControlName="oldYearlyPrice" />
-      </app-form-field>
+      <div class="flex gap-4">
+        <app-form-field label="Old monthly price" class="w-full" [error]="getFieldError('oldMonthlyPrice')">
+          <input class="ui-input" type="number" placeholder="oldMonthlyPrice" formControlName="oldMonthlyPrice" />
+        </app-form-field>
 
-      <app-form-field label="yearlyPrice" class="flex-1" [error]="getFieldError('yearlyPrice')">
-        <input class="ui-input" type="number" placeholder="yearlyPrice" formControlName="yearlyPrice" />
-      </app-form-field>
+        <app-form-field label="Monthly price" class="w-full" [error]="getFieldError('monthlyPrice')">
+          <input class="ui-input" type="number" placeholder="monthlyPrice" formControlName="monthlyPrice" />
+        </app-form-field>
+      </div>
+
+      <div class="flex gap-4">
+        <app-form-field label="Old yearly price" class="w-full" [error]="getFieldError('oldYearlyPrice')">
+          <input class="ui-input" type="number" placeholder="oldYearlyPrice" formControlName="oldYearlyPrice" />
+        </app-form-field>
+
+        <app-form-field label="Yearly price" class="w-full" [error]="getFieldError('yearlyPrice')">
+          <input class="ui-input" type="number" placeholder="yearlyPrice" formControlName="yearlyPrice" />
+        </app-form-field>
+      </div>
+
+      <div class="flex gap-4 w-full">
+        <label class="ui-toggle flex items-center gap-2 cursor-pointer flex-1">
+          <input type="checkbox" formControlName="isActive" />
+          <span></span>
+          <span class="text-sm text-gray-600 dark:text-gray-400 select-none">Is active</span>
+        </label>
+        <label class="ui-toggle flex items-center gap-2 cursor-pointer flex-1">
+          <input type="checkbox" formControlName="isPopular" />
+          <span></span>
+          <span class="text-sm text-gray-600 dark:text-gray-400 select-none">Is popular</span>
+        </label>
+      </div>
     </div>
-    <div class="flex flex-col">
-      <label class="ui-toggle flex items-center gap-2 cursor-pointer">
-        <input type="checkbox" formControlName="isActive" />
-        <span></span>
-        <span class="text-sm text-gray-600 dark:text-gray-400 select-none">Active</span>
-      </label>
-      <label class="ui-toggle flex items-center gap-2 cursor-pointer">
-        <input type="checkbox" formControlName="isPopular" />
-        <span></span>
-        <span class="text-sm text-gray-600 dark:text-gray-400 select-none">Popular</span>
-      </label>
+
+    <!--  -->
+    <div class="flex flex-col flex-1 gap-4 items-start min-w-[300px]">
+      adfadsfa
+
+      @for (category of selectedCategoryList; track $index) {
+        <div>
+          <div dashInputField>
+            <label>
+              {{ category.name }}
+            </label>
+          </div>
+          @if (category.integrations.length) {
+            <ul class="text-[12px]">
+              @for (item of category.integrations; track $index) {
+                <li class="flex items-center gap-2 text-gray-500 leading-none">
+                  <svg fill="none" viewBox="0 0 20 20" aria-hidden="true" height="20" width="20" class="shrink-0 text-check-icon-color">
+                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" d="m6 10.5 3 3 6-6"></path>
+                  </svg>
+                  <span class="font-[300]">
+                    {{ item.name }}
+                  </span>
+                </li>
+              }
+            </ul>
+          }
+        </div>
+      }
     </div>
   </div>
 

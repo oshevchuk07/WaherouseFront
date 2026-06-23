@@ -10,3 +10,7 @@ input::placeholder,
 textarea::placeholder {
   color: var(--ui-text-hint);
 }
+
+.cdk-overlay-pane.mat-mdc-dialog-panel {
+  max-width: 800px;
+}

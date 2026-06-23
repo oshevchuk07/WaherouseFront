@@ -6,6 +6,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { NotificationService } from '../../../core/notifications/notification.service';
 import { IntegrationsService } from '../integrations.service';
 import { IconComponent } from '../../../shared/components/icons/icons.component';
+import { IntegrationsStore } from '../integrations.store';
 
 @Component({
   selector: 'app-add-integration-group-dialog',
@@ -17,6 +18,7 @@ export class AddIntegrationGroupDialogComponent implements OnInit {
   private integrationsService = inject(IntegrationsService);
   private dialogRef = inject(MatDialogRef<AddIntegrationGroupDialogComponent>);
   private notification = inject(NotificationService);
+  private readonly integrationStore = inject(IntegrationsStore);
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   protected data = inject<{ item?: any }>(MAT_DIALOG_DATA, { optional: true });
@@ -28,6 +30,8 @@ export class AddIntegrationGroupDialogComponent implements OnInit {
     if (this.data?.item) {
       this.name.patchValue(this.data.item?.name || '');
     }
+
+    this.integrationStore.getIntegrationGroups();
   }
 
   submit(): void {

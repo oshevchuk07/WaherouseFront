@@ -25,6 +25,6 @@ export class PlanConfiguratorComponent implements OnInit {
   }
 
   editPlanItem(item: PlanItemModel): void {
-    this.dialog.open(PlanEditorDialogComponent, { data: item });
+    this.dialog.open(PlanEditorDialogComponent, { data: item, panelClass: 'ui-dialog-panel', maxWidth: '95vw' });
   }
 }
