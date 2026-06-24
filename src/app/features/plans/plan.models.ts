@@ -1,3 +1,7 @@
+import type { IntegrationItemModel } from '../integrations/integrations.model';
+
+export type IntegrationItemWithoutGroup = Omit<IntegrationItemModel, 'groupId'>;
+
 export interface PlanItemModel {
   id: number;
   name: string;
@@ -12,19 +16,7 @@ export interface PlanItemModel {
   oldMonthlyPrice: number | null;
   oldYearlyPrice: number | null;
 
-  planIntegrations: {
-    integration: {
-      id: number;
-      isActive: true;
-      logoImage: string;
-      name: string;
-      url: string;
-      group: {
-        id: number;
-        name: string;
-      };
-    };
-  }[];
+  features: Record<string, IntegrationItemWithoutGroup[]>;
 
   createdAt: string;
   updatedAt: string;

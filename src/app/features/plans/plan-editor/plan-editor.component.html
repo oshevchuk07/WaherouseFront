@@ -1,16 +1,16 @@
 <!-- eslint-disable @angular-eslint/template/label-has-associated-control -->
 <div class="ui-dialog">
   <div class="ui-dialog__header">
-    <h2 class="ui-dialog__title">Create nes subscription</h2>
+    <h2 class="ui-dialog__title">Create new subscription</h2>
     <div class="flex gap-4 items-center">
-      <button class="ui-btn-primary" [disabled]="saving()" (click)="editItegrationsCollection()">Chouse integrations</button>
+      <button class="ui-btn-primary" [disabled]="saving()" (click)="editItegrationsCollection()">Change integrations</button>
       <button class="ui-dialog__close" (click)="cancel()" aria-label="Close dialog">
         <app-icon name="close_ring_light" [size]="32" />
       </button>
     </div>
   </div>
 
-  <div class="ui-dialog__body flex flex-wrap gap-4" [formGroup]="editForm">
+  <div class="ui-dialog__body flex flex-wrap gap-8" [formGroup]="editForm">
     <div class="flex flex-col flex-1 gap-4 items-start min-w-[300px]">
       <app-form-field label="Name" class="w-full" [error]="getFieldError('name')">
         <input class="ui-input" type="text" placeholder="name" formControlName="name" />
@@ -60,7 +60,21 @@
 
     <!--  -->
     <div class="flex flex-col flex-1 gap-4 items-start min-w-[300px]">
-      adfadsfa
+      <div>
+        @for (group of currentIntegrations().features | keyvalue; track group.key) {
+          <div class="mb-2">
+            <h3 class="font-[500] leading-[16px] text-[14px] text-[#002d50] capitalize">{{ group.key }}</h3>
+            <ul>
+              @for (item of group.value; track item.id) {
+                <li class="text-[12px] leading-[12px] font-[300] text-[#64748b] flex items-center gap-1">
+                  <app-icon name="item-check" [size]="20"></app-icon>
+                  {{ item.name }}
+                </li>
+              }
+            </ul>
+          </div>
+        }
+      </div>
 
       @for (category of selectedCategoryList; track $index) {
         <div>

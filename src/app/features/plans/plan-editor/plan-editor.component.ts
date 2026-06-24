@@ -11,11 +11,12 @@ import type { IntegrationGroupModel, IntegrationItemModel } from '../../integrat
 import { IntegrationsService } from '../../integrations/integrations.service';
 import { IntegrationsSelectionDialog } from '../../integrations/integrations-selection/integrations-selection.dialog';
 import { DialogService } from '../../../shared/services/dialog.service';
+import { KeyValuePipe } from '@angular/common';
 
 // todo: refactor it
 @Component({
   templateUrl: './plan-editor.component.html',
-  imports: [IconComponent, FormFieldComponent, ReactiveFormsModule],
+  imports: [IconComponent, FormFieldComponent, ReactiveFormsModule, KeyValuePipe],
 })
 export class PlanEditorDialogComponent implements OnInit {
   private readonly data = inject<PlanItemModel>(MAT_DIALOG_DATA);
@@ -27,6 +28,8 @@ export class PlanEditorDialogComponent implements OnInit {
   private readonly dialog = inject(DialogService);
 
   readonly form = this.fb.nonNullable.group({});
+
+  readonly currentIntegrations = signal<PlanItemModel>(this.data);
 
   saving = signal(false);
 
@@ -53,6 +56,7 @@ export class PlanEditorDialogComponent implements OnInit {
   ngOnInit(): void {
     this.integrationsService.fetchIntegrations();
     this.categoryList = this.integrationsService.integrations();
+    // console.log(this.data);
 
     // if (this.data?.advantages) {
     //   const advantages = JSON.parse(this.data.advantages);
@@ -122,7 +126,9 @@ export class PlanEditorDialogComponent implements OnInit {
   }
 
   editItegrationsCollection(): void {
-    this.dialog.openWide(IntegrationsSelectionDialog);
+    const allIds: number[] = Object.values(this.currentIntegrations().features).flatMap(items => items.map(item => item.id));
+
+    this.dialog.openWide(IntegrationsSelectionDialog, { selectedIds: allIds });
   }
 
   cancel(): void {

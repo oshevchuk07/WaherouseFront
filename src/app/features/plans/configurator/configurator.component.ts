@@ -6,15 +6,30 @@ import { PlansStore } from '../plans.store';
 import { CommonModule } from '@angular/common';
 import { PlanCardComponent } from '../plan-card-item/plan-card.component';
 import type { PlanItemModel } from '../plan.models';
+import { MatTableModule } from '@angular/material/table';
+import { IconComponent } from '../../../shared/components/icons/icons.component';
 
 @Component({
   templateUrl: './configurator.component.html',
-  imports: [CommonModule, PlanCardComponent],
+  imports: [CommonModule, PlanCardComponent, MatTableModule, IconComponent],
   providers: [PlansStore],
 })
 export class PlanConfiguratorComponent implements OnInit {
   private readonly dialog = inject(MatDialog);
   readonly plansStore = inject(PlansStore);
+
+  readonly columns = [
+    'name',
+    'description',
+    'active',
+    'popular',
+    'oldMonthPrice',
+    'monthPrice',
+    'oldYearlyPrice',
+    'yearlyPrice',
+    'integrations',
+    'actions',
+  ];
 
   ngOnInit(): void {
     this.plansStore.loadPlanList();
