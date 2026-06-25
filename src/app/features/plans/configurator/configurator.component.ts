@@ -1,6 +1,5 @@
 import type { OnInit } from '@angular/core';
 import { Component, inject } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
 import { PlanEditorDialogComponent } from '../plan-editor/plan-editor.component';
 import { PlansStore } from '../plans.store';
 import { CommonModule } from '@angular/common';
@@ -8,6 +7,8 @@ import type { PlanItemModel } from '../plan.models';
 import { MatTableModule } from '@angular/material/table';
 import { IconComponent } from '../../../shared/components/icons/icons.component';
 import { MatMenuModule } from '@angular/material/menu';
+import { take } from 'rxjs';
+import { DialogService } from '../../../shared/services/dialog.service';
 
 @Component({
   templateUrl: './configurator.component.html',
@@ -15,7 +16,7 @@ import { MatMenuModule } from '@angular/material/menu';
   providers: [PlansStore],
 })
 export class PlanConfiguratorComponent implements OnInit {
-  private readonly dialog = inject(MatDialog);
+  private readonly dialog = inject(DialogService);
   readonly plansStore = inject(PlansStore);
 
   readonly columns = [
@@ -38,11 +39,27 @@ export class PlanConfiguratorComponent implements OnInit {
   }
 
   addNewPlan(): void {
-    this.dialog.open(PlanEditorDialogComponent);
+    this.dialog
+      .openWide(PlanEditorDialogComponent)
+      .afterClosed()
+      .pipe(take(1))
+      .subscribe(res => {
+        if (res) {
+          this.plansStore.loadPlanList();
+        }
+      });
   }
 
   editPlanItem(item: PlanItemModel): void {
-    this.dialog.open(PlanEditorDialogComponent, { data: item, panelClass: 'ui-dialog-panel', maxWidth: '95vw' });
+    this.dialog
+      .openWide(PlanEditorDialogComponent, item)
+      .afterClosed()
+      .pipe(take(1))
+      .subscribe(res => {
+        if (res) {
+          this.plansStore.loadPlanList();
+        }
+      });
   }
 
   getTotalCount(features: Record<string, unknown[]>): number {

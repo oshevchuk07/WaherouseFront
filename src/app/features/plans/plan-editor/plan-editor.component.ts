@@ -36,7 +36,7 @@ export class PlanEditorDialogComponent {
   readonly currentIntegrations = signal<PlanItemModel>(this.data);
 
   readonly selectedIds = signal<number[]>(
-    this.data?.features ? Object.values(this.data.features).flatMap(items => items.map(item => item.id)) : [],
+    this.data?.features ? Object.values(this.data.features as FeaturesMap).flatMap(items => items.map(i => i.id)) : [],
   );
   readonly selectedFeatures = signal<FeaturesMap>((this.data?.features as FeaturesMap) ?? {});
 
