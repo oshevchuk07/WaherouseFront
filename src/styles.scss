@@ -2,6 +2,20 @@
 
 @variant dark (&:where(.dark, .dark *));
 
+@theme {
+  // colors
+  --color-brand: #3b5bdb;
+  --color-brand-light: #748ffc;
+  --color-surface: #f8f9fa;
+  --color-danger: #e03131;
+
+  // font
+  --font-size-2xs: 0.625rem;
+
+  // spacings
+  --radius-card: 12px;
+}
+
 @import "styles/variables";
 @import "styles/base";
 @import "styles/components";

@@ -4,14 +4,14 @@ import { MatDialog } from '@angular/material/dialog';
 import { PlanEditorDialogComponent } from '../plan-editor/plan-editor.component';
 import { PlansStore } from '../plans.store';
 import { CommonModule } from '@angular/common';
-import { PlanCardComponent } from '../plan-card-item/plan-card.component';
 import type { PlanItemModel } from '../plan.models';
 import { MatTableModule } from '@angular/material/table';
 import { IconComponent } from '../../../shared/components/icons/icons.component';
+import { MatMenuModule } from '@angular/material/menu';
 
 @Component({
   templateUrl: './configurator.component.html',
-  imports: [CommonModule, PlanCardComponent, MatTableModule, IconComponent],
+  imports: [CommonModule, MatTableModule, IconComponent, MatMenuModule],
   providers: [PlansStore],
 })
 export class PlanConfiguratorComponent implements OnInit {
@@ -31,6 +31,8 @@ export class PlanConfiguratorComponent implements OnInit {
     'actions',
   ];
 
+  readonly objectKeys = Object.keys;
+
   ngOnInit(): void {
     this.plansStore.loadPlanList();
   }
@@ -41,5 +43,9 @@ export class PlanConfiguratorComponent implements OnInit {
 
   editPlanItem(item: PlanItemModel): void {
     this.dialog.open(PlanEditorDialogComponent, { data: item, panelClass: 'ui-dialog-panel', maxWidth: '95vw' });
+  }
+
+  getTotalCount(features: Record<string, unknown[]>): number {
+    return Object.values(features).reduce((sum, arr) => sum + arr.length, 0);
   }
 }

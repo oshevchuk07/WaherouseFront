@@ -1,5 +1,4 @@
-import type { OnInit } from '@angular/core';
-import { Component, inject, signal } from '@angular/core';
+import { Component, computed, inject, signal } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { IconComponent } from '../../../shared/components/icons/icons.component';
@@ -7,19 +6,21 @@ import { PlansService } from '../plans.service';
 import { NotificationService } from '../../../core/notifications/notification.service';
 import { FormFieldComponent } from '../../../shared/components/form-field/form-field.component';
 import type { PlanItemModel } from '../plan.models';
-import type { IntegrationGroupModel, IntegrationItemModel } from '../../integrations/integrations.model';
 import { IntegrationsService } from '../../integrations/integrations.service';
 import { IntegrationsSelectionDialog } from '../../integrations/integrations-selection/integrations-selection.dialog';
 import { DialogService } from '../../../shared/services/dialog.service';
 import { KeyValuePipe } from '@angular/common';
+import { forkJoin, of, switchMap, take } from 'rxjs';
+import type { IntegrationItemModel } from '../../integrations/integrations.model';
 
-// todo: refactor it
+type FeaturesMap = Record<string, IntegrationItemModel[]>;
+
 @Component({
   templateUrl: './plan-editor.component.html',
   imports: [IconComponent, FormFieldComponent, ReactiveFormsModule, KeyValuePipe],
 })
-export class PlanEditorDialogComponent implements OnInit {
-  private readonly data = inject<PlanItemModel>(MAT_DIALOG_DATA);
+export class PlanEditorDialogComponent {
+  readonly data = inject<PlanItemModel>(MAT_DIALOG_DATA);
   private readonly dialogRef = inject(MatDialogRef<PlanEditorDialogComponent>);
   private readonly fb = inject(FormBuilder);
   private readonly plansService = inject(PlansService);
@@ -27,11 +28,19 @@ export class PlanEditorDialogComponent implements OnInit {
   private readonly integrationsService = inject(IntegrationsService);
   private readonly dialog = inject(DialogService);
 
+  readonly saving = signal(false);
+  readonly isEditMode = !!this.data?.id;
+
   readonly form = this.fb.nonNullable.group({});
 
   readonly currentIntegrations = signal<PlanItemModel>(this.data);
 
-  saving = signal(false);
+  readonly selectedIds = signal<number[]>(
+    this.data?.features ? Object.values(this.data.features).flatMap(items => items.map(item => item.id)) : [],
+  );
+  readonly selectedFeatures = signal<FeaturesMap>((this.data?.features as FeaturesMap) ?? {});
+
+  readonly selectedCount = computed(() => this.selectedIds().length);
 
   readonly editForm = this.fb.nonNullable.group({
     name: [this.data?.name ?? '', Validators.required],
@@ -45,38 +54,11 @@ export class PlanEditorDialogComponent implements OnInit {
     yearlyPrice: [this.data?.yearlyPrice ?? 0, Validators.required],
   });
 
-  selectedPlatforms: IntegrationItemModel[] = [];
-  selectedLogisticas: IntegrationItemModel[] = [];
-  selectedMarketplaces: IntegrationItemModel[] = [];
-  selectedErp: IntegrationItemModel[] = [];
-
-  categoryList: IntegrationGroupModel[] = [];
-  selectedCategoryList: IntegrationGroupModel[] = [];
-
-  ngOnInit(): void {
-    this.integrationsService.fetchIntegrations();
-    this.categoryList = this.integrationsService.integrations();
-    // console.log(this.data);
-
-    // if (this.data?.advantages) {
-    //   const advantages = JSON.parse(this.data.advantages);
-    //   this.selectedPlatforms = advantages?.platforms as IntegrationItemModel[] | [];
-    //   this.selectedMarketplaces = advantages?.markets as IntegrationItemModel[] | [];
-    //   this.selectedLogisticas = advantages?.logistics as IntegrationItemModel[] | [];
-    //   this.selectedErp = advantages?.erp as IntegrationItemModel[] | [];
-
-    //   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    //   const selectedServices = this.data?.features?.map((el: any) => el.serviceId);
-    //   this.selectedCategoryList = selectedServices ?? [];
-    // }
-  }
-
   getFieldError(controlName: string): string {
     const control = this.editForm.get(controlName);
     if (!control || !control.touched || !control.errors) return '';
 
     if (control.hasError('required')) return 'This field is required';
-    if (control.hasError('email')) return 'Enter a valid email address';
 
     return 'Invalid field value';
   }
@@ -84,36 +66,37 @@ export class PlanEditorDialogComponent implements OnInit {
   save(): void {
     if (this.editForm.invalid) {
       this.editForm.markAllAsTouched();
-      console.error('Form invalid');
       return;
     }
 
-    if (this.data) {
-      this.plansService
-        .updateTariffItem(this.data.id, this.editForm.getRawValue())
-        // .pipe(takeUntilDestroyed())
-        .subscribe({
-          next: () => {
-            this.notify.success('Plan created');
-          },
-          error: () => {
-            this.notify.error('Unable to create plan');
-          },
-          complete: () => {
-            this.saving.set(false);
-            this.dialogRef.close();
-          },
-        });
+    this.saving.set(true);
+    const formValue = this.editForm.getRawValue();
+    const ids = this.selectedIds();
+
+    if (this.isEditMode) {
+      forkJoin([
+        this.plansService.updateTariffItem(this.data.id, formValue),
+        this.integrationsService.bulkReplaceServices(this.data.id, ids),
+      ]).subscribe({
+        next: () => this.notify.success('Plan updated'),
+        error: () => {
+          this.notify.error('Unable to update plan');
+          this.saving.set(false);
+        },
+        complete: () => {
+          this.saving.set(false);
+          this.dialogRef.close();
+        },
+      });
     } else {
       this.plansService
-        .addPlanItem(this.editForm.getRawValue())
-        // .pipe(takeUntilDestroyed())
+        .addPlanItem(formValue)
+        .pipe(switchMap(newPlan => (ids.length > 0 ? this.integrationsService.bulkReplaceServices(newPlan.id, ids) : of(null))))
         .subscribe({
-          next: () => {
-            this.notify.success('Plan created');
-          },
+          next: () => this.notify.success('Plan created'),
           error: () => {
             this.notify.error('Unable to create plan');
+            this.saving.set(false);
           },
           complete: () => {
             this.saving.set(false);
@@ -126,9 +109,16 @@ export class PlanEditorDialogComponent implements OnInit {
   }
 
   editItegrationsCollection(): void {
-    const allIds: number[] = Object.values(this.currentIntegrations().features).flatMap(items => items.map(item => item.id));
-
-    this.dialog.openWide(IntegrationsSelectionDialog, { selectedIds: allIds });
+    this.dialog
+      .openWide(IntegrationsSelectionDialog, { selectedIds: this.selectedIds() })
+      .afterClosed()
+      .pipe(take(1))
+      .subscribe((result: { ids: number[]; grouped: FeaturesMap } | null) => {
+        if (result) {
+          this.selectedIds.set(result.ids);
+          this.selectedFeatures.set(result.grouped);
+        }
+      });
   }
 
   cancel(): void {

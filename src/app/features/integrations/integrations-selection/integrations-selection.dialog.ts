@@ -2,14 +2,13 @@ import { Component, inject, signal } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { IntegrationsService } from '../integrations.service';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import type { IntegrationGroupModel } from '../integrations.model';
-import { MatIcon } from '@angular/material/icon';
+import type { IntegrationGroupModel, IntegrationItemModel } from '../integrations.model';
 import { CommonModule } from '@angular/common';
 import { IconComponent } from '../../../shared/components/icons/icons.component';
 
 @Component({
   templateUrl: './integrations-selection.dialog.html',
-  imports: [MatIcon, CommonModule, IconComponent],
+  imports: [CommonModule, IconComponent],
 })
 export class IntegrationsSelectionDialog {
   private readonly dialogRef = inject(MatDialogRef<IntegrationsSelectionDialog>);
@@ -17,7 +16,7 @@ export class IntegrationsSelectionDialog {
   private readonly integrationsService = inject(IntegrationsService);
 
   readonly groupList = signal<IntegrationGroupModel[]>([]);
-  readonly selectedIds = signal<Set<number>>(new Set());
+  readonly selectedIds = signal<Set<number>>(new Set(this.data?.selectedIds ?? []));
 
   constructor() {
     this.integrationsService
@@ -48,19 +47,27 @@ export class IntegrationsSelectionDialog {
   toggle(id: number): void {
     this.selectedIds.update(ids => {
       const next = new Set(ids);
-      // eslint-disable-next-line @typescript-eslint/no-unused-expressions
-      next.has(id) ? next.delete(id) : next.add(id);
+      if (next.has(id)) {
+        next.delete(id);
+      } else {
+        next.add(id);
+      }
       return next;
     });
   }
 
   submit(): void {
     const ids = this.selectedIds();
-    const selected = this.groupList()
-      .flatMap(g => g.integrations)
-      .filter(s => s.isActive && ids.has(s.id));
 
-    this.dialogRef.close(selected);
+    const grouped = this.groupList().reduce<Record<string, IntegrationItemModel[]>>((acc, group) => {
+      const selected = group.integrations.filter(i => ids.has(i.id));
+      if (selected.length > 0) {
+        acc[group.name.toLowerCase()] = selected;
+      }
+      return acc;
+    }, {});
+
+    this.dialogRef.close({ ids: Array.from(ids), grouped });
   }
 
   cancel(): void {

@@ -30,8 +30,8 @@
                   {{ item.name }}
                 </span>
                 @if (selectedIds().has(item.id)) {
-                  <div class="absolute top-1 left-1">
-                    <mat-icon svgIcon="checked-green" />
+                  <div class="absolute top-1 left-1 text-[green] bg-blue-50 rounded-full">
+                    <app-icon name="Check_ring_light" [size]="26" />
                   </div>
                 }
               </div>

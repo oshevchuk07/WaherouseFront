@@ -1,19 +1,15 @@
-# Warehouse Platform — Admin Dashboard
-
-A modern, responsive admin dashboard for the Warehouse Platform — a warehouse management system with 3D visualization, plan management, user administration, and AI-powered picking.
-
----
+# Service Platform — Admin Dashboard
 
 ## Tech Stack
 
-| Technology | Version |
-|---|---|
-| Angular | 21.2.14 |
-| TypeScript | 5.9.x |
-| NgRx SignalStore | 21.x |
-| Angular Material (CDK + Dialog + Table) | 21.x |
-| Tailwind CSS | 4.x |
-| RxJS | 7.x |
+| Technology                              | Version |
+| --------------------------------------- | ------- |
+| Angular                                 | 21.2.14 |
+| TypeScript                              | 5.9.x   |
+| NgRx SignalStore                        | 21.x    |
+| Angular Material (CDK + Dialog + Table) | 21.x    |
+| Tailwind CSS                            | 4.x     |
+| RxJS                                    | 7.x     |
 
 ---
 
@@ -131,50 +127,10 @@ node scripts/build-sprite.mjs
 This dashboard connects to a NestJS REST API. See the backend repository for setup instructions.
 
 **API base URL** is configured in:
+
 - `src/environments/environment.ts` — development
 - `src/environments/environment.prod.ts` — production
 
-### Key endpoints used
+# Icons
 
-| Method | Endpoint | Description |
-|---|---|---|
-| `POST` | `/auth/login` | Login, returns JWT |
-| `GET` | `/auth/profile` | Validate token, get current user |
-| `GET` | `/users/list` | List all users |
-| `PUT` | `/users/:id` | Update user |
-| `DELETE` | `/users/:id` | Delete user |
-| `PUT` | `/users/:id/assign-plan` | Assign plan to user |
-| `GET` | `/plan/list` | List all plans |
-| `POST` | `/plan` | Create plan |
-| `PUT` | `/plan/:id` | Update plan |
-| `GET` | `/service/list` | List services |
-| `GET` | `/service/category/list` | List service categories |
-
----
-
-## Architecture Notes
-
-### State Management
-
-Each feature manages its own state via **NgRx SignalStore** scoped to the feature component (`providers: [FeatureStore]`). The `AuthStore` is global (`providedIn: 'root'`).
-
-### Routing
-
-Routes are split into feature route files (`feature.routes.ts`) and lazy-loaded via `loadChildren`. The root `app.routes.ts` only declares top-level paths.
-
-### Layout Configuration
-
-Per-route layout behavior (topbar visibility, sidebar collapse) is declared in route `data`:
-
-```ts
-{
-  path: 'warehouse-3d',
-  data: { layout: { topbarTransparent: true, sidebarCollapsed: true } },
-  loadChildren: () => import('./features/warehouse-3d/warehouse-3d.routes')
-    .then(m => m.WAREHOUSE_3D_ROUTES),
-}
-```
-
-### UI Components
-
-Reusable styles are defined as Tailwind `@layer components` classes (`ui-input`, `ui-btn-primary`, `ui-badge-success`, etc.) in `src/styles/components/`. Angular components are used only where behavior or content projection is needed (`app-form-field`, `app-icon`, `app-notifications`).
+https://www.figma.com/design/ImPnn7sBKhThFcodcWf0XB/Free-Icon-Pack-1800--icons--Community-?node-id=2-27&p=f

@@ -77,7 +77,32 @@
       <ng-container matColumnDef="integrations">
         <th mat-header-cell *matHeaderCellDef class="text-xs font-medium text-gray-500 uppercase tracking-wide px-6 py-3">Integrations</th>
         <td mat-cell *matCellDef="let plan" class="px-6 py-4 text-sm text-gray-700">
-          {{ plan.features }}
+          @if (plan.features && objectKeys(plan.features).length > 0) {
+            <button class="ui-btn-secondary text-xs py-1 px-2" [matMenuTriggerFor]="featuresMenu">
+              {{ getTotalCount(plan.features) }} integrations
+              <span class="material-icons text-sm ml-1">expand_more</span>
+            </button>
+
+            <mat-menu #featuresMenu="matMenu" class="features-dropdown">
+              <div class="px-3 py-2 min-w-[220px]" (click)="$event.stopPropagation()" tabindex="1" role="button">
+                @for (group of objectKeys(plan.features); track group) {
+                  <div class="mb-3">
+                    <p class="text-xs font-semibold text-gray-400 uppercase tracking-wide mb-1">
+                      {{ group }}
+                    </p>
+                    @for (item of plan.features[group]; track item.id) {
+                      <div class="flex items-center gap-2 py-1">
+                        <img [src]="item.logoImage" class="h-5 w-5 object-contain" [alt]="item.name" />
+                        <span class="text-sm text-gray-700">{{ item.name }}</span>
+                      </div>
+                    }
+                  </div>
+                }
+              </div>
+            </mat-menu>
+          } @else {
+            <span class="text-gray-400 text-xs">—</span>
+          }
         </td>
       </ng-container>
 

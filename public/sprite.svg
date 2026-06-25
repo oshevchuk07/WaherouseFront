@@ -13,6 +13,10 @@
     <path d="M12 6L12 18" stroke="currentColor" stroke-linecap="square" stroke-linejoin="round" />
   <path d="M18 12L6 12" stroke="currentColor" stroke-linecap="square" stroke-linejoin="round" />
   </symbol>
+  <symbol id="icon-Check_ring_light" viewBox="0 0 24 24">
+    <circle cx="12" cy="12" r="9" stroke="currentColor" />
+  <path d="M8 12L11 15L16 9" stroke="currentColor" />
+  </symbol>
   <symbol id="icon-Chemistry _light" viewBox="0 0 24 24">
     <path d="M10.5 7.5L12.5 10.5L10.5 13.5H7.5L5.5 10.5L7.5 7.5H10.5Z" stroke="currentColor"
     stroke-linecap="round" stroke-linejoin="round" />
