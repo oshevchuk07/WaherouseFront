@@ -7,12 +7,14 @@ import { NotificationService } from '../../../core/notifications/notification.se
 import { IntegrationsService } from '../integrations.service';
 import { IconComponent } from '../../../shared/components/icons/icons.component';
 import { IntegrationsStore } from '../integrations.store';
+import type { IntegrationGroupModel } from '../integrations.model';
 
 @Component({
   selector: 'app-add-integration-group-dialog',
   templateUrl: './add-integration-group.dialog.html',
   standalone: true,
   imports: [ReactiveFormsModule, MatIconModule, IconComponent],
+  providers: [IntegrationsStore],
 })
 export class AddIntegrationGroupDialogComponent implements OnInit {
   private integrationsService = inject(IntegrationsService);
@@ -20,8 +22,7 @@ export class AddIntegrationGroupDialogComponent implements OnInit {
   private notification = inject(NotificationService);
   private readonly integrationStore = inject(IntegrationsStore);
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  protected data = inject<{ item?: any }>(MAT_DIALOG_DATA, { optional: true });
+  protected data = inject<{ item?: IntegrationGroupModel }>(MAT_DIALOG_DATA, { optional: true });
 
   name = new FormControl('', [Validators.required]);
   saving = signal(false);
@@ -43,8 +44,8 @@ export class AddIntegrationGroupDialogComponent implements OnInit {
     const nameValue = this.name.value ?? '';
 
     const request$ = isEdit
-      ? this.integrationsService.updateCategory(id!, { name: nameValue })
-      : this.integrationsService.addCategory({ name: nameValue });
+      ? this.integrationsService.updateIntegrationGroup(id!, { name: nameValue })
+      : this.integrationsService.addIntegrationGroup({ name: nameValue });
 
     request$.subscribe({
       next: res => {

@@ -76,7 +76,7 @@ export class PlanEditorDialogComponent {
     if (this.isEditMode) {
       forkJoin([
         this.plansService.updateTariffItem(this.data.id, formValue),
-        this.integrationsService.bulkReplaceServices(this.data.id, ids),
+        this.integrationsService.bulkReplaceIntegrations(this.data.id, ids),
       ]).subscribe({
         next: () => this.notify.success('Plan updated'),
         error: () => {
@@ -91,7 +91,7 @@ export class PlanEditorDialogComponent {
     } else {
       this.plansService
         .addPlanItem(formValue)
-        .pipe(switchMap(newPlan => (ids.length > 0 ? this.integrationsService.bulkReplaceServices(newPlan.id, ids) : of(null))))
+        .pipe(switchMap(newPlan => (ids.length > 0 ? this.integrationsService.bulkReplaceIntegrations(newPlan.id, ids) : of(null))))
         .subscribe({
           next: () => this.notify.success('Plan created'),
           error: () => {

@@ -10,12 +10,6 @@
     </button>
   </div>
 
-  <!-- @if (store.error()) {
-    <div class="px-4 py-3 rounded-lg bg-red-50 border border-red-200 text-red-600 text-sm">
-      {{ store.error() }}
-    </div>
-  } -->
-
   <div class="flex flex-col gap-6 flex-1">
     @if (isLoading()) {
       <div class="bg-white rounded-xl border border-gray-200 flex items-center justify-center py-16 text-gray-400 text-sm gap-2">
@@ -31,18 +25,16 @@
             </h3>
             <div class="flex items-center gap-2">
               <button
-                class="text-gray-400 hover:text-gray-600 p-1 rounded transition-colors"
-                title="Editar grupo"
+                class="w-7 h-7 flex items-center justify-center rounded-lg text-gray-400 transition-colors cursor-pointer hover:border-1 border-gray-200"
                 (click)="editGroup(item)"
               >
-                <span class="material-icons text-lg">edit</span>
+                <app-icon name="Edit" [size]="24"></app-icon>
               </button>
               <button
-                class="text-gray-400 hover:text-gray-600 p-1 rounded transition-colors"
-                title="Añadir servicio"
+                class="w-7 h-7 flex items-center justify-center rounded-lg text-gray-400 transition-colors cursor-pointer hover:border-1 border-gray-200"
                 (click)="addIntegration(item)"
               >
-                <span class="material-icons text-lg">add</span>
+                <app-icon name="Add_light" [size]="24"></app-icon>
               </button>
             </div>
           </div>
@@ -64,6 +56,4 @@
       }
     }
   </div>
-
-  <!-- <p class="text-xs text-gray-400">Total: {{ store.totalCount() }} grupos de integraciones</p> -->
 </div>

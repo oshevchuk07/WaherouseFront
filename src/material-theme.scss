@@ -44,3 +44,11 @@ body {
 .light body {
   color-scheme: light;
 }
+
+.mat-mdc-menu-panel {
+  --mat-menu-container-shape: 4px;
+
+  .mat-mdc-menu-content {
+    padding: 0 !important;
+  }
+}

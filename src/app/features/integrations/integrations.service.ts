@@ -35,31 +35,31 @@ export class IntegrationsService {
     return this.http.get<PaginatedResponse<IntegrationGroupModel>>(`${this.api}/integrations/groups`);
   }
 
-  addCategory(params: { name: string }): Observable<IntegrationGroupModel> {
+  addIntegrationGroup(params: { name: string }): Observable<IntegrationGroupModel> {
     return this.http.post<IntegrationGroupModel>(`${this.api}/integrations/groups`, params);
   }
 
-  updateCategory(id: number, params: { name: string | null }): Observable<IntegrationGroupModel> {
+  updateIntegrationGroup(id: number, params: { name: string | null }): Observable<IntegrationGroupModel> {
     return this.http.put<IntegrationGroupModel>(`${this.api}/integrations/groups/${id}`, params);
   }
 
-  addService(params: any): Observable<IntegrationItemModel> {
+  addIntegration(params: any): Observable<IntegrationItemModel> {
     return this.http.post<IntegrationItemModel>(`${this.api}/integrations`, params);
   }
 
-  updateService(id: string, params: any): Observable<IntegrationItemModel> {
+  updateIntegration(id: string, params: any): Observable<IntegrationItemModel> {
     return this.http.put<IntegrationItemModel>(`${this.api}/integrations/${id}`, params);
   }
 
-  uploadServiceImage(serviceId: string, formData: any): Observable<IntegrationItemModel> {
-    return this.http.post<IntegrationItemModel>(`${this.api}/integrations/${serviceId}/logo`, formData);
+  uploadIntegrationImage(integrationId: string, formData: any): Observable<IntegrationItemModel> {
+    return this.http.post<IntegrationItemModel>(`${this.api}/integrations/${integrationId}/logo`, formData);
   }
 
-  removeServiceImage(serviceId: string | number): Observable<IntegrationItemModel> {
-    return this.http.delete<IntegrationItemModel>(`${this.api}/integrations/${serviceId}/logo`);
+  removeIntegrationImage(integrationId: string | number): Observable<IntegrationItemModel> {
+    return this.http.delete<IntegrationItemModel>(`${this.api}/integrations/${integrationId}/logo`);
   }
 
-  bulkReplaceServices(planId: number, integrationIds: number[]): Observable<void> {
+  bulkReplaceIntegrations(planId: number, integrationIds: number[]): Observable<void> {
     return this.http.put<void>(`${this.api}/plans/${planId}/integrations`, {
       integrationIds,
     });

@@ -6,11 +6,12 @@ import { AddIntegrationGroupDialogComponent } from '../add-integration-group/add
 import { IntegrationItemComponent } from '../integration-item/integration-item';
 import type { IntegrationGroupModel, IntegrationItemModel } from '../integrations.model';
 import { IntegrationItemDialogComponent } from '../integration-item-dialog/integration-item.dialog';
+import { IconComponent } from '../../../shared/components/icons/icons.component';
 
 @Component({
   selector: 'app-integrations-list',
   templateUrl: './integrations.component.html',
-  imports: [IntegrationItemComponent],
+  imports: [IntegrationItemComponent, IconComponent],
 })
 export class IntegrationsListComponent implements OnInit {
   private integrationsService = inject(IntegrationsService);
@@ -50,12 +51,19 @@ export class IntegrationsListComponent implements OnInit {
   }
 
   editIntegration(item: IntegrationItemModel): void {
-    this.dialog.open(IntegrationItemDialogComponent, { data: item });
+    this.dialog
+      .open(IntegrationItemDialogComponent, { data: { item: item, groupId: item.groupId } })
+      .afterClosed()
+      .subscribe(res => {
+        if (res) {
+          this.fetchIntegrations();
+        }
+      });
   }
 
   addIntegration(item: IntegrationGroupModel): void {
     this.dialog
-      .open(IntegrationItemDialogComponent, { data: { catId: item.id } })
+      .open(IntegrationItemDialogComponent, { data: { groupId: item.id } })
       .afterClosed()
       .subscribe(res => {
         if (res) {

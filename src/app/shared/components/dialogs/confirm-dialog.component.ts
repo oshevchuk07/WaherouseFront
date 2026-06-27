@@ -34,10 +34,10 @@ const VARIANT_STYLES = {
       <!-- Footer -->
       <div class="ui-dialog__footer">
         <button class="ui-btn-secondary" (click)="cancel()">
-          {{ data.cancelLabel ?? 'Скасувати' }}
+          {{ data.cancelLabel ?? 'Cancel' }}
         </button>
         <button [class]="styles.btnClass" (click)="confirm()">
-          {{ data.confirmLabel ?? 'Підтвердити' }}
+          {{ data.confirmLabel ?? 'Confirm' }}
         </button>
       </div>
     </div>

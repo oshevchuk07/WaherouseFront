@@ -7,13 +7,19 @@ import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormFieldComponent } from '../../../shared/components/form-field/form-field.component';
 import { IconComponent } from '../../../shared/components/icons/icons.component';
+import { catchError, of, switchMap } from 'rxjs';
+
+interface DialogData {
+  item?: IntegrationItemModel;
+  groupId: number | string;
+}
 
 @Component({
   templateUrl: './integration-item.dialog.html',
   imports: [ReactiveFormsModule, FormFieldComponent, IconComponent],
 })
 export class IntegrationItemDialogComponent {
-  readonly data = inject<{ item: IntegrationItemModel; catId: number | string }>(MAT_DIALOG_DATA);
+  readonly data = inject<DialogData>(MAT_DIALOG_DATA);
   private readonly dialogRef = inject(MatDialogRef<IntegrationItemDialogComponent>);
   readonly integrationsService = inject(IntegrationsService);
   private readonly notify = inject(NotificationService);
@@ -54,15 +60,22 @@ export class IntegrationItemDialogComponent {
 
   removeImage(event: Event): void {
     event.preventDefault();
-    this.selectedFile.set(null);
+    event.stopPropagation();
 
     if (this.data.item?.id && this.data.item?.logoImage) {
       this.integrationsService
-        .removeServiceImage(this.data.item.id)
+        .removeIntegrationImage(this.data.item.id)
         .pipe(takeUntilDestroyed())
-        .subscribe({ next: () => this.previewUrl.set(null) });
+        .subscribe({
+          next: () => {
+            this.previewUrl.set(null);
+            this.selectedFile.set(null);
+          },
+          error: () => this.notify.error('Failed to remove image'),
+        });
     } else {
       this.previewUrl.set(null);
+      this.selectedFile.set(null);
     }
   }
 
@@ -76,41 +89,41 @@ export class IntegrationItemDialogComponent {
 
     const payload = {
       ...this.integrationForm.getRawValue(),
-      categoryId: this.data.catId,
+      groupId: this.data.groupId,
     };
 
     const request$ = this.isEdit
-      ? this.integrationsService.updateService(String(this.data.item!.id), payload)
-      : this.integrationsService.addService(payload);
+      ? this.integrationsService.updateIntegration(String(this.data.item!.id), payload)
+      : this.integrationsService.addIntegration(payload);
 
-    request$.subscribe({
-      next: res => {
-        const id = this.isEdit ? String(this.data.item!.id) : res?.id ? String(res.id) : undefined;
+    request$
+      .pipe(
+        switchMap(res => {
+          const id = String(this.isEdit ? this.data.item!.id : res.id);
+          const file = this.selectedFile();
 
-        if (this.selectedFile() && id) {
+          if (!file) return of(res);
+
           const formData = new FormData();
-          formData.append('file', this.selectedFile()!);
-
-          this.integrationsService.uploadServiceImage(id, formData).subscribe({
-            next: uploaded => {
-              this.notify.success(this.isEdit ? 'Service updated' : 'Service added');
-              this.dialogRef.close(uploaded);
-            },
-            error: () => {
-              this.notify.error('Failed to upload image');
-              this.saving.set(false);
-            },
-          });
-        } else {
-          this.notify.success(this.isEdit ? 'Service updated' : 'Service added');
+          formData.append('file', file);
+          return this.integrationsService.uploadIntegrationImage(id, formData).pipe(
+            catchError(() => {
+              this.notify.warning('Integration saved, but image upload failed');
+              return of(res);
+            }),
+          );
+        }),
+      )
+      .subscribe({
+        next: res => {
+          this.notify.success(this.isEdit ? 'Integration updated' : 'Integration added');
           this.dialogRef.close(res);
-        }
-      },
-      error: () => {
-        this.notify.error(this.isEdit ? 'Failed to update service' : 'Failed to add service');
-        this.saving.set(false);
-      },
-    });
+        },
+        error: () => {
+          this.notify.error(this.isEdit ? 'Failed to update' : 'Failed to add');
+          this.saving.set(false);
+        },
+      });
   }
 
   cancel(): void {
