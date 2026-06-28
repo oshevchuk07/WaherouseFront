@@ -35,7 +35,7 @@ export const NAV_CONFIG: NavEntry[] = [
 
   {
     type: 'item',
-    label: 'Plans and prices',
+    label: 'Plan & subscriptions',
     route: '/app/plans/selection',
     icon: 'Molecule_light',
     roles: ['ADMIN'],

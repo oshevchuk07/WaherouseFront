@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Component, computed, inject, input, output } from '@angular/core';
 import { PaymentType } from '../../../core/models/user.model';
 import type { IntegrationGroupModel } from '../../integrations/integrations.model';
@@ -27,13 +26,6 @@ export class PlanCardComponent {
 
   isPopular = computed(() => this.item().isPopular);
 
-  selectedCategoryList = computed(() => {
-    // const selectedIds = this.item().planServices?.map(s => s.serviceId) ?? [];
-    // if (!selectedIds.length) return [];
-    // return this.filterSelectedGroups(this.categoryList(), selectedIds);
-    return [] as any[];
-  });
-
   readonly objectKeys = Object.keys;
 
   onEditItem(): void {
@@ -52,13 +44,4 @@ export class PlanCardComponent {
         if (confirmed) this.startPlan.emit(this.item());
       });
   }
-
-  // private filterSelectedGroups(allGroups: IntegrationGroupModel[], selectedIds: number[]): IntegrationGroupModel[] {
-  //   return allGroups
-  //     .map(group => {
-  //       const services = group.services.filter(s => selectedIds.includes(s.id));
-  //       return services.length ? { ...group, services } : null;
-  //     })
-  //     .filter((g): g is IntegrationGroupModel => g !== null);
-  // }
 }

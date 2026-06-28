@@ -1,5 +1,5 @@
 import type { OnInit } from '@angular/core';
-import { Component, inject, signal } from '@angular/core';
+import { Component, computed, inject, signal } from '@angular/core';
 import { PlansStore } from '../plans.store';
 import { PlanCardComponent } from '../plan-card-item/plan-card.component';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
@@ -15,6 +15,8 @@ export class PlanSelectionComponent implements OnInit {
   readonly PaymentType = PaymentType;
 
   payPeriod = signal<PaymentType>(PaymentType.MONTHLY);
+
+  availableSubscriptions = computed(() => this.plansStore.planList().filter(el => el.isActive));
 
   ngOnInit(): void {
     this.plansStore.loadPlanList();
