@@ -34,6 +34,8 @@ export class PlanCardComponent {
     return [] as any[];
   });
 
+  readonly objectKeys = Object.keys;
+
   onEditItem(): void {
     this.editItem.emit(this.item());
   }

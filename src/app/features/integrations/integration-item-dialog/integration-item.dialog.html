@@ -29,21 +29,21 @@
       <span class="ui-label-text">Logo image</span>
       <label
         for="fileInput"
-        class="relative cursor-pointer w-28 h-28 rounded-xl border-2 border-dashed border-gray-700 hover:border-gray-500 transition-colors flex items-center justify-center overflow-hidden bg-gray-800"
+        class="relative cursor-pointer w-28 h-28 rounded-xl border-2 border-dashed border-gray-700 hover:border-gray-500 transition-colors flex items-center justify-center overflow-hidden bg-gray-100"
       >
         <input id="fileInput" type="file" class="hidden" accept="image/jpeg,image/png,image/webp" (change)="onFileSelected($event)" />
 
         @if (previewUrl()) {
           <img [src]="previewUrl()" alt="" class="w-full h-full object-contain" />
           <button
-            class="absolute top-1 right-1 w-6 h-6 rounded-full bg-red-600 hover:bg-red-500 flex items-center justify-center transition-colors z-10"
+            class="absolute top-1 right-1 w-6 h-6 rounded-full bg-red-600 hover:bg-red-100 flex items-center justify-center transition-colors z-10"
             (click)="removeImage($event)"
           >
-            <app-icon name="close" [size]="12" cssClass="text-white" />
+            <app-icon name="Trash_light" [size]="20" cssClass="text-white" />
           </button>
         } @else {
           <div class="flex flex-col items-center gap-1 text-gray-500 pointer-events-none">
-            <app-icon name="upload" [size]="20" />
+            <app-icon name="Arhive_alt_add_light" [size]="30" />
             <span class="text-xs">Add image</span>
           </div>
         }

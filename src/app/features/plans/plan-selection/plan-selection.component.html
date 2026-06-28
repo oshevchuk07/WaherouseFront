@@ -1,19 +1,26 @@
 <div class="flex flex-col gap-6">
-  <section>
+  <!-- <section>
     <div class="flex items-start justify-between gap-4">
       <div class="flex flex-col gap-1">
         <h1 class="text-2xl font-semibold text-gray-800 dark:text-gray-100">Plan Configurator</h1>
         <p class="text-sm text-gray-500 dark:text-gray-400">Choose your tariff plan</p>
       </div>
     </div>
-  </section>
+  </section> -->
+
+  <div class="w-full flex justify-center mb-4">
+    <mat-button-toggle-group name="fontStyle" [value]="payPeriod()" (change)="payPeriod.set($event.value)" aria-label="Font Style">
+      <mat-button-toggle [value]="PaymentType.MONTHLY">Pago mensual</mat-button-toggle>
+      <mat-button-toggle [value]="PaymentType.YEARLY">Pago anual</mat-button-toggle>
+    </mat-button-toggle-group>
+  </div>
 
   <div class="flex gap-4 justify-center flex-wrap">
     @if (plansStore.planListLoading()) {
       Loading
     } @else {
       @for (plan of plansStore.planList(); track plan.id) {
-        <app-plan-cart [item]="plan" [editMode]="false"></app-plan-cart>
+        <app-plan-cart [item]="plan" [editMode]="false" [payPeriod]="payPeriod()"></app-plan-cart>
       }
     }
   </div>
