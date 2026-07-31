@@ -25,20 +25,26 @@
                 class="w-7 h-7 flex items-center justify-center rounded-lg text-gray-400 transition-colors cursor-pointer hover:border-1 border-gray-200"
                 (click)="editGroup(item)"
               >
-                <app-icon name="Edit" [size]="24"></app-icon>
+                <app-icon name="Edit" [size]="22" class="text-gray-500"></app-icon>
               </button>
               <button
                 class="w-7 h-7 flex items-center justify-center rounded-lg text-gray-400 transition-colors cursor-pointer hover:border-1 border-gray-200"
                 (click)="addIntegration(item)"
               >
-                <app-icon name="Add_light" [size]="24"></app-icon>
+                <app-icon name="Add_light" [size]="22" class="text-gray-600"></app-icon>
               </button>
             </div>
           </div>
 
           <div class="divide-y divide-gray-100">
             @for (integration of item?.integrations; track integration.id) {
-              <div class="px-6 py-4 hover:bg-gray-50 transition-colors">
+              <div
+                class="px-6 py-4 hover:bg-gray-50 transition-colors"
+                [class.hover:bg-gray-50]="integration.isActive"
+                [class.bg-gray-100]="!integration.isActive"
+                [class.grayscale]="!integration.isActive"
+                [class.opacity-60]="!integration.isActive"
+              >
                 <app-integration-item [item]="integration" (editIntegration)="editIntegration($event)"></app-integration-item>
               </div>
             } @empty {

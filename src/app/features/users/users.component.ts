@@ -7,10 +7,11 @@ import { UsersStore } from './users.store';
 import type { User } from '../../core/models/user.model';
 import { MatDialog } from '@angular/material/dialog';
 import { EditUserDialogComponent } from './edit-user/edit-user.dialog';
+import { IconComponent } from '../../shared/components/icons/icons.component';
 
 @Component({
   selector: 'app-users',
-  imports: [FormsModule, MatTableModule, MatSortModule],
+  imports: [FormsModule, MatTableModule, MatSortModule, IconComponent],
   providers: [UsersStore],
   templateUrl: './users.component.html',
 })

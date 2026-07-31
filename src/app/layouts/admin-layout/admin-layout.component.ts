@@ -6,7 +6,6 @@ import { TopbarComponent } from '../../shared/components/topbar/topbar';
 import { NotificationsComponent } from '../../shared/components/notifications/notifications.component';
 import type { LayoutConfig } from '../../core/services/layout.service';
 import { LayoutService } from '../../core/services/layout.service';
-import type { Subscription } from 'rxjs';
 import { filter, map } from 'rxjs';
 import { BreakpointService } from '../../core/services/breakpoint.service';
 import { RouteProgressBarComponent } from '../../shared/components/route-progressbar/route-progressbar.component';
@@ -25,7 +24,6 @@ export class AdminLayoutComponent {
 
   private readonly router = inject(Router);
   private readonly activatedRoute = inject(ActivatedRoute);
-  private sub?: Subscription;
 
   private readonly routeData = toSignal(
     this.router.events.pipe(

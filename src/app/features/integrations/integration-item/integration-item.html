@@ -1,4 +1,4 @@
-<div class="flex items-center gap-4" [class.bg-gray-400]="!item().isActive">
+<div class="flex items-center gap-4">
   <!-- <div class="w-[60px]">
     @if (item().isActive) {
       <div class="w-[20px] mx-auto">
@@ -10,6 +10,12 @@
       </div>
     }
   </div> -->
+  <div>
+    <label class="ui-toggle flex items-center gap-2">
+      <input type="checkbox" [checked]="item().isActive" disabled />
+      <span></span>
+    </label>
+  </div>
   <div class="w-[200px] flex flex-col">
     <div class="text-gray-500 font-[500] text-[16px] cursor-pointer underline" (click)="openExternalLink()" role="button" tabindex="0">
       {{ item().name }}
@@ -28,7 +34,7 @@
       class="w-7 h-7 flex items-center justify-center rounded-lg text-gray-400 transition-colors cursor-pointer hover:border-1 border-gray"
       (click)="editService()"
     >
-      <app-icon name="Setting_line_light"></app-icon>
+      <app-icon name="Setting_line_light" class="text-gray-500"></app-icon>
     </button>
   </div>
 </div>

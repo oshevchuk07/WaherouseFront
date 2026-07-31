@@ -39,7 +39,9 @@ export class DialogService {
     return this.dialog.open(component, {
       data,
       panelClass: 'ui-dialog-panel',
+      backdropClass: 'ui-dialog-backdrop',
       maxWidth: '95vw',
+      width: 'auto',
     });
   }
 
@@ -47,7 +49,9 @@ export class DialogService {
     return this.dialog.open(component, {
       data,
       panelClass: ['ui-dialog-panel', 'ui-dialog-panel-wide'],
+      backdropClass: 'ui-dialog-backdrop',
       maxWidth: '95vw',
+      width: 'auto',
     });
   }
 }

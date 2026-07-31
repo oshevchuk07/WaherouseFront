@@ -1,7 +1,7 @@
 <app-route-progress-bar />
 
 <div class="flex h-screen overflow-hidden bg-gray-50 dark:bg-gray-950">
-  <app-sidebar #sidebar [forceCollapsed]="layout.config().sidebarCollapsed" (onLogout)="authStore.logout()" />
+  <app-sidebar #sidebar [forceCollapsed]="layout.config().sidebarCollapsed" (logout)="authStore.logout()" />
 
   <div class="flex flex-col flex-1 overflow-hidden relative min-w-0">
     @if (layout.config().topbarVisible) {
