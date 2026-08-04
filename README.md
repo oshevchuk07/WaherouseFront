@@ -134,3 +134,5 @@ This dashboard connects to a NestJS REST API. See the backend repository for set
 # Icons
 
 https://www.figma.com/design/ImPnn7sBKhThFcodcWf0XB/Free-Icon-Pack-1800--icons--Community-?node-id=2-27&p=f
+
+test message

@@ -24,14 +24,16 @@ export class EditUserDialogComponent {
   private readonly notify = inject(NotificationService);
   private readonly fb = inject(FormBuilder);
 
+  readonly createMode = signal(!this.data?.id);
+
   readonly plans = toSignal(this.plansService.getActivePlans(), { initialValue: [] });
   readonly saving = signal(false);
 
   readonly editForm = this.fb.nonNullable.group({
-    firstName: [this.data.firstName ?? '', Validators.required],
-    lastName: [this.data.lastName ?? '', Validators.required],
-    email: [this.data.email ?? '', [Validators.required, Validators.email]],
-    planId: [String(this.data.planId ?? '')],
+    firstName: [this.data?.firstName ?? '', Validators.required],
+    lastName: [this.data?.lastName ?? '', Validators.required],
+    email: [this.data?.email ?? '', [Validators.required, Validators.email]],
+    planId: [String(this.data?.planId ?? '')],
   });
 
   getFieldError(controlName: string): string {

@@ -21,14 +21,16 @@
       <input class="ui-input" type="email" placeholder="user@example.com" formControlName="email" />
     </app-form-field>
 
-    <app-form-field label="Plan">
-      <select class="ui-select" formControlName="planId">
-        <option value="">— No plan —</option>
-        @for (plan of plans(); track plan.id) {
-          <option [value]="plan.id">{{ plan.name }}</option>
-        }
-      </select>
-    </app-form-field>
+    @if (createMode()) {
+      <app-form-field label="Plan">
+        <select class="ui-select" formControlName="planId">
+          <option value="">— No plan —</option>
+          @for (plan of plans(); track plan.id) {
+            <option [value]="plan.id">{{ plan.name }}</option>
+          }
+        </select>
+      </app-form-field>
+    }
   </div>
 
   <div class="ui-dialog__footer">

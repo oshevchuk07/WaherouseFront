@@ -29,7 +29,7 @@ export class UsersComponent implements OnInit {
     return [user.firstName, user.lastName].filter(Boolean).join(' ') || '—';
   }
 
-  edit(user: User): void {
+  editUser(user: User): void {
     this.dialog
       .open(EditUserDialogComponent, {
         data: user,
@@ -38,5 +38,9 @@ export class UsersComponent implements OnInit {
       .subscribe(updated => {
         if (updated) this.store.loadUsers();
       });
+  }
+
+  addNewUser(): void {
+    this.dialog.open(EditUserDialogComponent);
   }
 }
